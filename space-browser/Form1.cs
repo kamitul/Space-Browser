@@ -11,13 +11,22 @@ using System.Windows.Forms;
 
 namespace space_browser
 {
-    public partial class Form1 : MetroForm
+    public partial class Form1 : Form
     {
         public Form1()
         {
             InitializeComponent();
         }
 
+        private void Browser_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void metroListView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
     
