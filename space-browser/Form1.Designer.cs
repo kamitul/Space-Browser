@@ -1,4 +1,6 @@
-﻿namespace space_browser
+﻿using System.Windows.Forms;
+
+namespace space_browser
 {
     partial class Form1
     {
@@ -28,6 +30,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
+            "FIRST",
+            "SubItem1a",
+            "SubItem1b",
+            "SubItem1c",
+            "SubItem1c",
+            "SubItem1c"}, -1);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -96,11 +105,40 @@
             this.Rocket,
             this.Country});
             this.listView1.HideSelection = false;
+            this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem1});
             this.listView1.Location = new System.Drawing.Point(12, 28);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(533, 407);
             this.listView1.TabIndex = 2;
             this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView1.View = System.Windows.Forms.View.Details;
+            // 
+            // ID
+            // 
+            this.ID.Text = "ID";
+            // 
+            // Status
+            // 
+            this.Status.Text = "Status";
+            // 
+            // Name
+            // 
+            this.Name.Text = "Name";
+            this.Name.Width = 120;
+            // 
+            // Payloads
+            // 
+            this.Payloads.Text = "Payloads";
+            // 
+            // Rocket
+            // 
+            this.Rocket.Text = "Rocket";
+            this.Rocket.Width = 120;
+            // 
+            // Country
+            // 
+            this.Country.Text = "Country";
             // 
             // tableLayoutPanel2
             // 
