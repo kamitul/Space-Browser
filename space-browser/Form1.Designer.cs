@@ -30,13 +30,6 @@ namespace space_browser
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
-            "FIRST",
-            "SubItem1a",
-            "SubItem1b",
-            "SubItem1c",
-            "SubItem1c",
-            "SubItem1c"}, -1);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -105,8 +98,6 @@ namespace space_browser
             this.Rocket,
             this.Country});
             this.listView1.HideSelection = false;
-            this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1});
             this.listView1.Location = new System.Drawing.Point(12, 28);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(533, 407);
@@ -220,6 +211,7 @@ namespace space_browser
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.listView1);
+            this.Name = "Form1";
             this.Text = "SpaceX Browser";
             this.Load += new System.EventHandler(this.Browser_Load);
             this.tableLayoutPanel1.ResumeLayout(false);

@@ -1,4 +1,6 @@
 ﻿using MetroFramework.Forms;
+using Microsoft.EntityFrameworkCore;
+using SBDataLibrary.Server;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,17 +15,15 @@ namespace space_browser
 {
     public partial class Form1 : Form
     {
+
+        private SBDataContext context;
+
         public Form1()
         {
-            InitializeComponent();
+            InitializeComponent();      
         }
 
         private void Browser_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void metroListView1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }

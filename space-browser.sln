@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "space-browser", "space-browser\space-browser.csproj", "{0A9FC4DE-1CFC-490A-9EA0-AE41229D6E47}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "space-browser", "space-browser\space-browser.csproj", "{0A9FC4DE-1CFC-490A-9EA0-AE41229D6E47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SBDataLibrary", "SBDataLibrary\SBDataLibrary.csproj", "{87E2AA23-66A6-4C4F-8B6B-633BCF54A0B1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{0A9FC4DE-1CFC-490A-9EA0-AE41229D6E47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A9FC4DE-1CFC-490A-9EA0-AE41229D6E47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A9FC4DE-1CFC-490A-9EA0-AE41229D6E47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87E2AA23-66A6-4C4F-8B6B-633BCF54A0B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87E2AA23-66A6-4C4F-8B6B-633BCF54A0B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87E2AA23-66A6-4C4F-8B6B-633BCF54A0B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87E2AA23-66A6-4C4F-8B6B-633BCF54A0B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
