@@ -23,8 +23,40 @@ namespace space_browser
         public Form1(DataController dataController)
         {
             InitializeComponent();
+            this.listView1.ColumnWidthChanging += new ColumnWidthChangingEventHandler(ResizeColumn);
+            this.listView1.DrawColumnHeader += DrawColumnHeader;
+            this.listView1.DrawItem += DrawItem;
+            this.listView1.DrawSubItem += DrawSubItem;
             this.dataController = dataController;
             this.connection = new Connection(100000000);
+        }
+
+        private void DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
+        {
+            e.Graphics.FillRectangle(SystemBrushes.Menu, e.Bounds);
+            e.Graphics.DrawRectangle(SystemPens.GradientInactiveCaption,
+                new Rectangle(e.Bounds.X, 0, e.Bounds.Width, e.Bounds.Height));
+
+            string text = listView1.Columns[e.ColumnIndex].Text;
+            TextFormatFlags cFlag = TextFormatFlags.HorizontalCenter
+                                  | TextFormatFlags.VerticalCenter;
+            TextRenderer.DrawText(e.Graphics, text, listView1.Font, e.Bounds, Color.Black, cFlag);
+        }
+
+        private void DrawItem(object sender, DrawListViewItemEventArgs e)
+        {
+            e.DrawDefault = true;
+        }
+
+        private void DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
+        {
+            e.DrawDefault = true;
+        }
+
+        private void ResizeColumn(object sender, ColumnWidthChangingEventArgs e)
+        {
+            e.NewWidth = this.listView1.Columns[e.ColumnIndex].Width;
+            e.Cancel = true;
         }
 
         private async void Browser_Load(object sender, EventArgs e)
@@ -34,8 +66,7 @@ namespace space_browser
             var parsedData = CollectData(content);
             for (int i = 0; i < parsedData.Count; ++i)
             {
-                ListViewItem item = new ListViewItem();
-                item.SubItems.Add(parsedData[i].Launch.Id.ToString());
+                ListViewItem item = new ListViewItem(parsedData[i].Launch.Id.ToString());
                 item.SubItems.Add(parsedData[i].Launch.Status.ToString());
                 item.SubItems.Add(parsedData[i].Launch.Name);
                 item.SubItems.Add(parsedData[i].Launch.Payloads.ToString());
@@ -43,6 +74,7 @@ namespace space_browser
                 item.SubItems.Add(parsedData[i].Launch.Country);
                 listView1.Items.Add(item);
             }
+            this.listView1.Items[0].Selected = true;
         }
 
         private List<JSONData> CollectData(string launches)
@@ -74,6 +106,11 @@ namespace space_browser
                             launchesJSON["launches"][index]["rocket"]["second_stage"]["payloads"].Count(),
                             (string)launchesJSON["launches"][index]["rocket"]["rocket_name"],
                             (string)launchesJSON["launches"][index]["rocket"]["second_stage"]["payloads"][0]["nationality"]);
+        }
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

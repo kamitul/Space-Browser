@@ -37,7 +37,7 @@ namespace space_browser
             this.listView1 = new System.Windows.Forms.ListView();
             this.ID = new System.Windows.Forms.ColumnHeader();
             this.Status = new System.Windows.Forms.ColumnHeader();
-            this.Name = new System.Windows.Forms.ColumnHeader();
+            this.MissionName = new System.Windows.Forms.ColumnHeader();
             this.Payloads = new System.Windows.Forms.ColumnHeader();
             this.Rocket = new System.Windows.Forms.ColumnHeader();
             this.Country = new System.Windows.Forms.ColumnHeader();
@@ -93,30 +93,35 @@ namespace space_browser
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ID,
             this.Status,
-            this.Name,
+            this.MissionName,
             this.Payloads,
             this.Rocket,
             this.Country});
+            this.listView1.FullRowSelect = true;
+            this.listView1.GridLines = true;
             this.listView1.HideSelection = false;
             this.listView1.Location = new System.Drawing.Point(12, 28);
             this.listView1.Name = "listView1";
+            this.listView1.OwnerDraw = true;
             this.listView1.Size = new System.Drawing.Size(533, 407);
             this.listView1.TabIndex = 2;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
+            this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
             // 
             // ID
             // 
             this.ID.Text = "ID";
+            this.ID.Width = 28;
             // 
             // Status
             // 
             this.Status.Text = "Status";
             // 
-            // Name
+            // MissionName
             // 
-            this.Name.Text = "Name";
-            this.Name.Width = 120;
+            this.MissionName.Text = "Mission Name";
+            this.MissionName.Width = 155;
             // 
             // Payloads
             // 
@@ -124,12 +129,13 @@ namespace space_browser
             // 
             // Rocket
             // 
-            this.Rocket.Text = "Rocket";
-            this.Rocket.Width = 120;
+            this.Rocket.Text = "Rocket Name";
+            this.Rocket.Width = 155;
             // 
             // Country
             // 
             this.Country.Text = "Country";
+            this.Country.Width = 55;
             // 
             // tableLayoutPanel2
             // 
@@ -211,6 +217,9 @@ namespace space_browser
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.listView1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "Form1";
             this.Text = "SpaceX Browser";
             this.Load += new System.EventHandler(this.Browser_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -231,7 +240,7 @@ namespace space_browser
         private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.ColumnHeader ID;
         private System.Windows.Forms.ColumnHeader Status;
-        private System.Windows.Forms.ColumnHeader Name;
+        private System.Windows.Forms.ColumnHeader MissionName;
         private System.Windows.Forms.ColumnHeader Payloads;
         private System.Windows.Forms.ColumnHeader Rocket;
         private System.Windows.Forms.ColumnHeader Country;
