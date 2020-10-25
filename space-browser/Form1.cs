@@ -32,9 +32,10 @@ namespace space_browser
             var parsedResults = await connection.CreateGet("https://api.spacexdata.com/v3/launches");
             var content = parsedResults.Content.ReadAsStringAsync().Result;
             var parsedData = CollectData(content);
-            for(int i = 0; i < parsedData.Count; ++i)
+            for (int i = 0; i < parsedData.Count; ++i)
             {
-                ListViewItem item = new ListViewItem(parsedData[i].Launch.Id.ToString());
+                ListViewItem item = new ListViewItem();
+                item.SubItems.Add(parsedData[i].Launch.Id.ToString());
                 item.SubItems.Add(parsedData[i].Launch.Status.ToString());
                 item.SubItems.Add(parsedData[i].Launch.Name);
                 item.SubItems.Add(parsedData[i].Launch.Payloads.ToString());
