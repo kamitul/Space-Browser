@@ -1,5 +1,4 @@
-﻿using MetroFramework.Forms;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SBDataLibrary.Server;
 using System;
 using System.Collections.Generic;
@@ -15,12 +14,12 @@ namespace space_browser
 {
     public partial class Form1 : Form
     {
+        private DataController dataController;
 
-        private SBDataContext context;
-
-        public Form1()
+        public Form1(DataController dataController)
         {
-            InitializeComponent();      
+            InitializeComponent();
+            this.dataController = dataController;
         }
 
         private void Browser_Load(object sender, EventArgs e)

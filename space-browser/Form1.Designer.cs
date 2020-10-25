@@ -211,7 +211,6 @@ namespace space_browser
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.listView1);
-            this.Name = "Form1";
             this.Text = "SpaceX Browser";
             this.Load += new System.EventHandler(this.Browser_Load);
             this.tableLayoutPanel1.ResumeLayout(false);

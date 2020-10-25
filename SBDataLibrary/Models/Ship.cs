@@ -12,6 +12,6 @@ namespace SBDataLibrary.Models
         public string Name { get; set; }
         public string Type { get; set; }
         public string HomePort { get; set; }
-        public Bitmap Image { get; set; }
+        public byte[] Image { get; set; }
     }
 }
