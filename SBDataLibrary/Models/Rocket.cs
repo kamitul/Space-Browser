@@ -9,8 +9,11 @@ namespace SBDataLibrary.Models
     [System.Serializable]
     public class Rocket
     {
-        public string Id { get; set; }
-
+        public int Id { get; set; }
+        [Required]
+        public int LaunchId { get; set; }
+        [Required]
+        public string RocketId { get; set; }
         [Required]
         [MaxLength(200)]
         public string Name { get; set; }
@@ -22,15 +25,15 @@ namespace SBDataLibrary.Models
         public string Country { get; set; }
         public int Mass { get; set; }
         public byte[] Image { get; set; }
-        public Rocket(string id, string name, string type, string country, int mass, byte[] image)
+
+        public Rocket(string rocketId, string name, string type, string country, int mass, byte[] image)
         {
-            this.Id = id;
+            this.RocketId = rocketId;
             this.Name = name;
             this.Type = type;
             this.Country = country;
             this.Mass = mass;
             this.Image = image;
         }
-
     }
 }

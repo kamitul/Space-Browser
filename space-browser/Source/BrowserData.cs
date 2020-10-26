@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace space_browser.Source
 {
-    public class BrowserData
+    public class BrowserData : IRefreshable
     {
         public List<Launch> Launches;
         private Connection connection;
@@ -23,13 +23,18 @@ namespace space_browser.Source
 
         public async Task LoadData()
         {
-            Launches.Clear();
+            Refresh();
             var result = await Task.WhenAll(Connect("https://api.spacexdata.com/v3/launches"), Connect("https://api.spacexdata.com/v3/ships"), Connect("https://api.spacexdata.com/v3/rockets"));
             var parsedData = await CollectData(result[0], result[2], result[1]);
             for (int i = 0; i < parsedData.Count; ++i)
             {
                 Launches.Add(parsedData[i].Launch);
             }
+        }
+
+        public void Refresh()
+        {
+            Launches.Clear();
         }
 
         private async Task<string> Connect(string url)
@@ -76,7 +81,7 @@ namespace space_browser.Source
             var ships_id = launchesParsed["launches"][i]["ships"];
             var rocket_id = (string)launchesParsed["launches"][i]["rocket"]["rocket_id"];
             return new Launch(
-                        (int)launchesParsed["launches"][i]["flight_number"],
+                        (string)launchesParsed["launches"][i]["flight_number"],
                         (State)(int)launchesParsed["launches"][i]["upcoming"],
                         (string)launchesParsed["launches"][i]["mission_name"],
                         launchesParsed["launches"][i]["rocket"]["second_stage"]["payloads"].Count(),
@@ -84,7 +89,7 @@ namespace space_browser.Source
                         (string)launchesParsed["launches"][i]["rocket"]["second_stage"]["payloads"][0]["nationality"],
                         (string)launchesParsed["launches"][i]["launch_date_utc"],
                         (string)launchesParsed["launches"][i]["mission_name"],
-                        rockets.Find(x=>x.Id == rocket_id),
+                        rockets.Find(x=>x.RocketId == rocket_id),
                         shipsInfo.FindAll(x=>ships_id.Contains(x.Id)));
         }
 
@@ -121,6 +126,7 @@ namespace space_browser.Source
             {
                     byte[] image = await GetImage((string)shipsJSON["ships"][j]["image"]);
                     shipInfos.Add(new Ship(
+                        (string)shipsJSON["ships"][j]["ship_id"],
                         shipsJSON["ships"][j]["missions"].Count(),
                         (string)shipsJSON["ships"][j]["ship_name"],
                         (string)shipsJSON["ships"][j]["ship_type"],

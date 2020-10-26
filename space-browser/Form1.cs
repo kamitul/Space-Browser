@@ -20,15 +20,25 @@ namespace space_browser
     public partial class Form1 : Form
     {
         private BrowserData browserData;
+        private List<IRefreshable> refreshables;
+        private DataController dataController;
 
         public Form1()
         {
             InitializeComponent();
-            this.browserData = new BrowserData();
+            InitializeFields();
             this.listView1.ColumnWidthChanging += new ColumnWidthChangingEventHandler(ResizeColumn);
             this.listView1.DrawColumnHeader += DrawColumnHeader;
             this.listView1.DrawItem += DrawItem;
             this.listView1.DrawSubItem += DrawSubItem;
+        }
+
+        private void InitializeFields()
+        {
+            refreshables = new List<IRefreshable>();
+            this.browserData = new BrowserData();
+            this.dataController = new DataController();
+            refreshables.Add(this.browserData);
         }
 
         private void DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
@@ -61,10 +71,15 @@ namespace space_browser
         
         private async void Browser_Load(object sender, EventArgs e)
         {
+            await LoadForm();
+        }
+
+        private async Task LoadForm()
+        {
             await browserData.LoadData();
             for (int i = 0; i < browserData.Launches.Count; ++i)
             {
-                ListViewItem item = new ListViewItem(browserData.Launches[i].Id.ToString());
+                ListViewItem item = new ListViewItem(browserData.Launches[i].FlightId.ToString());
                 item.SubItems.Add(browserData.Launches[i].Status.ToString());
                 item.SubItems.Add(browserData.Launches[i].Name);
                 item.SubItems.Add(browserData.Launches[i].Payloads.ToString());
@@ -93,6 +108,31 @@ namespace space_browser
                 }
             }
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count > 0)
+            {
+                int index = listView1.Items.IndexOf(listView1.SelectedItems[0]);
+                dataController.Add(browserData.Launches[index]);
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Refresh();
+        }
+
+        public override async void Refresh()
+        {
+            base.Refresh();
+            this.listView1.Items.Clear();
+            this.richTextBox1.Clear();
+            this.pictureBox1.Image = null;
+            foreach (var refreshable in refreshables)
+                refreshable.Refresh();
+            await LoadForm();
         }
     }
 }

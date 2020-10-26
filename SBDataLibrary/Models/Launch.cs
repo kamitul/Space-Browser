@@ -19,6 +19,8 @@ namespace SBDataLibrary.Models
     {
         public int Id { get; set; }
         [Required]
+        public string FlightId { get; set; }
+        [Required]
         public State Status { get; set; }
         [Required]
         [MaxLength(200)]
@@ -38,9 +40,9 @@ namespace SBDataLibrary.Models
         public Rocket Rocket { get; set; }
         public List<Ship> Ships { get; set; }
 
-        public Launch(int id, State status, string name, int payloads, string rocketName, string country, string launchDate, string missionName, Rocket rocket, List<Ship> ships)
+        public Launch(string flightId, State status, string name, int payloads, string rocketName, string country, string launchDate, string missionName, Rocket rocket, List<Ship> ships)
         {
-            this.Id = id;
+            this.FlightId = flightId;
             this.Status = status;
             this.Name = name;
             this.Payloads = payloads;
@@ -52,9 +54,9 @@ namespace SBDataLibrary.Models
             this.Ships = ships;
         }
 
-        public Launch(int id, State status, string name, int payloads, string rocketName, string country, string launchDate, string missionName)
+        public Launch(string flightId, State status, string name, int payloads, string rocketName, string country, string launchDate, string missionName)
         {
-            this.Id = id;
+            this.FlightId = flightId;
             this.Status = status;
             this.Name = name;
             this.Payloads = payloads;
