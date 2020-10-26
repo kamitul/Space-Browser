@@ -8,27 +8,27 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 
 namespace space_browser
 {
     public partial class Form1 : Form
     {
-        private DataController dataController;
-        private Connection connection;
+        private BrowserData browserData;
 
-        public Form1(DataController dataController)
+        public Form1()
         {
             InitializeComponent();
+            this.browserData = new BrowserData();
             this.listView1.ColumnWidthChanging += new ColumnWidthChangingEventHandler(ResizeColumn);
             this.listView1.DrawColumnHeader += DrawColumnHeader;
             this.listView1.DrawItem += DrawItem;
             this.listView1.DrawSubItem += DrawSubItem;
-            this.dataController = dataController;
-            this.connection = new Connection(100000000);
         }
 
         private void DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
@@ -58,58 +58,40 @@ namespace space_browser
             e.NewWidth = this.listView1.Columns[e.ColumnIndex].Width;
             e.Cancel = true;
         }
-
+        
         private async void Browser_Load(object sender, EventArgs e)
         {
-            var parsedResults = await connection.CreateGet("https://api.spacexdata.com/v3/launches");
-            var content = parsedResults.Content.ReadAsStringAsync().Result;
-            var parsedData = CollectData(content);
-            for (int i = 0; i < parsedData.Count; ++i)
+            await browserData.LoadData();
+            for (int i = 0; i < browserData.Launches.Count; ++i)
             {
-                ListViewItem item = new ListViewItem(parsedData[i].Launch.Id.ToString());
-                item.SubItems.Add(parsedData[i].Launch.Status.ToString());
-                item.SubItems.Add(parsedData[i].Launch.Name);
-                item.SubItems.Add(parsedData[i].Launch.Payloads.ToString());
-                item.SubItems.Add(parsedData[i].Launch.RocketName);
-                item.SubItems.Add(parsedData[i].Launch.Country);
+                ListViewItem item = new ListViewItem(browserData.Launches[i].Id.ToString());
+                item.SubItems.Add(browserData.Launches[i].Status.ToString());
+                item.SubItems.Add(browserData.Launches[i].Name);
+                item.SubItems.Add(browserData.Launches[i].Payloads.ToString());
+                item.SubItems.Add(browserData.Launches[i].RocketName);
+                item.SubItems.Add(browserData.Launches[i].Country);
                 listView1.Items.Add(item);
             }
-            this.listView1.Items[0].Selected = true;
-        }
-
-        private List<JSONData> CollectData(string launches)
-        {
-            return PopulateData("{ launches: " + launches + "}");
-        }
-
-        private List<JSONData> PopulateData(string launchesJSON)
-        {
-            List<JSONData> collectedData = new List<JSONData>();
-
-            JObject launchesParsed = JObject.Parse(launchesJSON);
-
-            for (int i = 0; i < launchesParsed["launches"].Count(); ++i)
-            {
-                Launch launchInfo = SetLaunchInfo(launchesParsed, i);
-                collectedData.Add(new JSONData(launchInfo));
-            }
-
-            return collectedData;
-        }
-
-        private Launch SetLaunchInfo(JObject launchesJSON, int index)
-        {
-            return new Launch(
-                            (int)launchesJSON["launches"][index]["flight_number"],
-                            (State)(int)launchesJSON["launches"][index]["upcoming"],
-                            (string)launchesJSON["launches"][index]["mission_name"],
-                            launchesJSON["launches"][index]["rocket"]["second_stage"]["payloads"].Count(),
-                            (string)launchesJSON["launches"][index]["rocket"]["rocket_name"],
-                            (string)launchesJSON["launches"][index]["rocket"]["second_stage"]["payloads"][0]["nationality"]);
+            listView1.Items[0].Selected = true;
         }
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (listView1.SelectedItems.Count > 0)
+            {
+                int index = listView1.Items.IndexOf(listView1.SelectedItems[0]);
+                this.richTextBox1.Text = $"Rocket Data:\r\n" +
+                    $"Mission Name: {browserData.Launches[index].MissionName}\r\n" +
+                    $"Launch Date: {browserData.Launches[index].LaunchDate}\r\n" +
+                    $"Rocket ID: {browserData.Launches[index].Rocket.Id}\r\n" +
+                    $"Rocket Type: {browserData.Launches[index].Rocket.Type}\r\n" +
+                    $"Rocket Mass: {browserData.Launches[index].Rocket.Mass}\r\n";
+
+                using (var ms = new MemoryStream(browserData.Launches[index].Rocket.Image))
+                {
+                   this.pictureBox1.Image = new Bitmap(ms);
+                }
+            }
 
         }
     }

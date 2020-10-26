@@ -14,14 +14,12 @@ namespace space_browser
         public Connection(long timeout)
         {
             httpClient = new HttpClient();
-            httpClient.Timeout = new TimeSpan(ticks: timeout);
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
         }
 
-        public async Task<HttpResponseMessage> CreateGet(string url)
+        public HttpRequest CreateGet(string url)
         {
-            var request = new HttpRequest(new HttpRequestMessage(HttpMethod.Get, url), httpClient);
-            var result = await request.Send();
-            return result;
+            return new HttpRequest(new HttpRequestMessage(HttpMethod.Get, url), httpClient);
         }
     }
 }

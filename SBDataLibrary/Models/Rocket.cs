@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Drawing;
 using System.Text;
 
 namespace SBDataLibrary.Models
 {
     [System.Serializable]
-    public class Ship
+    public class Rocket
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         [Required]
         [MaxLength(200)]
@@ -16,14 +17,18 @@ namespace SBDataLibrary.Models
         [Required]
         [MaxLength(100)]
         public string Type { get; set; }
-        public string HomePort { get; set; }
+        [Required]
+        [MaxLength(100)]
+        public string Country { get; set; }
+        public int Mass { get; set; }
         public byte[] Image { get; set; }
-        public Ship(int id, string name, string type, string homePort, byte[] image)
+        public Rocket(string id, string name, string type, string country, int mass, byte[] image)
         {
             this.Id = id;
             this.Name = name;
             this.Type = type;
-            this.HomePort = homePort;
+            this.Country = country;
+            this.Mass = mass;
             this.Image = image;
         }
 

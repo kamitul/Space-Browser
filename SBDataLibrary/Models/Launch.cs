@@ -31,16 +31,37 @@ namespace SBDataLibrary.Models
         [MaxLength(3)]
         [Column(TypeName = "varchar(3)")]
         public string Country { get; set; }
-        public List<Ship> Ships { get; set; } = new List<Ship>();
+        [MaxLength(200)]
+        public string LaunchDate { get; set; }
+        [MaxLength(200)]
+        public string MissionName { get; set; }
+        public Rocket Rocket { get; set; }
+        public List<Ship> Ships { get; set; }
 
-        public Launch(int id, State status, string name, int payloads, string rocketname, string country)
+        public Launch(int id, State status, string name, int payloads, string rocketName, string country, string launchDate, string missionName, Rocket rocket, List<Ship> ships)
         {
             this.Id = id;
             this.Status = status;
             this.Name = name;
             this.Payloads = payloads;
-            this.RocketName = rocketname;
+            this.RocketName = rocketName;
             this.Country = GetCountry(country);
+            this.LaunchDate = launchDate;
+            this.MissionName = missionName;
+            this.Rocket = rocket;
+            this.Ships = ships;
+        }
+
+        public Launch(int id, State status, string name, int payloads, string rocketName, string country, string launchDate, string missionName)
+        {
+            this.Id = id;
+            this.Status = status;
+            this.Name = name;
+            this.Payloads = payloads;
+            this.RocketName = rocketName;
+            this.Country = GetCountry(country);
+            this.LaunchDate = launchDate;
+            this.MissionName = missionName;
         }
 
         private string GetCountry(string countryUI)

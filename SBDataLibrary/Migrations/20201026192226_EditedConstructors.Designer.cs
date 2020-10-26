@@ -10,8 +10,8 @@ using SBDataLibrary.Server;
 namespace SBDataLibrary.Migrations
 {
     [DbContext(typeof(SBDataContext))]
-    [Migration("20201025170057_EditedDBAttributes")]
-    partial class EditedDBAttributes
+    [Migration("20201026192226_EditedConstructors")]
+    partial class EditedConstructors
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,6 +33,14 @@ namespace SBDataLibrary.Migrations
                         .HasColumnType("varchar(3)")
                         .HasMaxLength(3);
 
+                    b.Property<string>("LaunchDate")
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
+
+                    b.Property<string>("MissionName")
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(200)")
@@ -40,6 +48,9 @@ namespace SBDataLibrary.Migrations
 
                     b.Property<int>("Payloads")
                         .HasColumnType("int");
+
+                    b.Property<string>("RocketId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("RocketName")
                         .IsRequired()
@@ -51,7 +62,40 @@ namespace SBDataLibrary.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("RocketId");
+
                     b.ToTable("Launches");
+                });
+
+            modelBuilder.Entity("SBDataLibrary.Models.Rocket", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<byte[]>("Image")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<int>("Mass")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Ships");
                 });
 
             modelBuilder.Entity("SBDataLibrary.Models.Ship", b =>
@@ -84,7 +128,14 @@ namespace SBDataLibrary.Migrations
 
                     b.HasIndex("LaunchId");
 
-                    b.ToTable("Ships");
+                    b.ToTable("Ship");
+                });
+
+            modelBuilder.Entity("SBDataLibrary.Models.Launch", b =>
+                {
+                    b.HasOne("SBDataLibrary.Models.Rocket", "Rocket")
+                        .WithMany()
+                        .HasForeignKey("RocketId");
                 });
 
             modelBuilder.Entity("SBDataLibrary.Models.Ship", b =>

@@ -18,7 +18,7 @@ namespace space_browser
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1(new DataController()));
+            Application.Run(new Form1());
         }
     }
 }
