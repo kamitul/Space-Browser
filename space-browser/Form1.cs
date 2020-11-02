@@ -22,10 +22,12 @@ namespace space_browser
         private BrowserData browserData;
         private List<IRefreshable> refreshables;
         private DataController dataController;
+        private Dictionary<string, Panel> panels = new Dictionary<string, Panel>();
 
         public Form1()
         {
             InitializeComponent();
+            panels.Add("Browser", panel1);
             InitializeFields();
             this.listView1.ColumnWidthChanging += new ColumnWidthChangingEventHandler(ResizeColumn);
             this.listView1.DrawColumnHeader += DrawColumnHeader;
@@ -103,8 +105,9 @@ namespace space_browser
                     $"Rocket Mass: {browserData.Launches[index].Rocket.Mass}\r\n";
 
                 using (var ms = new MemoryStream(browserData.Launches[index].Rocket.Image))
-                {
-                   this.pictureBox1.Image = new Bitmap(ms);
+                {               
+                    var bmp = new Bitmap(Image.FromStream(ms), new Size(230, 210));
+                    this.pictureBox1.Image = bmp;
                 }
             }
 
@@ -133,6 +136,16 @@ namespace space_browser
             foreach (var refreshable in refreshables)
                 refreshable.Refresh();
             await LoadForm();
+        }
+
+        private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            panels[e.ClickedItem.Text].Visible = true;
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

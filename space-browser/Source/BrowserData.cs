@@ -98,15 +98,7 @@ namespace space_browser.Source
             List<Rocket> rockets = new List<Rocket>();
             for (int j = 0; j < rocketJSON["rockets"].Count(); ++j)
             {
-                var url = $"http://en.wikipedia.org/w/api.php?action=query&titles={((string)rocketJSON["rockets"][j]["wikipedia"]).Split('/').Last()}&prop=pageimages&format=json&pithumbsize=220";
-                var task = connection.CreateGet(url);
-                var response = await task.Send();
-                response.EnsureSuccessStatusCode();
-                var content = response.Content.ReadAsStringAsync().Result;
-                JObject urlParsed = JObject.Parse("{ image: " + content + "}");
-
-                var firstName = ((JProperty)urlParsed["image"]["query"]["pages"].ElementAt(0)).Name;
-                byte[] image = await GetImage((string)urlParsed["image"]["query"]["pages"][firstName]["thumbnail"]["source"]);
+                byte[] image = await GetImage(rocketJSON["rockets"][j]["flickr_images"][0].ToString());
 
                 rockets.Add(new Rocket(
                                 (string)rocketJSON["rockets"][j]["rocket_id"],
