@@ -13,7 +13,6 @@ namespace space_browser
 {
     public partial class Form1 : Form
     {
-        private BrowserDataController browserData;
         private ServerDataController dataController;
         private Dictionary<string, PanelView> panels = new Dictionary<string, PanelView>();
 
@@ -33,11 +32,15 @@ namespace space_browser
                 }, 
                 new List<Button>() 
                 {
-                    
+                    button3,
+                    button4,
+                    button5,
                 })));
             panels.Add("Browser", new BrowserPanel(new BrowserPanel.BrowserData( new BrowserDataController()
                 ,panel1, listView1, richTextBox1, pictureBox1)));;
-            InitializeFields();
+
+            dataController = new ServerDataController();
+
             listView1.ColumnWidthChanging += new ColumnWidthChangingEventHandler(ResizeColumn);
             listView1.DrawColumnHeader += DrawColumnHeader;
             listView1.DrawItem += DrawItem;
@@ -47,12 +50,6 @@ namespace space_browser
             listView2.DrawColumnHeader += DrawColumnHeader;
             listView2.DrawItem += DrawItem;
             listView2.DrawSubItem += DrawSubItem;
-        }
-
-        private void InitializeFields()
-        {
-            browserData = new BrowserDataController();
-            dataController = new ServerDataController();
         }
 
         private void DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
@@ -93,7 +90,7 @@ namespace space_browser
             foreach (var elem in panels)
                 elem.Value.Hide();
             panels["Browser"].Init();
-            panels["Browser"].SetView<List<Launch>>();
+            await panels["Browser"].SetView<List<Launch>>();
         }
 
         private void button2_Click(object sender, EventArgs e)

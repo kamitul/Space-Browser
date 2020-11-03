@@ -44,6 +44,12 @@ namespace space_browser.Source
             this.data.Launches.Click += SwitchLaunchView;
             this.data.Rocket.Click += SwitchRocketView;
             this.data.Ships.Click += SwitchShipView;
+            this.data.Properties.Click += ShowPopertiesPopup;
+        }
+
+        private void ShowPopertiesPopup(object sender, EventArgs e)
+        {
+            
         }
 
         private async void SwitchLaunchView(object sender, EventArgs e)
