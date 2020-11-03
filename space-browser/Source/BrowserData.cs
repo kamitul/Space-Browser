@@ -11,30 +11,26 @@ using System.Windows.Forms;
 
 namespace space_browser.Source
 {
-    public class BrowserData : IRefreshable
+    public class BrowserData
     {
-        public List<Launch> Launches;
         private Connection connection;
+        public List<Launch> Launches;
         public BrowserData()
         {
             connection = new Connection(60);
-            Launches = new List<Launch>();
         }
 
-        public async Task LoadData()
+        public async Task<List<Launch>> LoadData()
         {
-            Refresh();
+            List<Launch> launches = new List<Launch>();
             var result = await Task.WhenAll(Connect("https://api.spacexdata.com/v3/launches"), Connect("https://api.spacexdata.com/v3/ships"), Connect("https://api.spacexdata.com/v3/rockets"));
             var parsedData = await CollectData(result[0], result[2], result[1]);
             for (int i = 0; i < parsedData.Count; ++i)
             {
-                Launches.Add(parsedData[i].Launch);
+                launches.Add(parsedData[i].Launch);
             }
-        }
-
-        public void Refresh()
-        {
-            Launches.Clear();
+            Launches = launches;
+            return launches;
         }
 
         private async Task<string> Connect(string url)

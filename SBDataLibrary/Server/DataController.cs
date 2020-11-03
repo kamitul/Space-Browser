@@ -3,6 +3,7 @@ using SBDataLibrary.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SBDataLibrary.Server
 {
@@ -25,6 +26,24 @@ namespace SBDataLibrary.Server
             dataContext.Ships.AddRange(launch.Ships);
             await dataContext.SaveChangesAsync();
             dataContext.Database.CloseConnection();
+        }
+
+        public async Task<List<Launch>> GetLaunches()
+        {
+            var res = await dataContext.Launches.ToListAsync();
+            return res;
+        }
+
+        public async Task<List<Ship>> GetShips()
+        {
+            var res = await dataContext.Ships.ToListAsync();
+            return res;
+        }
+
+        public async Task<List<Rocket>> GetRockets()
+        {
+            var res = await dataContext.Rockets.ToListAsync();
+            return res;
         }
     }
 }

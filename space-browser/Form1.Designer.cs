@@ -50,12 +50,28 @@ namespace space_browser
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
+            this.listView2 = new System.Windows.Forms.ListView();
+            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
+            this.Launches = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.Ships = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.Rockets = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.panel2.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
+            this.toolStrip2.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -127,7 +143,7 @@ namespace space_browser
             this.listView1.TabIndex = 2;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
-            this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
+            this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView_SelectedIndexChanged);
             // 
             // ID
             // 
@@ -235,11 +251,142 @@ namespace space_browser
             this.richTextBox1.TabIndex = 1;
             this.richTextBox1.Text = "";
             // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.tableLayoutPanel3);
+            this.panel2.Controls.Add(this.listView2);
+            this.panel2.Controls.Add(this.toolStrip2);
+            this.panel2.Location = new System.Drawing.Point(0, 28);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(800, 424);
+            this.panel2.TabIndex = 5;
+            this.panel2.Visible = false;
+            // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.ColumnCount = 1;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel3.Controls.Add(this.button3, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.button4, 0, 1);
+            this.tableLayoutPanel3.Controls.Add(this.button5, 0, 2);
+            this.tableLayoutPanel3.Controls.Add(this.button6, 0, 3);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(640, 84);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 4;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(156, 245);
+            this.tableLayoutPanel3.TabIndex = 2;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(3, 3);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(150, 55);
+            this.button3.TabIndex = 0;
+            this.button3.Text = "Edit";
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(3, 64);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(150, 55);
+            this.button4.TabIndex = 1;
+            this.button4.Text = "Properties";
+            this.button4.UseVisualStyleBackColor = true;
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(3, 125);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(150, 55);
+            this.button5.TabIndex = 2;
+            this.button5.Text = "Delete";
+            this.button5.UseVisualStyleBackColor = true;
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(3, 186);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(150, 56);
+            this.button6.TabIndex = 3;
+            this.button6.Text = "XD";
+            this.button6.UseVisualStyleBackColor = true;
+            // 
+            // listView2
+            // 
+            this.listView2.FullRowSelect = true;
+            this.listView2.GridLines = true;
+            this.listView2.HideSelection = false;
+            this.listView2.Location = new System.Drawing.Point(12, 25);
+            this.listView2.Name = "listView2";
+            this.listView2.OwnerDraw = true;
+            this.listView2.Size = new System.Drawing.Size(622, 383);
+            this.listView2.TabIndex = 1;
+            this.listView2.UseCompatibleStateImageBehavior = false;
+            this.listView2.View = System.Windows.Forms.View.Details;
+            // 
+            // toolStrip2
+            // 
+            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Launches,
+            this.toolStripSeparator1,
+            this.Ships,
+            this.toolStripSeparator2,
+            this.Rockets});
+            this.toolStrip2.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip2.Name = "toolStrip2";
+            this.toolStrip2.Size = new System.Drawing.Size(800, 25);
+            this.toolStrip2.TabIndex = 0;
+            this.toolStrip2.Text = "toolStrip2";
+            // 
+            // Launches
+            // 
+            this.Launches.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.Launches.Image = ((System.Drawing.Image)(resources.GetObject("Launches.Image")));
+            this.Launches.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.Launches.Name = "Launches";
+            this.Launches.Size = new System.Drawing.Size(23, 22);
+            this.Launches.Text = "toolStripButton1";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // Ships
+            // 
+            this.Ships.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.Ships.Image = ((System.Drawing.Image)(resources.GetObject("Ships.Image")));
+            this.Ships.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.Ships.Name = "Ships";
+            this.Ships.Size = new System.Drawing.Size(23, 22);
+            this.Ships.Text = "toolStripButton2";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // Rockets
+            // 
+            this.Rockets.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.Rockets.Image = ((System.Drawing.Image)(resources.GetObject("Rockets.Image")));
+            this.Rockets.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.Rockets.Name = "Rockets";
+            this.Rockets.Size = new System.Drawing.Size(23, 22);
+            this.Rockets.Text = "toolStripButton3";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.toolStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -255,6 +402,11 @@ namespace space_browser
             this.groupBox1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            this.tableLayoutPanel3.ResumeLayout(false);
+            this.toolStrip2.ResumeLayout(false);
+            this.toolStrip2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -280,6 +432,19 @@ namespace space_browser
         private TableLayoutPanel tableLayoutPanel1;
         private PictureBox pictureBox1;
         private RichTextBox richTextBox1;
+        private Panel panel2;
+        private TableLayoutPanel tableLayoutPanel3;
+        private Button button3;
+        private Button button4;
+        private Button button5;
+        private Button button6;
+        private ListView listView2;
+        private ToolStrip toolStrip2;
+        private ToolStripButton Launches;
+        private ToolStripSeparator toolStripSeparator1;
+        private ToolStripButton Ships;
+        private ToolStripSeparator toolStripSeparator2;
+        private ToolStripButton Rockets;
     }
 }
 
