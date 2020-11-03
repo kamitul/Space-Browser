@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace SBDataLibrary.Models
 {
-    [System.Serializable]
+    [Serializable]
     public class Ship
     {
         public int Id { get; set; }
@@ -25,12 +23,12 @@ namespace SBDataLibrary.Models
 
         public Ship(string shipId, int missions, string name, string type, string homePort, byte[] image)
         {
-            this.ShipId = shipId;
-            this.Missions = missions;
-            this.Name = name;
-            this.Type = type;
-            this.HomePort = homePort;
-            this.Image = image;
+            ShipId = shipId;
+            Missions = missions;
+            Name = name;
+            Type = type;
+            HomePort = homePort;
+            Image = image;
         }
     }
 }

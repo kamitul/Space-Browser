@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using SBDataLibrary.Server;
 using System.Windows.Forms;
 
 namespace space_browser.Source
@@ -9,21 +7,23 @@ namespace space_browser.Source
     {
         public class PanelData
         {
-            public System.Windows.Forms.Panel Panel;
-            public System.Windows.Forms.ListView ListView;
+            public Panel Panel;
+            public ListView ListView;
+            public IDataGetter DataGetter;
 
-            public PanelData(Panel panel, ListView listView)
+            public PanelData(Panel panel, ListView listView, IDataGetter dataGetter)
             {
                 Panel = panel;
                 ListView = listView;
+                DataGetter = dataGetter;
             }
         }
 
         public PanelData Data;
         public bool IsActive;
         public abstract void Init();
-        public PanelView(PanelData data) => this.Data = data;
-        public abstract void SetView<T>(List<T> data);
+        public PanelView(PanelData data) => Data = data;
+        public abstract void SetView<T>();
         public abstract void Hide();
     }
 }

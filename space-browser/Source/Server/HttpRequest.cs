@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Text;
+﻿using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -19,8 +16,8 @@ namespace space_browser
 
         public HttpRequest(HttpRequestMessage requestMessage, HttpClient httpClient)
         {
-            this.Message = requestMessage;
-            this.HttpClient = httpClient;
+            Message = requestMessage;
+            HttpClient = httpClient;
             cts = new CancellationTokenSource();
         }
 

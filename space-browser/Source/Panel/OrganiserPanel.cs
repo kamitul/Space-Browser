@@ -1,9 +1,8 @@
 ﻿using SBDataLibrary.Models;
+using SBDataLibrary.Server;
 using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace space_browser.Source
 {
@@ -19,7 +18,7 @@ namespace space_browser.Source
             public System.Windows.Forms.Button Remove;
             public System.Windows.Forms.Button Properties;
 
-            public OrganiserData(System.Windows.Forms.Panel panel, System.Windows.Forms.ListView listView, List<System.Windows.Forms.Button> buttons) : base(panel, listView)
+            public OrganiserData(IDataGetter dataGetter, System.Windows.Forms.Panel panel, System.Windows.Forms.ListView listView, List<System.Windows.Forms.Button> buttons) : base(panel, listView, dataGetter)
             {
                 Panel = panel;
                 ListView = listView;
@@ -47,21 +46,24 @@ namespace space_browser.Source
             data.Panel.BringToFront();
         }
 
-        public override void SetView<T>(List<T> data)
+        public async override void SetView<T>()
         {
-            this.data.ListView.Items.Clear();
-            this.data.ListView.Columns.Clear();
+            data.ListView.Items.Clear();
+            data.ListView.Columns.Clear();
 
-            if(data.GetType() == typeof(List<Launch>))
+            if(typeof(T) == typeof(List<Launch>))
             {
+                var data = await Data.DataGetter.GetLaunchesAsync();
                 AddLaunches(data);
             }
-            else if (data.GetType() == typeof(List<Ship>))
+            else if (typeof(T) == typeof(List<Ship>))
             {
+                var data = await Data.DataGetter.GetShipsAsync();
                 AddShips(data);
             }
-            else if(data.GetType() == typeof(List<Rocket>))
+            else if(typeof(T) == typeof(List<Rocket>))
             {
+                var data = await Data.DataGetter.GetRocketsAsync();
                 AddRockets(data);
             }
         }
@@ -69,7 +71,7 @@ namespace space_browser.Source
         public override void Hide()
         {
             IsActive = false;
-            this.data.Panel.Visible = false;
+            data.Panel.Visible = false;
         }
 
         private void AddRockets<T>(List<T> data)
@@ -135,9 +137,9 @@ namespace space_browser.Source
             var fields = type.GetProperties().Select(x => x.Name).ToList();
             for (int i = 1; i < fields.Count; ++i)
             {
-                this.data.ListView.Columns.Add(i.ToString(), fields[i], 100, System.Windows.Forms.HorizontalAlignment.Left, string.Empty);
+                data.ListView.Columns.Add(i.ToString(), fields[i], 100, System.Windows.Forms.HorizontalAlignment.Left, string.Empty);
             }
-            this.data.ListView.View = System.Windows.Forms.View.Details;
+            data.ListView.View = System.Windows.Forms.View.Details;
         }
     }
 }

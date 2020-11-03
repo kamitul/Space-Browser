@@ -1,36 +1,43 @@
 ﻿using Newtonsoft.Json.Linq;
 using SBDataLibrary.Models;
+using SBDataLibrary.Server;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
-using System.Web;
-using System.Windows.Forms;
 
 namespace space_browser.Source
 {
-    public class BrowserData
+    public class BrowserDataController : IDataGetter
     {
         private Connection connection;
-        public List<Launch> Launches;
-        public BrowserData()
+        private List<Launch> Launches;
+        private List<Rocket> Rockets;
+        private List<Ship> Ships;
+
+        IEnumerable<Launch> IDataGetter.Launches => Launches;
+        IEnumerable<Ship> IDataGetter.Ships => Ships;
+        IEnumerable<Rocket> IDataGetter.Rockets => Rockets;
+
+        public BrowserDataController()
         {
             connection = new Connection(60);
         }
 
-        public async Task<List<Launch>> LoadData()
+        public async Task Init()
         {
-            List<Launch> launches = new List<Launch>();
+            await LoadData();
+        }
+
+        public async Task LoadData()
+        {
             var result = await Task.WhenAll(Connect("https://api.spacexdata.com/v3/launches"), Connect("https://api.spacexdata.com/v3/ships"), Connect("https://api.spacexdata.com/v3/rockets"));
             var parsedData = await CollectData(result[0], result[2], result[1]);
-            for (int i = 0; i < parsedData.Count; ++i)
-            {
-                launches.Add(parsedData[i].Launch);
-            }
-            Launches = launches;
-            return launches;
+
+            Launches = parsedData.Select(x=>x.Launch).ToList();
+            Rockets = parsedData.Select(x => x.Rocket).ToList();
+            Ships = parsedData.SelectMany(x => x.Ships).Distinct().ToList();
         }
 
         private async Task<string> Connect(string url)
@@ -62,31 +69,38 @@ namespace space_browser.Source
 
             List<Rocket> rockets = await SetRocketInfo(rocketsParsed);
             List<Ship> ships = await SetShipsInfo(shipsParsed);
+            List<Launch> launches = await SetLaunchInfo(launchesParsed, ships, rockets);
 
-            for (int i = 0; i < launchesParsed["launches"].Count(); ++i)
+
+            for (int i = 0; i < launches.Count; ++i)
             {
-                Launch launch = SetLaunchInfo(launchesParsed, i, ships, rockets);
-                collectedData.Add(new JSONData(launch));
+                collectedData.Add(new JSONData(launches[i], launches[i].Rocket, launches[i].Ships));
             }
 
             return collectedData;
         }
 
-        private Launch SetLaunchInfo(JObject launchesParsed, int i, List<Ship> shipsInfo, List<Rocket> rockets)
+        private async Task<List<Launch>> SetLaunchInfo(JObject launchesJSON, List<Ship> ships, List<Rocket> rockets)
         {
-            var ships_id = launchesParsed["launches"][i]["ships"];
-            var rocket_id = (string)launchesParsed["launches"][i]["rocket"]["rocket_id"];
-            return new Launch(
-                        (string)launchesParsed["launches"][i]["flight_number"],
-                        (State)(int)launchesParsed["launches"][i]["upcoming"],
-                        (string)launchesParsed["launches"][i]["mission_name"],
-                        launchesParsed["launches"][i]["rocket"]["second_stage"]["payloads"].Count(),
-                        (string)launchesParsed["launches"][i]["rocket"]["rocket_name"],
-                        (string)launchesParsed["launches"][i]["rocket"]["second_stage"]["payloads"][0]["nationality"],
-                        (string)launchesParsed["launches"][i]["launch_date_utc"],
-                        (string)launchesParsed["launches"][i]["mission_name"],
-                        rockets.Find(x=>x.RocketId == rocket_id),
-                        shipsInfo.FindAll(x=>ships_id.Contains(x.Id)));
+            List<Launch> ret = new List<Launch>();
+
+            for (int i = 0; i < launchesJSON["launches"].Count(); ++i)
+            {
+                var ships_id = launchesJSON["launches"][i]["ships"];
+                var rocket_id = (string)launchesJSON["launches"][i]["rocket"]["rocket_id"];
+                ret.Add(new Launch(
+                                (string)launchesJSON["launches"][i]["flight_number"],
+                                (State)(int)launchesJSON["launches"][i]["upcoming"],
+                                (string)launchesJSON["launches"][i]["mission_name"],
+                                launchesJSON["launches"][i]["rocket"]["second_stage"]["payloads"].Count(),
+                                (string)launchesJSON["launches"][i]["rocket"]["rocket_name"],
+                                (string)launchesJSON["launches"][i]["rocket"]["second_stage"]["payloads"][0]["nationality"],
+                                (string)launchesJSON["launches"][i]["launch_date_utc"],
+                                (string)launchesJSON["launches"][i]["mission_name"],
+                                rockets.Find(x => x.RocketId == rocket_id),
+                                ships.FindAll(x => ships_id.Contains(x.Id))));
+            }
+            return ret;
         }
 
         private async Task<List<Rocket>> SetRocketInfo(JObject rocketJSON)
@@ -139,5 +153,24 @@ namespace space_browser.Source
             else
                 return null;
         }
+
+        public async Task<List<Launch>> GetLaunchesAsync()
+        {
+            await Init();
+            return Launches;
+        }
+
+        public async Task<List<Ship>> GetShipsAsync()
+        {
+            await Init();
+            return Ships;
+        }
+
+        public async Task<List<Rocket>> GetRocketsAsync()
+        {
+            await Init();
+            return Rockets;
+        }
+
     }
 }

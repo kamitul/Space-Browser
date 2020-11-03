@@ -1,8 +1,10 @@
 ﻿using SBDataLibrary.Models;
+using SBDataLibrary.Server;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace space_browser.Source
@@ -11,14 +13,15 @@ namespace space_browser.Source
     {
         public class BrowserData : PanelData
         {
-            public System.Windows.Forms.RichTextBox RichTextBox;
-            public System.Windows.Forms.PictureBox PictureBox;
+            public RichTextBox RichTextBox;
+            public PictureBox PictureBox;
 
-            public BrowserData(System.Windows.Forms.Panel panel, System.Windows.Forms.ListView listView, RichTextBox textBox, PictureBox pictureBox) : base(panel, listView)
+            public BrowserData(IDataGetter dataGetter, Panel panel, ListView listView, RichTextBox textBox, PictureBox pictureBox) : base(panel, listView, dataGetter)
             {
                 RichTextBox = textBox;
                 PictureBox = pictureBox;
             }
+
         }
 
         private BrowserData data;
@@ -26,42 +29,42 @@ namespace space_browser.Source
         public BrowserPanel(PanelData data) : base(data)
         {
             this.data = data as BrowserData;
-            this.data.ListView.SelectedIndexChanged += ListView_SelectedIndexChanged;
+            this.data.ListView.SelectedIndexChanged += SelectedIndexChangedEvent;
         }
 
-        private void ListView_SelectedIndexChanged(object sender, EventArgs e)
+        private void SelectedIndexChangedEvent(object sender, EventArgs e)
         {
-            //if (this.data.ListView.SelectedItems.Count > 0)
-            //{
-            //    int index = this.Data.ListView.Items.IndexOf(this.Data.ListView.SelectedItems[0]);
-            //    this.data.RichTextBox.Text = $"Rocket Data:\r\n" +
-            //        $"Mission Name: {browserData.Launches[index].MissionName}\r\n" +
-            //        $"Launch Date: {browserData.Launches[index].LaunchDate}\r\n" +
-            //        $"Rocket ID: {browserData.Launches[index].Rocket.Id}\r\n" +
-            //        $"Rocket Type: {browserData.Launches[index].Rocket.Type}\r\n" +
-            //        $"Rocket Mass: {browserData.Launches[index].Rocket.Mass}\r\n";
+            if (data.ListView.SelectedItems.Count > 0)
+            {
+                int index = Data.ListView.Items.IndexOf(Data.ListView.SelectedItems[0]);
+                data.RichTextBox.Text = $"Rocket Data:\r\n" +
+                    $"Mission Name: {Data.DataGetter.Launches.ElementAt(index).MissionName}\r\n" +
+                    $"Launch Date: {Data.DataGetter.Launches.ElementAt(index).LaunchDate}\r\n" +
+                    $"Rocket ID: {Data.DataGetter.Launches.ElementAt(index).Rocket.Id}\r\n" +
+                    $"Rocket Type: {Data.DataGetter.Launches.ElementAt(index).Rocket.Type}\r\n" +
+                    $"Rocket Mass: {Data.DataGetter.Launches.ElementAt(index).Rocket.Mass}\r\n";
 
-            //    using (var ms = new MemoryStream(browserData.Launches[index].Rocket.Image))
-            //    {
-            //        var bmp = new Bitmap(Image.FromStream(ms), new Size(230, 210));
-            //        this.pictureBox1.Image = bmp;
-            //    }
-            //}
-
+                using (var ms = new MemoryStream(Data.DataGetter.Launches.ElementAt(index).Rocket.Image))
+                {
+                    var bmp = new Bitmap(Image.FromStream(ms), new Size(230, 210));
+                    data.PictureBox.Image = bmp;
+                }
+            }
         }
 
         public override void Init()
         {
             IsActive = true;
-            this.data.Panel.Visible = true;
-            this.data.Panel.BringToFront();
+            data.Panel.Visible = true;
+            data.Panel.BringToFront();
         }
 
-        public override void SetView<T>(List<T> data)
+        public async override void SetView<T>()
         {
-            this.data.ListView.Items.Clear();
-            if (data.GetType() == typeof(List<Launch>))
+            data.ListView.Items.Clear();
+            if (typeof(T) == typeof(List<Launch>))
             {
+                var data = await Data.DataGetter.GetLaunchesAsync();
                 AddLaunches(data);
             }
         }
@@ -85,7 +88,7 @@ namespace space_browser.Source
         public override void Hide()
         {
             IsActive = false;
-            this.data.Panel.Visible = false;
+            data.Panel.Visible = false;
         }
     }
 }

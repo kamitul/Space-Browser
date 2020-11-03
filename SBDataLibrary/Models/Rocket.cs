@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Drawing;
-using System.Text;
 
 namespace SBDataLibrary.Models
 {
-    [System.Serializable]
+    [Serializable]
     public class Rocket
     {
         public int Id { get; set; }
@@ -28,12 +25,12 @@ namespace SBDataLibrary.Models
 
         public Rocket(string rocketId, string name, string type, string country, int mass, byte[] image)
         {
-            this.RocketId = rocketId;
-            this.Name = name;
-            this.Type = type;
-            this.Country = country;
-            this.Mass = mass;
-            this.Image = image;
+            RocketId = rocketId;
+            Name = name;
+            Type = type;
+            Country = country;
+            Mass = mass;
+            Image = image;
         }
     }
 }

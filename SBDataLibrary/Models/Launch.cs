@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
-using System.Text;
 
 namespace SBDataLibrary.Models
 {
@@ -14,7 +13,7 @@ namespace SBDataLibrary.Models
         Pending
     }
 
-    [System.Serializable]
+    [Serializable]
     public class Launch
     {
         public int Id { get; set; }
@@ -42,28 +41,28 @@ namespace SBDataLibrary.Models
 
         public Launch(string flightId, State status, string name, int payloads, string rocketName, string country, string launchDate, string missionName, Rocket rocket, List<Ship> ships)
         {
-            this.FlightId = flightId;
-            this.Status = status;
-            this.Name = name;
-            this.Payloads = payloads;
-            this.RocketName = rocketName;
-            this.Country = GetCountry(country);
-            this.LaunchDate = launchDate;
-            this.MissionName = missionName;
-            this.Rocket = rocket;
-            this.Ships = ships;
+            FlightId = flightId;
+            Status = status;
+            Name = name;
+            Payloads = payloads;
+            RocketName = rocketName;
+            Country = GetCountry(country);
+            LaunchDate = launchDate;
+            MissionName = missionName;
+            Rocket = rocket;
+            Ships = ships;
         }
 
         public Launch(string flightId, State status, string name, int payloads, string rocketName, string country, string launchDate, string missionName)
         {
-            this.FlightId = flightId;
-            this.Status = status;
-            this.Name = name;
-            this.Payloads = payloads;
-            this.RocketName = rocketName;
-            this.Country = GetCountry(country);
-            this.LaunchDate = launchDate;
-            this.MissionName = missionName;
+            FlightId = flightId;
+            Status = status;
+            Name = name;
+            Payloads = payloads;
+            RocketName = rocketName;
+            Country = GetCountry(country);
+            LaunchDate = launchDate;
+            MissionName = missionName;
         }
 
         private string GetCountry(string countryUI)

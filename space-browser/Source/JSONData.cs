@@ -1,18 +1,21 @@
 ﻿using SBDataLibrary.Models;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace space_browser.Source
 {
-    [System.Serializable]
+    [Serializable]
     public class JSONData
     {
         public Launch Launch;
+        public Rocket Rocket;
+        public List<Ship> Ships;
 
-        public JSONData(Launch launchInfo)
+        public JSONData(Launch launchInfo, Rocket rocket, List<Ship> ships)
         {
             Launch = launchInfo;
+            Rocket = rocket;
+            Ships = ships;
         }
     }
 
