@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -22,8 +23,18 @@ namespace space_browser
             panel1.Parent = this;
             panel2.Parent = this;
             toolStrip1.Parent = this;
-            panels.Add("Organiser", new OrganiserPanel(new OrganiserPanel.OrganiserData( new ServerDataController()
-                ,panel2, listView2, new List<Button>() { })));
+            panels.Add("Organiser", new OrganizerPanel(new OrganizerPanel.Organizer(
+                new ServerDataController() ,panel2, listView2, 
+                new List<ToolStripButton>() 
+                { 
+                    toolStrip2.Items[0] as ToolStripButton, 
+                    toolStrip2.Items[2] as ToolStripButton, 
+                    toolStrip2.Items[4] as ToolStripButton
+                }, 
+                new List<Button>() 
+                {
+                    
+                })));
             panels.Add("Browser", new BrowserPanel(new BrowserPanel.BrowserData( new BrowserDataController()
                 ,panel1, listView1, richTextBox1, pictureBox1)));;
             InitializeFields();

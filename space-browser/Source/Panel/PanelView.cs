@@ -1,4 +1,5 @@
 ﻿using SBDataLibrary.Server;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace space_browser.Source
@@ -19,11 +20,10 @@ namespace space_browser.Source
             }
         }
 
-        public PanelData Data;
+        public abstract PanelData Data { get; }
         public bool IsActive;
         public abstract void Init();
-        public PanelView(PanelData data) => Data = data;
-        public abstract void SetView<T>();
+        public abstract Task SetView<T>();
         public abstract void Hide();
     }
 }

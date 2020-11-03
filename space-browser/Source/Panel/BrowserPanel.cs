@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace space_browser.Source
@@ -25,8 +26,9 @@ namespace space_browser.Source
         }
 
         private BrowserData data;
+        public override PanelData Data => data;
 
-        public BrowserPanel(PanelData data) : base(data)
+        public BrowserPanel(PanelData data)
         {
             this.data = data as BrowserData;
             this.data.ListView.SelectedIndexChanged += SelectedIndexChangedEvent;
@@ -36,15 +38,15 @@ namespace space_browser.Source
         {
             if (data.ListView.SelectedItems.Count > 0)
             {
-                int index = Data.ListView.Items.IndexOf(Data.ListView.SelectedItems[0]);
+                int index = data.ListView.Items.IndexOf(data.ListView.SelectedItems[0]);
                 data.RichTextBox.Text = $"Rocket Data:\r\n" +
-                    $"Mission Name: {Data.DataGetter.Launches.ElementAt(index).MissionName}\r\n" +
-                    $"Launch Date: {Data.DataGetter.Launches.ElementAt(index).LaunchDate}\r\n" +
-                    $"Rocket ID: {Data.DataGetter.Launches.ElementAt(index).Rocket.Id}\r\n" +
-                    $"Rocket Type: {Data.DataGetter.Launches.ElementAt(index).Rocket.Type}\r\n" +
-                    $"Rocket Mass: {Data.DataGetter.Launches.ElementAt(index).Rocket.Mass}\r\n";
+                    $"Mission Name: {data.DataGetter.Launches.ElementAt(index).MissionName}\r\n" +
+                    $"Launch Date: {data.DataGetter.Launches.ElementAt(index).LaunchDate}\r\n" +
+                    $"Rocket ID: {data.DataGetter.Launches.ElementAt(index).Rocket.Id}\r\n" +
+                    $"Rocket Type: {data.DataGetter.Launches.ElementAt(index).Rocket.Type}\r\n" +
+                    $"Rocket Mass: {data.DataGetter.Launches.ElementAt(index).Rocket.Mass}\r\n";
 
-                using (var ms = new MemoryStream(Data.DataGetter.Launches.ElementAt(index).Rocket.Image))
+                using (var ms = new MemoryStream(data.DataGetter.Launches.ElementAt(index).Rocket.Image))
                 {
                     var bmp = new Bitmap(Image.FromStream(ms), new Size(230, 210));
                     data.PictureBox.Image = bmp;
@@ -59,13 +61,13 @@ namespace space_browser.Source
             data.Panel.BringToFront();
         }
 
-        public async override void SetView<T>()
+        public async override Task SetView<T>()
         {
             data.ListView.Items.Clear();
             if (typeof(T) == typeof(List<Launch>))
             {
-                var data = await Data.DataGetter.GetLaunchesAsync();
-                AddLaunches(data);
+                var result = await data.DataGetter.GetLaunchesAsync();
+                AddLaunches(result);
             }
         }
 
@@ -82,7 +84,8 @@ namespace space_browser.Source
                 item.SubItems.Add(launches[i].Country);
                 this.data.ListView.Items.Add(item);
             }
-            this.data.ListView.Items[0].Selected = true;
+            if (this.data.ListView.SelectedItems.Count > 0)
+                this.data.ListView.Items[0].Selected = true;
         }
 
         public override void Hide()
