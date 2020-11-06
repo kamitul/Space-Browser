@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SBDataLibrary.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SBDataLibrary.Server
@@ -29,9 +30,11 @@ namespace SBDataLibrary.Server
 
         }
 
-        public async void Add(Launch launch)
+        public async Task Add(Launch launch)
         {
             dataContext.Database.OpenConnection();
+            if (dataContext.Launches.Any(x => x.FlightId == launch.FlightId))
+                throw new System.Exception("Launch is already added!");
             dataContext.Launches.Add(launch);
             dataContext.Rockets.Add(launch.Rocket);
             dataContext.Ships.AddRange(launch.Ships);

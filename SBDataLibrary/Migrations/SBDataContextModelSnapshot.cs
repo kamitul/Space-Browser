@@ -60,8 +60,10 @@ namespace SBDataLibrary.Migrations
 
             modelBuilder.Entity("SBDataLibrary.Models.Rocket", b =>
                 {
-                    b.Property<string>("RocketId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Country")
                         .IsRequired()
@@ -82,12 +84,16 @@ namespace SBDataLibrary.Migrations
                         .HasColumnType("nvarchar(200)")
                         .HasMaxLength(200);
 
+                    b.Property<string>("RocketId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
-                    b.HasKey("RocketId");
+                    b.HasKey("ID");
 
                     b.HasIndex("LaunchID")
                         .IsUnique()
@@ -98,8 +104,10 @@ namespace SBDataLibrary.Migrations
 
             modelBuilder.Entity("SBDataLibrary.Models.Ship", b =>
                 {
-                    b.Property<string>("ShipId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("HomePort")
                         .HasColumnType("nvarchar(max)");
@@ -118,12 +126,16 @@ namespace SBDataLibrary.Migrations
                         .HasColumnType("nvarchar(200)")
                         .HasMaxLength(200);
 
+                    b.Property<string>("ShipId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
-                    b.HasKey("ShipId");
+                    b.HasKey("ID");
 
                     b.HasIndex("LaunchFlightId");
 

@@ -112,13 +112,15 @@ namespace space_browser.Source
 
             for (int i = 0; i < rockets.Count; ++i)
             {
-                System.Windows.Forms.ListViewItem item = new System.Windows.Forms.ListViewItem(rockets[i].LaunchID.ToString());
+                System.Windows.Forms.ListViewItem item = new System.Windows.Forms.ListViewItem(rockets[i].ID.ToString());
                 item.SubItems.Add(rockets[i].RocketId.ToString());
                 item.SubItems.Add(rockets[i].Name.ToString());
                 item.SubItems.Add(rockets[i].Type);
                 item.SubItems.Add(rockets[i].Country.ToString());
                 item.SubItems.Add(rockets[i].Mass.ToString());
                 //Add Image
+                item.SubItems.Add(rockets[i].LaunchID.ToString());
+                item.SubItems.Add(rockets[i].Launch.ToString());
                 this.data.ListView.Items.Add(item);
             }
             if(this.data.ListView.SelectedItems.Count > 0)
@@ -138,6 +140,7 @@ namespace space_browser.Source
                 item.SubItems.Add(ships[i].Type);
                 item.SubItems.Add(ships[i].Missions.ToString());
                 item.SubItems.Add(ships[i].HomePort);
+                item.SubItems.Add(ships[i].Launch.ToString());
                 this.data.ListView.Items.Add(item);
             }
             if (this.data.ListView.SelectedItems.Count > 0)

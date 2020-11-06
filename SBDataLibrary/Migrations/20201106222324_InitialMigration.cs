@@ -29,6 +29,8 @@ namespace SBDataLibrary.Migrations
                 name: "Rockets",
                 columns: table => new
                 {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     RocketId = table.Column<string>(nullable: false),
                     Name = table.Column<string>(maxLength: 200, nullable: false),
                     Type = table.Column<string>(maxLength: 100, nullable: false),
@@ -39,7 +41,7 @@ namespace SBDataLibrary.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Rockets", x => x.RocketId);
+                    table.PrimaryKey("PK_Rockets", x => x.ID);
                     table.ForeignKey(
                         name: "FK_Rockets_Launches_LaunchID",
                         column: x => x.LaunchID,
@@ -52,6 +54,8 @@ namespace SBDataLibrary.Migrations
                 name: "Ships",
                 columns: table => new
                 {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     ShipId = table.Column<string>(nullable: false),
                     Name = table.Column<string>(maxLength: 200, nullable: false),
                     Type = table.Column<string>(maxLength: 100, nullable: false),
@@ -62,7 +66,7 @@ namespace SBDataLibrary.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Ships", x => x.ShipId);
+                    table.PrimaryKey("PK_Ships", x => x.ID);
                     table.ForeignKey(
                         name: "FK_Ships_Launches_LaunchFlightId",
                         column: x => x.LaunchFlightId,

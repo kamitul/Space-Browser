@@ -7,6 +7,9 @@ namespace SBDataLibrary.Models
     [Serializable]
     public class Ship
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
+        public int ID { get; set; }
         [Required]
         public string ShipId { get; set; }
         [Required]

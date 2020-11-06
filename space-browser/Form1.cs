@@ -93,16 +93,23 @@ namespace space_browser
             await panels["Browser"].SetView<List<Launch>>();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private async void button2_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
             {
                 int index = listView1.Items.IndexOf(listView1.SelectedItems[0]);
                 var launch = panels["Browser"].Data.DataGetter.Launches.ElementAt(index);
 
-                dataController.Add(
-                    launch
-                    );
+                try
+                {
+                    await dataController.Add(
+                        launch
+                        );
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
