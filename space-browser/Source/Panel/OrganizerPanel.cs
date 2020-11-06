@@ -1,5 +1,6 @@
 ﻿using SBDataLibrary.Models;
 using SBDataLibrary.Server;
+using space_browser.Source.UI.Widgets;
 using System;
 using System.CodeDom;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace space_browser.Source
 {
     public class OrganizerPanel : PanelView
     {
-        public class Organizer : PanelData
+        public class OrganizerData : PanelData
         {
             public System.Windows.Forms.ToolStripButton Launches;
             public System.Windows.Forms.ToolStripButton Ships;
@@ -20,7 +21,7 @@ namespace space_browser.Source
             public System.Windows.Forms.Button Remove;
             public System.Windows.Forms.Button Properties;
 
-            public Organizer(IDataGetter dataGetter, System.Windows.Forms.Panel panel, System.Windows.Forms.ListView listView, List<System.Windows.Forms.ToolStripButton> toolButtons, List<System.Windows.Forms.Button> buttons) : base(panel, listView, dataGetter)
+            public OrganizerData(IDataGetter dataGetter, System.Windows.Forms.Panel panel, System.Windows.Forms.ListView listView, List<System.Windows.Forms.ToolStripButton> toolButtons, List<System.Windows.Forms.Button> buttons) : base(panel, listView, dataGetter)
             {
                 Panel = panel;
                 ListView = listView;
@@ -28,19 +29,19 @@ namespace space_browser.Source
                 Ships = toolButtons.Find(x => x.Name.Equals("Ships"));
                 Rocket = toolButtons.Find(x => x.Name.Equals("Rockets"));
 
-                Edit = buttons.Find(x => x.Name.Equals("Edit"));
-                Remove = buttons.Find(x => x.Name.Equals("Remove"));
-                Properties = buttons.Find(x => x.Name.Equals("Properties"));
+                Edit = buttons.Find(x => x.Name.Equals("EditButton"));
+                Remove = buttons.Find(x => x.Name.Equals("DeleteButton"));
+                Properties = buttons.Find(x => x.Name.Equals("PropertiesButton"));
 
             }
         }
 
-        private Organizer data;
+        private OrganizerData data;
         public override PanelData Data => data;
 
         public OrganizerPanel(PanelData data)
         {
-            this.data = data as Organizer;
+            this.data = data as OrganizerData;
             this.data.Launches.Click += SwitchLaunchView;
             this.data.Rocket.Click += SwitchRocketView;
             this.data.Ships.Click += SwitchShipView;
@@ -49,7 +50,9 @@ namespace space_browser.Source
 
         private void ShowPopertiesPopup(object sender, EventArgs e)
         {
-            
+            int index = data.ListView.Items.IndexOf(data.ListView.SelectedItems[0]);
+            var window = new PorpertiesPopup(new PorpertiesPopup.Payload(this.data.DataGetter.Launches.ElementAt(index).ToString()));
+            window.Show();
         }
 
         private async void SwitchLaunchView(object sender, EventArgs e)
@@ -104,17 +107,17 @@ namespace space_browser.Source
 
         private void AddRockets<T>(List<T> data)
         {
-            var launches = data.Select(x => x as Rocket).ToList();
+            var rockets = data.Select(x => x as Rocket).ToList();
             PopulateColumns(typeof(Rocket));
 
-            for (int i = 0; i < launches.Count; ++i)
+            for (int i = 0; i < rockets.Count; ++i)
             {
-                System.Windows.Forms.ListViewItem item = new System.Windows.Forms.ListViewItem(launches[i].LaunchId.ToString());
-                item.SubItems.Add(launches[i].RocketId.ToString());
-                item.SubItems.Add(launches[i].Name.ToString());
-                item.SubItems.Add(launches[i].Type);
-                item.SubItems.Add(launches[i].Country.ToString());
-                item.SubItems.Add(launches[i].Mass.ToString());
+                System.Windows.Forms.ListViewItem item = new System.Windows.Forms.ListViewItem(rockets[i].LaunchID.ToString());
+                item.SubItems.Add(rockets[i].RocketId.ToString());
+                item.SubItems.Add(rockets[i].Name.ToString());
+                item.SubItems.Add(rockets[i].Type);
+                item.SubItems.Add(rockets[i].Country.ToString());
+                item.SubItems.Add(rockets[i].Mass.ToString());
                 //Add Image
                 this.data.ListView.Items.Add(item);
             }
@@ -124,19 +127,17 @@ namespace space_browser.Source
 
         private void AddShips<T>(List<T> data)
         {
-            var launches = data.Select(x => x as Ship).ToList();
+            var ships = data.Select(x => x as Ship).ToList();
 
             PopulateColumns(typeof(Ship));
 
-            for (int i = 0; i < launches.Count; ++i)
+            for (int i = 0; i < ships.Count; ++i)
             {
-                System.Windows.Forms.ListViewItem item = new System.Windows.Forms.ListViewItem(launches[i].LaunchId.ToString());
-                item.SubItems.Add(launches[i].ShipId.ToString());
-                item.SubItems.Add(launches[i].Name);
-                item.SubItems.Add(launches[i].Type);
-                item.SubItems.Add(launches[i].Missions.ToString());
-                item.SubItems.Add(launches[i].HomePort);
-                //Add image
+                System.Windows.Forms.ListViewItem item = new System.Windows.Forms.ListViewItem(ships[i].ShipId.ToString());
+                item.SubItems.Add(ships[i].Name);
+                item.SubItems.Add(ships[i].Type);
+                item.SubItems.Add(ships[i].Missions.ToString());
+                item.SubItems.Add(ships[i].HomePort);
                 this.data.ListView.Items.Add(item);
             }
             if (this.data.ListView.SelectedItems.Count > 0)
@@ -158,8 +159,8 @@ namespace space_browser.Source
                 item.SubItems.Add(launches[i].Country);
                 item.SubItems.Add(launches[i].LaunchDate.ToString());
                 item.SubItems.Add(launches[i].MissionName);
-                item.SubItems.Add(string.Empty);
-                item.SubItems.Add(string.Empty);
+                item.SubItems.Add(launches[i].Rocket.ToString());
+                item.SubItems.Add(launches[i].Ships.ToString());
                 this.data.ListView.Items.Add(item);
             }
             if (this.data.ListView.SelectedItems.Count > 0)
@@ -169,7 +170,7 @@ namespace space_browser.Source
         private void PopulateColumns(Type type)
         {
             var fields = type.GetProperties().Select(x => x.Name).ToList();
-            for (int i = 1; i < fields.Count; ++i)
+            for (int i = 0; i < fields.Count; ++i)
             {
                 data.ListView.Columns.Add(i.ToString(), fields[i], 100, System.Windows.Forms.HorizontalAlignment.Left, string.Empty);
             }

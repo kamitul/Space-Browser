@@ -21,19 +21,13 @@ namespace SBDataLibrary.Migrations
 
             modelBuilder.Entity("SBDataLibrary.Models.Launch", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("FlightId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Country")
                         .IsRequired()
                         .HasColumnType("varchar(3)")
                         .HasMaxLength(3);
-
-                    b.Property<string>("FlightId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LaunchDate")
                         .HasColumnType("nvarchar(200)")
@@ -59,17 +53,15 @@ namespace SBDataLibrary.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("FlightId");
 
                     b.ToTable("Launches");
                 });
 
             modelBuilder.Entity("SBDataLibrary.Models.Rocket", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("RocketId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Country")
                         .IsRequired()
@@ -79,8 +71,8 @@ namespace SBDataLibrary.Migrations
                     b.Property<byte[]>("Image")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<int>("LaunchId")
-                        .HasColumnType("int");
+                    b.Property<string>("LaunchID")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Mass")
                         .HasColumnType("int");
@@ -90,29 +82,24 @@ namespace SBDataLibrary.Migrations
                         .HasColumnType("nvarchar(200)")
                         .HasMaxLength(200);
 
-                    b.Property<string>("RocketId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
-                    b.HasKey("Id");
+                    b.HasKey("RocketId");
 
-                    b.HasIndex("LaunchId")
-                        .IsUnique();
+                    b.HasIndex("LaunchID")
+                        .IsUnique()
+                        .HasFilter("[LaunchID] IS NOT NULL");
 
                     b.ToTable("Rockets");
                 });
 
             modelBuilder.Entity("SBDataLibrary.Models.Ship", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("ShipId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("HomePort")
                         .HasColumnType("nvarchar(max)");
@@ -120,8 +107,8 @@ namespace SBDataLibrary.Migrations
                     b.Property<byte[]>("Image")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<int>("LaunchId")
-                        .HasColumnType("int");
+                    b.Property<string>("LaunchFlightId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Missions")
                         .HasColumnType("int");
@@ -131,38 +118,30 @@ namespace SBDataLibrary.Migrations
                         .HasColumnType("nvarchar(200)")
                         .HasMaxLength(200);
 
-                    b.Property<string>("ShipId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
-                    b.HasKey("Id");
+                    b.HasKey("ShipId");
 
-                    b.HasIndex("LaunchId");
+                    b.HasIndex("LaunchFlightId");
 
                     b.ToTable("Ships");
                 });
 
             modelBuilder.Entity("SBDataLibrary.Models.Rocket", b =>
                 {
-                    b.HasOne("SBDataLibrary.Models.Launch", null)
+                    b.HasOne("SBDataLibrary.Models.Launch", "Launch")
                         .WithOne("Rocket")
-                        .HasForeignKey("SBDataLibrary.Models.Rocket", "LaunchId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SBDataLibrary.Models.Rocket", "LaunchID");
                 });
 
             modelBuilder.Entity("SBDataLibrary.Models.Ship", b =>
                 {
-                    b.HasOne("SBDataLibrary.Models.Launch", null)
+                    b.HasOne("SBDataLibrary.Models.Launch", "Launch")
                         .WithMany("Ships")
-                        .HasForeignKey("LaunchId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LaunchFlightId");
                 });
 #pragma warning restore 612, 618
         }

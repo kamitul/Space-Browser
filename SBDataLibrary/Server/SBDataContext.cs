@@ -11,5 +11,15 @@ namespace SBDataLibrary.Server
         public DbSet<Rocket> Rockets { get; set; }
         public DbSet<Ship> Ships { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder options) => options.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=SpaceDB;Integrated Security=True;");
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Launch>()
+                .HasOne(a => a.Rocket)
+                .WithOne(b => b.Launch)
+                .HasForeignKey<Rocket>(b => b.LaunchID);
+            modelBuilder.Entity<Launch>()
+               .HasMany(c => c.Ships)
+               .WithOne(e => e.Launch);
+        }
     }
 }

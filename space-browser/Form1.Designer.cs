@@ -52,9 +52,9 @@ namespace space_browser
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
+            this.EditButton = new System.Windows.Forms.Button();
+            this.PropertiesButton = new System.Windows.Forms.Button();
+            this.DeleteButton = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.listView2 = new System.Windows.Forms.ListView();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
@@ -266,9 +266,9 @@ namespace space_browser
             this.tableLayoutPanel3.ColumnCount = 1;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.Controls.Add(this.button3, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.button4, 0, 1);
-            this.tableLayoutPanel3.Controls.Add(this.button5, 0, 2);
+            this.tableLayoutPanel3.Controls.Add(this.EditButton, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.PropertiesButton, 0, 1);
+            this.tableLayoutPanel3.Controls.Add(this.DeleteButton, 0, 2);
             this.tableLayoutPanel3.Controls.Add(this.button6, 0, 3);
             this.tableLayoutPanel3.Location = new System.Drawing.Point(640, 84);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -280,32 +280,32 @@ namespace space_browser
             this.tableLayoutPanel3.Size = new System.Drawing.Size(156, 245);
             this.tableLayoutPanel3.TabIndex = 2;
             // 
-            // button3
+            // EditButton
             // 
-            this.button3.Location = new System.Drawing.Point(3, 3);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(150, 55);
-            this.button3.TabIndex = 0;
-            this.button3.Text = "Edit";
-            this.button3.UseVisualStyleBackColor = true;
+            this.EditButton.Location = new System.Drawing.Point(3, 3);
+            this.EditButton.Name = "EditButton";
+            this.EditButton.Size = new System.Drawing.Size(150, 55);
+            this.EditButton.TabIndex = 0;
+            this.EditButton.Text = "Edit";
+            this.EditButton.UseVisualStyleBackColor = true;
             // 
-            // button4
+            // PropertiesButton
             // 
-            this.button4.Location = new System.Drawing.Point(3, 64);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(150, 55);
-            this.button4.TabIndex = 1;
-            this.button4.Text = "Properties";
-            this.button4.UseVisualStyleBackColor = true;
+            this.PropertiesButton.Location = new System.Drawing.Point(3, 64);
+            this.PropertiesButton.Name = "PropertiesButton";
+            this.PropertiesButton.Size = new System.Drawing.Size(150, 55);
+            this.PropertiesButton.TabIndex = 1;
+            this.PropertiesButton.Text = "Properties";
+            this.PropertiesButton.UseVisualStyleBackColor = true;
             // 
-            // button5
+            // DeleteButton
             // 
-            this.button5.Location = new System.Drawing.Point(3, 125);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(150, 55);
-            this.button5.TabIndex = 2;
-            this.button5.Text = "Delete";
-            this.button5.UseVisualStyleBackColor = true;
+            this.DeleteButton.Location = new System.Drawing.Point(3, 125);
+            this.DeleteButton.Name = "DeleteButton";
+            this.DeleteButton.Size = new System.Drawing.Size(150, 55);
+            this.DeleteButton.TabIndex = 2;
+            this.DeleteButton.Text = "Delete";
+            this.DeleteButton.UseVisualStyleBackColor = true;
             // 
             // button6
             // 
@@ -433,9 +433,9 @@ namespace space_browser
         private RichTextBox richTextBox1;
         private Panel panel2;
         private TableLayoutPanel tableLayoutPanel3;
-        private Button button3;
-        private Button button4;
-        private Button button5;
+        private Button EditButton;
+        private Button PropertiesButton;
+        private Button DeleteButton;
         private Button button6;
         private ListView listView2;
         private ToolStrip toolStrip2;

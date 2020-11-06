@@ -1,14 +1,12 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SBDataLibrary.Models
 {
     [Serializable]
     public class Ship
     {
-        public int Id { get; set; }
-        [Required]
-        public int LaunchId { get; set; }
         [Required]
         public string ShipId { get; set; }
         [Required]
@@ -20,6 +18,7 @@ namespace SBDataLibrary.Models
         public int Missions { get; set; }
         public string HomePort { get; set; }
         public byte[] Image { get; set; }
+        public Launch Launch { get; set; }
 
         public Ship(string shipId, int missions, string name, string type, string homePort, byte[] image)
         {
@@ -29,6 +28,15 @@ namespace SBDataLibrary.Models
             Type = type;
             HomePort = homePort;
             Image = image;
+        }
+
+        public override string ToString()
+        {
+            return  $"Ship ID: {ShipId}" + "\n" +
+                $"Name : {Name}" + "\n" +
+                $"Missions: {Missions}" + "\n" +
+                $"Type : {Type}" + "\n" +
+                $"HomePort: {HomePort}" + "\n";
         }
     }
 }

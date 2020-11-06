@@ -22,7 +22,7 @@ namespace space_browser
             panel1.Parent = this;
             panel2.Parent = this;
             toolStrip1.Parent = this;
-            panels.Add("Organiser", new OrganizerPanel(new OrganizerPanel.Organizer(
+            panels.Add("Organiser", new OrganizerPanel(new OrganizerPanel.OrganizerData(
                 new ServerDataController() ,panel2, listView2, 
                 new List<ToolStripButton>() 
                 { 
@@ -32,9 +32,9 @@ namespace space_browser
                 }, 
                 new List<Button>() 
                 {
-                    button3,
-                    button4,
-                    button5,
+                    EditButton,
+                    PropertiesButton,
+                    DeleteButton,
                 })));
             panels.Add("Browser", new BrowserPanel(new BrowserPanel.BrowserData( new BrowserDataController()
                 ,panel1, listView1, richTextBox1, pictureBox1)));;
@@ -98,7 +98,11 @@ namespace space_browser
             if (listView1.SelectedItems.Count > 0)
             {
                 int index = listView1.Items.IndexOf(listView1.SelectedItems[0]);
-                dataController.Add(panels["Browser"].Data.DataGetter.Launches.ElementAt(index));
+                var launch = panels["Browser"].Data.DataGetter.Launches.ElementAt(index);
+
+                dataController.Add(
+                    launch
+                    );
             }
         }
 

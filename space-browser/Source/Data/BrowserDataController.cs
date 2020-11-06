@@ -98,7 +98,7 @@ namespace space_browser.Source
                                 (string)launchesJSON["launches"][i]["launch_date_utc"],
                                 (string)launchesJSON["launches"][i]["mission_name"],
                                 rockets.Find(x => x.RocketId == rocket_id),
-                                ships.FindAll(x => ships_id.Contains(x.Id))));
+                                ships.FindAll(x => ships_id.Contains(x.ShipId))));
             }
             return ret;
         }

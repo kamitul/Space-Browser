@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
+using System.Linq;
 
 namespace SBDataLibrary.Models
 {
@@ -16,8 +17,8 @@ namespace SBDataLibrary.Models
     [Serializable]
     public class Launch
     {
-        public int Id { get; set; }
         [Required]
+        [Key]
         public string FlightId { get; set; }
         [Required]
         public State Status { get; set; }
@@ -83,6 +84,26 @@ namespace SBDataLibrary.Models
                 }
             }
             return country != null ? country.ToString() : string.Empty;
+        }
+
+        public override string ToString()
+        {
+            var rocket = Rocket.ToString().Split('\n').ToList();
+            rocket.ForEach(x=>x = "\t" + x + "\n");
+            var ships = string.Concat(Ships).Split('\n').ToList();
+            ships.ForEach(x => x = "\t" + x + "\n");
+
+            return $"Launch:" + "\n" +
+                $"Flight ID: {FlightId}" + "\n" +
+                $"Name : {Name}" + "\n" +
+                $"Country: {Country}" + "\n" +
+                $"Status : {Status}" + "\n" +
+                $"Payloads: {Payloads}" + "\n" +
+                $"Rocket Name: {RocketName}" + "\n" +
+                $"Launch Data: {LaunchDate}" + "\n" +
+                $"Mission Name: {MissionName}" + "\n" +
+                $"Rocket : {string.Concat(rocket)}" + "\n" +
+                $"Ships : {string.Concat(ships)}" + "\n";
         }
     }
 }

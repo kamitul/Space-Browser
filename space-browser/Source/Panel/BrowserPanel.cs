@@ -42,7 +42,7 @@ namespace space_browser.Source
                 data.RichTextBox.Text = $"Rocket Data:\r\n" +
                     $"Mission Name: {data.DataGetter.Launches.ElementAt(index).MissionName}\r\n" +
                     $"Launch Date: {data.DataGetter.Launches.ElementAt(index).LaunchDate}\r\n" +
-                    $"Rocket ID: {data.DataGetter.Launches.ElementAt(index).Rocket.Id}\r\n" +
+                    $"Rocket ID: {data.DataGetter.Launches.ElementAt(index).Rocket.RocketId}\r\n" +
                     $"Rocket Type: {data.DataGetter.Launches.ElementAt(index).Rocket.Type}\r\n" +
                     $"Rocket Mass: {data.DataGetter.Launches.ElementAt(index).Rocket.Mass}\r\n";
 

@@ -42,21 +42,28 @@ namespace SBDataLibrary.Server
 
         public async Task<List<Launch>> GetLaunchesAsync()
         {
-            var res = await dataContext.Launches.ToListAsync();
+            var res = await dataContext.Launches
+                .Include(x => x.Rocket)
+                .Include(x => x.Ships)
+                .ToListAsync();
             launches = res;
             return res;
         }
 
         public async Task<List<Ship>> GetShipsAsync()
         {
-            var res = await dataContext.Ships.ToListAsync();
+            var res = await dataContext.Ships
+                .Include(x=>x.Launch)
+                .ToListAsync();
             ships = res;
             return res;
         }
 
         public async Task<List<Rocket>> GetRocketsAsync()
         {
-            var res = await dataContext.Rockets.ToListAsync();
+            var res = await dataContext.Rockets
+                .Include(x => x.Launch)
+                .ToListAsync();
             rockets = res;
             return res;
         }

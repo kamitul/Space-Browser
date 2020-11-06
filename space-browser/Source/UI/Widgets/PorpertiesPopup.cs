@@ -22,5 +22,17 @@ namespace space_browser.Source.UI.Widgets
                 Content = text;
             }
         }
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // PorpertiesPopup
+            // 
+            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Name = "PorpertiesPopup";
+            this.ResumeLayout(false);
+
+        }
     }
 }
