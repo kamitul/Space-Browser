@@ -111,7 +111,7 @@ namespace space_browser
             this.Organiser.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.Organiser.Name = "Organiser";
             this.Organiser.Size = new System.Drawing.Size(62, 22);
-            this.Organiser.Text = "Organiser";
+            this.Organiser.Text = "Organizer";
             // 
             // panel1
             // 
