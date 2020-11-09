@@ -55,6 +55,7 @@ namespace space_browser.Source.UI.Widgets
             this.Controls.Add(this.richTextBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PorpertiesPopup";
+            this.Text = "Entity Properties";
             this.ResumeLayout(false);
 
         }

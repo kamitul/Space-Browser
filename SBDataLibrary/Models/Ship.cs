@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 
 namespace SBDataLibrary.Models
 {
@@ -40,6 +42,19 @@ namespace SBDataLibrary.Models
                 $"Missions: {Missions}" + "\n" +
                 $"Type : {Type}" + "\n" +
                 $"HomePort: {HomePort}" + "\n";
+        }
+
+        public override void Set(params object[] data)
+        {
+            Name = (string)data[0];
+            Missions = (int)data[1];
+            Type = (string)data[2];
+            HomePort = (string)data[3];
+        }
+
+        public override string[] GetFields()
+        {
+            return new[] { "Name: ", "Missions: ", "Type: ", "HomePort: " };
         }
     }
 }

@@ -88,12 +88,20 @@ namespace SBDataLibrary.Models
 
         public override string ToString()
         {
-            List<string> rocket = new List<string>();
-            Rocket.ToString().Split('\n').ToList().ForEach(x=> rocket.Add( "\t" + x + "\n"));
-            var rocketInfo = string.Concat(rocket);
-            List<string> ships = new List<string>();
-            string.Concat(Ships).Split('\n').ToList().ForEach(x => ships.Add("\t" + x + "\n"));
-            var shipInfo = string.Concat(ships);
+            string rocketInfo = string.Empty;
+            string shipInfo = string.Empty;
+            if (Rocket != null)
+            {
+                List<string> rocket = new List<string>();
+                Rocket.ToString().Split('\n').ToList().ForEach(x => rocket.Add("\t" + x + "\n"));
+                rocketInfo = string.Concat(rocket);
+            }
+            if (Ships != null)
+            {
+                List<string> ships = new List<string>();
+                string.Concat(Ships).Split('\n').ToList().ForEach(x => ships.Add("\t" + x + "\n"));
+                shipInfo = string.Concat(ships);
+            }
 
             return $"Launch:" + "\n" +
                 $"Flight ID: {FlightId}" + "\n" +
@@ -105,6 +113,21 @@ namespace SBDataLibrary.Models
                 $"Mission Name: {MissionName}" + "\n" +
                 $"Rocket :  \n{rocketInfo}" + "\n" +
                 $"Ships : \n{shipInfo}" + "\n";
+        }
+
+        public override void Set(params object[] data)
+        {
+            Name = (string)data[0];
+            Country = (string)data[1];
+            Status = (State)data[2];
+            Payloads = (int)data[3];
+            LaunchDate = (string)data[4];
+            MissionName = (string)data[5];
+        }
+
+        public override string[] GetFields()
+        {
+            return new []{ "Name: ", "Country: ", "Status: ", "Payloads: ", "Launch Date: ", "Mission Name: " };
         }
     }
 }

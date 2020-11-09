@@ -55,7 +55,6 @@ namespace space_browser
             this.EditButton = new System.Windows.Forms.Button();
             this.PropertiesButton = new System.Windows.Forms.Button();
             this.DeleteButton = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
             this.listView2 = new System.Windows.Forms.ListView();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.Launches = new System.Windows.Forms.ToolStripButton();
@@ -265,19 +264,17 @@ namespace space_browser
             // 
             this.tableLayoutPanel3.ColumnCount = 1;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel3.Controls.Add(this.EditButton, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.PropertiesButton, 0, 1);
             this.tableLayoutPanel3.Controls.Add(this.DeleteButton, 0, 2);
-            this.tableLayoutPanel3.Controls.Add(this.button6, 0, 3);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(640, 84);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(640, 25);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 4;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(156, 245);
+            this.tableLayoutPanel3.RowCount = 3;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(156, 183);
             this.tableLayoutPanel3.TabIndex = 2;
             // 
             // EditButton
@@ -306,15 +303,6 @@ namespace space_browser
             this.DeleteButton.TabIndex = 2;
             this.DeleteButton.Text = "Delete";
             this.DeleteButton.UseVisualStyleBackColor = true;
-            // 
-            // button6
-            // 
-            this.button6.Location = new System.Drawing.Point(3, 186);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(150, 56);
-            this.button6.TabIndex = 3;
-            this.button6.Text = "XD";
-            this.button6.UseVisualStyleBackColor = true;
             // 
             // listView2
             // 
@@ -437,7 +425,6 @@ namespace space_browser
         private Button EditButton;
         private Button PropertiesButton;
         private Button DeleteButton;
-        private Button button6;
         private ListView listView2;
         private ToolStrip toolStrip2;
         private ToolStripButton Launches;

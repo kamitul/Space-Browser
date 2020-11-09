@@ -56,6 +56,27 @@ namespace space_browser.Source
             this.data.Ships.Click += SwitchShipView;
             this.data.Properties.Click += ShowPopertiesPopup;
             this.data.Remove.Click += DeleteElementFromDB;
+            this.data.Edit.Click += EditElementFromDB;
+        }
+
+        private void EditElementFromDB(object sender, EventArgs e)
+        {
+            int index = data.ListView.Items.IndexOf(data.ListView.SelectedItems[0]);
+            EditPopup window = null;
+            switch (type)
+            {
+                case OrganizerType.LAUNCH:
+                    window = new EditPopup(new EditPopup.Payload(this.data.DataGetter[0].Launches.ElementAt(index)));
+                    break;
+                case OrganizerType.ROCKET:
+                    window = new EditPopup(new EditPopup.Payload(this.data.DataGetter[0].Rockets.ElementAt(index)));
+                    break;
+                case OrganizerType.SHIP:
+                    window = new EditPopup(new EditPopup.Payload(this.data.DataGetter[0].Ships.ElementAt(index)));
+                    break;
+            }
+            if (window != null)
+                window.Show();
         }
 
         private void DeleteElementFromDB(object sender, EventArgs e)
