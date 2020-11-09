@@ -51,7 +51,9 @@ namespace SBDataLibrary.Models
             Name = (string)data[0];
             Country = (string)data[1];
             Type = (string)data[2];
-            Mass = (int)data[3];
+            int mass;
+            if (int.TryParse((string)data[3], out mass))
+                Mass = mass;
         }
 
         public override string[] GetFields()

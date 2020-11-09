@@ -119,8 +119,12 @@ namespace SBDataLibrary.Models
         {
             Name = (string)data[0];
             Country = (string)data[1];
-            Status = (State)data[2];
-            Payloads = (int)data[3];
+            int state;
+            if (int.TryParse((string)data[3], out state))
+                Status = (State)state;
+            int payloads;
+            if (int.TryParse((string)data[3], out payloads))
+                Payloads = payloads;
             LaunchDate = (string)data[4];
             MissionName = (string)data[5];
         }

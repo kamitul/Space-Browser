@@ -47,7 +47,9 @@ namespace SBDataLibrary.Models
         public override void Set(params object[] data)
         {
             Name = (string)data[0];
-            Missions = (int)data[1];
+            int missions;
+            if (int.TryParse((string)data[1], out missions))
+                Missions = missions;
             Type = (string)data[2];
             HomePort = (string)data[3];
         }
