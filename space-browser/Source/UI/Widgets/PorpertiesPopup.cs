@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace space_browser.Source.UI.Widgets
+﻿namespace space_browser.Source.UI.Widgets
 {
     public class PorpertiesPopup : Popup
     {
