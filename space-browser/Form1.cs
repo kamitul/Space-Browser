@@ -26,12 +26,12 @@ namespace space_browser
 
             dataController = new ServerDataController();
 
-            listView1.ColumnWidthChanging += new ColumnWidthChangingEventHandler(ResizeColumn);
+            listView1.ColumnWidthChanging += new ColumnWidthChangingEventHandler((object sender, ColumnWidthChangingEventArgs e) => ResizeColumn(listView1, e));
             listView1.DrawColumnHeader += DrawColumnHeader;
             listView1.DrawItem += DrawItem;
             listView1.DrawSubItem += DrawSubItem;
 
-            listView2.ColumnWidthChanging += new ColumnWidthChangingEventHandler(ResizeColumn);
+            listView2.ColumnWidthChanging += new ColumnWidthChangingEventHandler((object sender, ColumnWidthChangingEventArgs e) => ResizeColumn(listView2, e));
             listView2.DrawColumnHeader += DrawColumnHeader;
             listView2.DrawItem += DrawItem;
             listView2.DrawSubItem += DrawSubItem;
@@ -85,12 +85,12 @@ namespace space_browser
             e.DrawDefault = true;
         }
 
-        private void ResizeColumn(object sender, ColumnWidthChangingEventArgs e)
+        private void ResizeColumn(ListView listview, ColumnWidthChangingEventArgs e)
         {
-            e.NewWidth = listView1.Columns[e.ColumnIndex].Width;
+            e.NewWidth = listview.Columns[e.ColumnIndex].Width;
             e.Cancel = true;
         }
-        
+
         private async void Browser_Load(object sender, EventArgs e)
         {
             await LoadForm();
