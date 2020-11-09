@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace SBDataLibrary.Models
 {
     [Serializable]
-    public class Ship
+    public class Ship : Entity
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]

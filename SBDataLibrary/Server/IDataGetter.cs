@@ -13,5 +13,8 @@ namespace SBDataLibrary.Server
         Task<List<Launch>> GetLaunchesAsync();
         Task<List<Ship>> GetShipsAsync();
         Task<List<Rocket>> GetRocketsAsync();
+        Task DeleteLaunch(Launch launch);
+        Task DeleteRocket(Rocket rocket);
+        Task DeleteShip(Ship ship);
     }
 }

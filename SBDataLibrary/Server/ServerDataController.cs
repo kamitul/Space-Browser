@@ -70,5 +70,35 @@ namespace SBDataLibrary.Server
             rockets = res;
             return res;
         }
+
+        public async Task DeleteLaunch(Launch launch)
+        {
+            dataContext.Database.OpenConnection();
+            launch.Rocket = null;
+            var ships = dataContext.Ships.Where(b => b.Launch.FlightId == launch.FlightId);
+            foreach (var ship in ships)
+            {
+                launch.Ships.Remove(ship);
+            }
+            dataContext.Launches.Remove(launch);
+            await dataContext.SaveChangesAsync();
+            dataContext.Database.CloseConnection();
+        }
+
+        public async Task DeleteRocket(Rocket rocket)
+        {
+            dataContext.Database.OpenConnection();
+            dataContext.Rockets.Remove(rocket);
+            await dataContext.SaveChangesAsync();
+            dataContext.Database.CloseConnection();
+        }
+
+        public async Task DeleteShip(Ship ship)
+        {
+            dataContext.Database.OpenConnection();
+            dataContext.Ships.Remove(ship);
+            await dataContext.SaveChangesAsync();
+            dataContext.Database.CloseConnection();
+        }
     }
 }

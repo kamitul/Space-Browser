@@ -172,5 +172,16 @@ namespace space_browser.Source
             return Rockets;
         }
 
+        public async Task DeleteLaunch(Launch launch)
+        {
+        }
+
+        public async Task DeleteRocket(Rocket rocket)
+        {
+        }
+
+        public async Task DeleteShip(Ship ship)
+        {
+        }
     }
 }

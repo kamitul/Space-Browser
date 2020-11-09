@@ -15,7 +15,7 @@ namespace SBDataLibrary.Models
     }
 
     [Serializable]
-    public class Launch
+    public class Launch : Entity
     {
         [Required]
         [Key]
@@ -88,10 +88,12 @@ namespace SBDataLibrary.Models
 
         public override string ToString()
         {
-            var rocket = Rocket.ToString().Split('\n').ToList();
-            rocket.ForEach(x=>x = "\t" + x + "\n");
-            var ships = string.Concat(Ships).Split('\n').ToList();
-            ships.ForEach(x => x = "\t" + x + "\n");
+            List<string> rocket = new List<string>();
+            Rocket.ToString().Split('\n').ToList().ForEach(x=> rocket.Add( "\t" + x + "\n"));
+            var rocketInfo = string.Concat(rocket);
+            List<string> ships = new List<string>();
+            string.Concat(Ships).Split('\n').ToList().ForEach(x => ships.Add("\t" + x + "\n"));
+            var shipInfo = string.Concat(ships);
 
             return $"Launch:" + "\n" +
                 $"Flight ID: {FlightId}" + "\n" +
@@ -99,11 +101,10 @@ namespace SBDataLibrary.Models
                 $"Country: {Country}" + "\n" +
                 $"Status : {Status}" + "\n" +
                 $"Payloads: {Payloads}" + "\n" +
-                $"Rocket Name: {RocketName}" + "\n" +
                 $"Launch Data: {LaunchDate}" + "\n" +
                 $"Mission Name: {MissionName}" + "\n" +
-                $"Rocket : {string.Concat(rocket)}" + "\n" +
-                $"Ships : {string.Concat(ships)}" + "\n";
+                $"Rocket :  \n{rocketInfo}" + "\n" +
+                $"Ships : \n{shipInfo}" + "\n";
         }
     }
 }

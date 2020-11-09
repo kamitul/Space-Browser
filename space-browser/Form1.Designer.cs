@@ -392,6 +392,7 @@ namespace space_browser
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SpaceX Browser";
             this.Load += new System.EventHandler(this.Browser_Load);
             this.toolStrip1.ResumeLayout(false);

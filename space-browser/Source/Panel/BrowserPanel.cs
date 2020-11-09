@@ -17,7 +17,7 @@ namespace space_browser.Source
             public RichTextBox RichTextBox;
             public PictureBox PictureBox;
 
-            public BrowserData(IDataGetter dataGetter, Panel panel, ListView listView, RichTextBox textBox, PictureBox pictureBox) : base(panel, listView, dataGetter)
+            public BrowserData(Panel panel, ListView listView, RichTextBox textBox, PictureBox pictureBox, params IDataGetter[] dataGetter) : base(panel, listView, dataGetter)
             {
                 RichTextBox = textBox;
                 PictureBox = pictureBox;
@@ -40,13 +40,13 @@ namespace space_browser.Source
             {
                 int index = data.ListView.Items.IndexOf(data.ListView.SelectedItems[0]);
                 data.RichTextBox.Text = $"Rocket Data:\r\n" +
-                    $"Mission Name: {data.DataGetter.Launches.ElementAt(index).MissionName}\r\n" +
-                    $"Launch Date: {data.DataGetter.Launches.ElementAt(index).LaunchDate}\r\n" +
-                    $"Rocket ID: {data.DataGetter.Launches.ElementAt(index).Rocket.RocketId}\r\n" +
-                    $"Rocket Type: {data.DataGetter.Launches.ElementAt(index).Rocket.Type}\r\n" +
-                    $"Rocket Mass: {data.DataGetter.Launches.ElementAt(index).Rocket.Mass}\r\n";
+                    $"Mission Name: {data.DataGetter[0].Launches.ElementAt(index).MissionName}\r\n" +
+                    $"Launch Date: {data.DataGetter[0].Launches.ElementAt(index).LaunchDate}\r\n" +
+                    $"Rocket ID: {data.DataGetter[0].Launches.ElementAt(index).Rocket.RocketId}\r\n" +
+                    $"Rocket Type: {data.DataGetter[0].Launches.ElementAt(index).Rocket.Type}\r\n" +
+                    $"Rocket Mass: {data.DataGetter[0].Launches.ElementAt(index).Rocket.Mass}\r\n";
 
-                using (var ms = new MemoryStream(data.DataGetter.Launches.ElementAt(index).Rocket.Image))
+                using (var ms = new MemoryStream(data.DataGetter[0].Launches.ElementAt(index).Rocket.Image))
                 {
                     var bmp = new Bitmap(Image.FromStream(ms), new Size(230, 210));
                     data.PictureBox.Image = bmp;
@@ -66,7 +66,7 @@ namespace space_browser.Source
             data.ListView.Items.Clear();
             if (typeof(T) == typeof(List<Launch>))
             {
-                var result = await data.DataGetter.GetLaunchesAsync();
+                var result = await data.DataGetter[0].GetLaunchesAsync();
                 AddLaunches(result);
             }
         }

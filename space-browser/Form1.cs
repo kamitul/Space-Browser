@@ -22,22 +22,7 @@ namespace space_browser
             panel1.Parent = this;
             panel2.Parent = this;
             toolStrip1.Parent = this;
-            panels.Add("Organiser", new OrganizerPanel(new OrganizerPanel.OrganizerData(
-                new ServerDataController() ,panel2, listView2, 
-                new List<ToolStripButton>() 
-                { 
-                    toolStrip2.Items[0] as ToolStripButton, 
-                    toolStrip2.Items[2] as ToolStripButton, 
-                    toolStrip2.Items[4] as ToolStripButton
-                }, 
-                new List<Button>() 
-                {
-                    EditButton,
-                    PropertiesButton,
-                    DeleteButton,
-                })));
-            panels.Add("Browser", new BrowserPanel(new BrowserPanel.BrowserData( new BrowserDataController()
-                ,panel1, listView1, richTextBox1, pictureBox1)));;
+            AddPanels();
 
             dataController = new ServerDataController();
 
@@ -50,6 +35,32 @@ namespace space_browser
             listView2.DrawColumnHeader += DrawColumnHeader;
             listView2.DrawItem += DrawItem;
             listView2.DrawSubItem += DrawSubItem;
+        }
+
+        private void AddPanels()
+        {
+            panels.Add("Organizer", new OrganizerPanel(
+                new OrganizerPanel.OrganizerData(
+                panel2, listView2,
+                new List<ToolStripButton>()
+                {
+                    toolStrip2.Items[0] as ToolStripButton,
+                    toolStrip2.Items[2] as ToolStripButton,
+                    toolStrip2.Items[4] as ToolStripButton
+                },
+                new List<Button>()
+                {
+                    EditButton,
+                    PropertiesButton,
+                    DeleteButton,
+                },
+                new ServerDataController())));
+            panels.Add("Browser", new BrowserPanel(
+                new BrowserPanel.BrowserData(
+                panel1, listView1,
+                richTextBox1,
+                pictureBox1,
+                new BrowserDataController()))); ;
         }
 
         private void DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
@@ -98,7 +109,7 @@ namespace space_browser
             if (listView1.SelectedItems.Count > 0)
             {
                 int index = listView1.Items.IndexOf(listView1.SelectedItems[0]);
-                var launch = panels["Browser"].Data.DataGetter.Launches.ElementAt(index);
+                var launch = panels["Browser"].Data.DataGetter[0].Launches.ElementAt(index);
 
                 try
                 {

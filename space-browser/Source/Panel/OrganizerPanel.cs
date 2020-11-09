@@ -5,12 +5,20 @@ using System;
 using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Threading.Tasks;
 
 namespace space_browser.Source
 {
     public class OrganizerPanel : PanelView
     {
+        private enum OrganizerType
+        {
+            SHIP,
+            ROCKET,
+            LAUNCH
+        }
+
         public class OrganizerData : PanelData
         {
             public System.Windows.Forms.ToolStripButton Launches;
@@ -21,7 +29,7 @@ namespace space_browser.Source
             public System.Windows.Forms.Button Remove;
             public System.Windows.Forms.Button Properties;
 
-            public OrganizerData(IDataGetter dataGetter, System.Windows.Forms.Panel panel, System.Windows.Forms.ListView listView, List<System.Windows.Forms.ToolStripButton> toolButtons, List<System.Windows.Forms.Button> buttons) : base(panel, listView, dataGetter)
+            public OrganizerData(System.Windows.Forms.Panel panel, System.Windows.Forms.ListView listView, List<System.Windows.Forms.ToolStripButton> toolButtons, List<System.Windows.Forms.Button> buttons, params IDataGetter[] dataGetter) : base(panel, listView, dataGetter)
             {
                 Panel = panel;
                 ListView = listView;
@@ -36,6 +44,7 @@ namespace space_browser.Source
             }
         }
 
+        private OrganizerType type;
         private OrganizerData data;
         public override PanelData Data => data;
 
@@ -46,13 +55,44 @@ namespace space_browser.Source
             this.data.Rocket.Click += SwitchRocketView;
             this.data.Ships.Click += SwitchShipView;
             this.data.Properties.Click += ShowPopertiesPopup;
+            this.data.Remove.Click += DeleteElementFromDB;
+        }
+
+        private void DeleteElementFromDB(object sender, EventArgs e)
+        {
+            int index = data.ListView.Items.IndexOf(data.ListView.SelectedItems[0]);
+            switch (type)
+            {
+                case OrganizerType.LAUNCH:
+                    this.data.DataGetter[0].DeleteLaunch(this.data.DataGetter[0].Launches.ElementAt(index));
+                    break;
+                case OrganizerType.ROCKET:
+                    this.data.DataGetter[0].DeleteRocket(this.data.DataGetter[0].Rockets.ElementAt(index));
+                    break;
+                case OrganizerType.SHIP:
+                    this.data.DataGetter[0].DeleteShip(this.data.DataGetter[0].Ships.ElementAt(index));
+                    break;
+            }
         }
 
         private void ShowPopertiesPopup(object sender, EventArgs e)
         {
             int index = data.ListView.Items.IndexOf(data.ListView.SelectedItems[0]);
-            var window = new PorpertiesPopup(new PorpertiesPopup.Payload(this.data.DataGetter.Launches.ElementAt(index).ToString()));
-            window.Show();
+            PorpertiesPopup window = null;
+            switch(type)
+            {
+                case OrganizerType.LAUNCH:
+                    window = new PorpertiesPopup(new PorpertiesPopup.Payload(this.data.DataGetter[0].Launches.ElementAt(index).ToString()));
+                    break;
+                case OrganizerType.ROCKET:
+                    window = new PorpertiesPopup(new PorpertiesPopup.Payload(this.data.DataGetter[0].Rockets.ElementAt(index).ToString()));
+                    break;
+                case OrganizerType.SHIP:
+                    window = new PorpertiesPopup(new PorpertiesPopup.Payload(this.data.DataGetter[0].Ships.ElementAt(index).ToString()));
+                    break;
+            }
+            if(window != null)
+                window.Show();
         }
 
         private async void SwitchLaunchView(object sender, EventArgs e)
@@ -84,17 +124,20 @@ namespace space_browser.Source
 
             if(typeof(T) == typeof(List<Launch>))
             {
-                var data = await this.data.DataGetter.GetLaunchesAsync();
+                type = OrganizerType.LAUNCH;
+                var data = await this.data.DataGetter[0].GetLaunchesAsync();
                 AddLaunches(data);
             }
             else if (typeof(T) == typeof(List<Ship>))
             {
-                var data = await this.data.DataGetter.GetShipsAsync();
+                type = OrganizerType.SHIP;
+                var data = await this.data.DataGetter[0].GetShipsAsync();
                 AddShips(data);
             }
             else if(typeof(T) == typeof(List<Rocket>))
             {
-                var data = await this.data.DataGetter.GetRocketsAsync();
+                type = OrganizerType.ROCKET;
+                var data = await this.data.DataGetter[0].GetRocketsAsync();
                 AddRockets(data);
             }
         }
@@ -162,8 +205,8 @@ namespace space_browser.Source
                 item.SubItems.Add(launches[i].Country);
                 item.SubItems.Add(launches[i].LaunchDate.ToString());
                 item.SubItems.Add(launches[i].MissionName);
-                item.SubItems.Add(launches[i].Rocket.ToString());
-                item.SubItems.Add(launches[i].Ships.ToString());
+                item.SubItems.Add(launches[i].Rocket != null ? launches[i].Rocket.ToString() : "------");
+                item.SubItems.Add(launches[i].Ships != null ? launches[i].Ships.ToString() : "------");
                 this.data.ListView.Items.Add(item);
             }
             if (this.data.ListView.SelectedItems.Count > 0)

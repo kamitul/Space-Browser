@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace SBDataLibrary.Models
 {
     [Serializable]
-    public class Rocket
+    public class Rocket : Entity
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]

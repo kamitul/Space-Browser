@@ -1,4 +1,6 @@
 ﻿using SBDataLibrary.Server;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -10,13 +12,13 @@ namespace space_browser.Source
         {
             public Panel Panel;
             public ListView ListView;
-            public IDataGetter DataGetter;
+            public List<IDataGetter> DataGetter;
 
-            public PanelData(Panel panel, ListView listView, IDataGetter dataGetter)
+            public PanelData(Panel panel, ListView listView, params IDataGetter[] dataGetter)
             {
                 Panel = panel;
                 ListView = listView;
-                DataGetter = dataGetter;
+                DataGetter = dataGetter.ToList();
             }
         }
 
