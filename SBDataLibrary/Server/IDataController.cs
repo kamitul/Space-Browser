@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace SBDataLibrary.Server
 {
-    public interface IDataGetter
+    public interface IDataController
     {
         IEnumerable<Launch> Launches { get; }
         IEnumerable<Ship> Ships { get; }
@@ -16,5 +16,8 @@ namespace SBDataLibrary.Server
         Task DeleteLaunch(Launch launch);
         Task DeleteRocket(Rocket rocket);
         Task DeleteShip(Ship ship);
+        Task UpdateLaunch(Launch launch);
+        Task UpdateRocket(Rocket rocket);
+        Task UpdateShip(Ship ship);
     }
 }

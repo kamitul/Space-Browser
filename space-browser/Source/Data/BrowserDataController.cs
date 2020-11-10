@@ -9,16 +9,16 @@ using System.Threading.Tasks;
 
 namespace space_browser.Source
 {
-    public class BrowserDataController : IDataGetter
+    public class BrowserDataController : IDataController
     {
         private Connection connection;
         private List<Launch> Launches;
         private List<Rocket> Rockets;
         private List<Ship> Ships;
 
-        IEnumerable<Launch> IDataGetter.Launches => Launches;
-        IEnumerable<Ship> IDataGetter.Ships => Ships;
-        IEnumerable<Rocket> IDataGetter.Rockets => Rockets;
+        IEnumerable<Launch> IDataController.Launches => Launches;
+        IEnumerable<Ship> IDataController.Ships => Ships;
+        IEnumerable<Rocket> IDataController.Rockets => Rockets;
 
         public BrowserDataController()
         {
@@ -174,14 +174,44 @@ namespace space_browser.Source
 
         public async Task DeleteLaunch(Launch launch)
         {
+            await Task.Yield();
+            Launches.Remove(launch);
         }
 
         public async Task DeleteRocket(Rocket rocket)
         {
+            await Task.Yield();
+            Rockets.Remove(rocket);
         }
 
         public async Task DeleteShip(Ship ship)
         {
+            await Task.Yield();
+            Ships.Remove(ship);
+        }
+
+        public async Task UpdateLaunch(Launch launch)
+        {
+            await Task.Yield();
+            var elem = Launches.Find(x => x.FlightId == launch.FlightId);
+            if(elem != null)
+                elem.Set(launch.Name, launch.Country, launch.Status, launch.Payloads, launch.LaunchDate, launch.MissionName);
+        }
+
+        public async Task UpdateRocket(Rocket rocket)
+        {
+            await Task.Yield();
+            var elem = Rockets.Find(x => x.ID == rocket.ID);
+            if (elem != null)
+                elem.Set(rocket.Name, rocket.Country, rocket.Type, rocket.Mass);
+        }
+
+        public async Task UpdateShip(Ship ship)
+        {
+            await Task.Yield();
+            var elem = Ships.Find(x => x.ID == ship.ID);
+            if (elem != null)
+                elem.Set(ship.Name, ship.Missions, ship.Type, ship.HomePort);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace space_browser.Source
             public RichTextBox RichTextBox;
             public PictureBox PictureBox;
 
-            public BrowserData(Panel panel, ListView listView, RichTextBox textBox, PictureBox pictureBox, params IDataGetter[] dataGetter) : base(panel, listView, dataGetter)
+            public BrowserData(System.Windows.Forms.Panel panel, ListView listView, RichTextBox textBox, PictureBox pictureBox, params IDataController[] dataGetter) : base(panel, listView, dataGetter)
             {
                 RichTextBox = textBox;
                 PictureBox = pictureBox;

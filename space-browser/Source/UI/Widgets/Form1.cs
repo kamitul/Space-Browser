@@ -1,6 +1,7 @@
 ﻿using SBDataLibrary.Models;
 using SBDataLibrary.Server;
 using space_browser.Source;
+using space_browser.Source.Panel;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -34,6 +35,13 @@ namespace space_browser
             listView2.DrawColumnHeader += DrawColumnHeader;
             listView2.DrawItem += DrawItem;
             listView2.DrawSubItem += DrawSubItem;
+
+            SaveButton.Click += SaveToFile;
+        }
+
+        private async void SaveToFile(object sender, EventArgs e)
+        {
+            await (panels["File"] as FilePanel).Save();
         }
 
         private void AddPanels()
@@ -59,7 +67,12 @@ namespace space_browser
                 panel1, listView1,
                 richTextBox1,
                 pictureBox1,
-                new BrowserDataController()))); ;
+                new BrowserDataController())));
+            panels.Add("File", new FilePanel(
+                new FilePanel.FileData(
+                    null,
+                    null,
+                    new ServerDataController())));
         }
 
         private void DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)

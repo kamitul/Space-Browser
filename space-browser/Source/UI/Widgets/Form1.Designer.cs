@@ -33,6 +33,7 @@ namespace space_browser
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.File = new System.Windows.Forms.ToolStripDropDownButton();
+            this.SaveButton = new System.Windows.Forms.ToolStripMenuItem();
             this.Browser = new System.Windows.Forms.ToolStripButton();
             this.Organiser = new System.Windows.Forms.ToolStripButton();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -89,10 +90,18 @@ namespace space_browser
             // File
             // 
             this.File.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.File.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.SaveButton});
             this.File.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.File.Name = "File";
             this.File.Size = new System.Drawing.Size(38, 22);
             this.File.Text = "File";
+            // 
+            // SaveButton
+            // 
+            this.SaveButton.Name = "SaveButton";
+            this.SaveButton.Size = new System.Drawing.Size(98, 22);
+            this.SaveButton.Text = "Save";
             // 
             // Browser
             // 
@@ -432,6 +441,7 @@ namespace space_browser
         private ToolStripButton Ships;
         private ToolStripSeparator toolStripSeparator2;
         private ToolStripButton Rockets;
+        private ToolStripMenuItem SaveButton;
     }
 }
 

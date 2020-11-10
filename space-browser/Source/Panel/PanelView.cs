@@ -10,11 +10,11 @@ namespace space_browser.Source
     {
         public class PanelData
         {
-            public Panel Panel;
+            public System.Windows.Forms.Panel Panel;
             public ListView ListView;
-            public List<IDataGetter> DataGetter;
+            public List<IDataController> DataGetter;
 
-            public PanelData(Panel panel, ListView listView, params IDataGetter[] dataGetter)
+            public PanelData(System.Windows.Forms.Panel panel, ListView listView, params IDataController[] dataGetter)
             {
                 Panel = panel;
                 ListView = listView;

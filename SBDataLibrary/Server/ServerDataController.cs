@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SBDataLibrary.Server
 {
-    public class ServerDataController : IDataGetter
+    public class ServerDataController : IDataController
     {
         private SBDataContext dataContext;
 
@@ -99,6 +99,28 @@ namespace SBDataLibrary.Server
             dataContext.Ships.Remove(ship);
             await dataContext.SaveChangesAsync();
             dataContext.Database.CloseConnection();
+        }
+
+        public async Task UpdateLaunch(Launch launch)
+        {
+            dataContext.Database.OpenConnection();
+            dataContext.Launches.Update(launch);
+            await dataContext.SaveChangesAsync();
+
+        }
+
+        public async Task UpdateRocket(Rocket rocket)
+        {
+            dataContext.Database.OpenConnection();
+            dataContext.Rockets.Update(rocket);
+            await dataContext.SaveChangesAsync();
+        }
+
+        public async Task UpdateShip(Ship ship)
+        {
+            dataContext.Database.OpenConnection();
+            dataContext.Ships.Update(ship);
+            await dataContext.SaveChangesAsync();
         }
     }
 }

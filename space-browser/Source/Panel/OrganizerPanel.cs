@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace space_browser.Source
 {
@@ -27,10 +28,8 @@ namespace space_browser.Source
             public System.Windows.Forms.Button Remove;
             public System.Windows.Forms.Button Properties;
 
-            public OrganizerData(System.Windows.Forms.Panel panel, System.Windows.Forms.ListView listView, List<System.Windows.Forms.ToolStripButton> toolButtons, List<System.Windows.Forms.Button> buttons, params IDataGetter[] dataGetter) : base(panel, listView, dataGetter)
+            public OrganizerData(System.Windows.Forms.Panel panel, System.Windows.Forms.ListView listView, List<System.Windows.Forms.ToolStripButton> toolButtons, List<System.Windows.Forms.Button> buttons, params IDataController[] dataGetter) : base(panel, listView, dataGetter)
             {
-                Panel = panel;
-                ListView = listView;
                 Launches = toolButtons.Find(x => x.Name.Equals("Launches"));
                 Ships = toolButtons.Find(x => x.Name.Equals("Ships"));
                 Rocket = toolButtons.Find(x => x.Name.Equals("Rockets"));
@@ -59,59 +58,107 @@ namespace space_browser.Source
 
         private void EditElementFromDB(object sender, EventArgs e)
         {
-            int index = data.ListView.Items.IndexOf(data.ListView.SelectedItems[0]);
-            EditPopup window = null;
-            switch (type)
+            if (data.ListView.SelectedItems.Count > 0)
             {
-                case OrganizerType.LAUNCH:
-                    window = new EditPopup(new EditPopup.Payload(this.data.DataGetter[0].Launches.ElementAt(index)));
-                    break;
-                case OrganizerType.ROCKET:
-                    window = new EditPopup(new EditPopup.Payload(this.data.DataGetter[0].Rockets.ElementAt(index)));
-                    break;
-                case OrganizerType.SHIP:
-                    window = new EditPopup(new EditPopup.Payload(this.data.DataGetter[0].Ships.ElementAt(index)));
-                    break;
+                int index = data.ListView.Items.IndexOf(data.ListView.SelectedItems[0]);
+                EditPopup window = null;
+                switch (type)
+                {
+                    case OrganizerType.LAUNCH:
+                        window = new EditPopup(new EditPopup.Payload(this.data.DataGetter[0].Launches.ElementAt(index)));
+                        window.OnElementEdited += EditLaunch;
+                        break;
+                    case OrganizerType.ROCKET:
+                        window = new EditPopup(new EditPopup.Payload(this.data.DataGetter[0].Rockets.ElementAt(index)));
+                        window.OnElementEdited += EditRocket;
+                        break;
+                    case OrganizerType.SHIP:
+                        window = new EditPopup(new EditPopup.Payload(this.data.DataGetter[0].Ships.ElementAt(index)));
+                        window.OnElementEdited += EditShip;
+                        break;
+                }
+                if (window != null)
+                    window.Show(); 
             }
-            if (window != null)
-                window.Show();
+        }
+
+        private async void EditShip(Entity obj)
+        {
+            try
+            {
+                await this.data.DataGetter[0].UpdateShip(obj as Ship);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private async void EditRocket(Entity obj)
+        {
+            try
+            {
+                await this.data.DataGetter[0].UpdateRocket(obj as Rocket);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private async void EditLaunch(Entity obj)
+        {
+            try
+            {
+                await this.data.DataGetter[0].UpdateLaunch(obj as Launch);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void DeleteElementFromDB(object sender, EventArgs e)
         {
-            int index = data.ListView.Items.IndexOf(data.ListView.SelectedItems[0]);
-            switch (type)
+            if (data.ListView.SelectedItems.Count > 0)
             {
-                case OrganizerType.LAUNCH:
-                    this.data.DataGetter[0].DeleteLaunch(this.data.DataGetter[0].Launches.ElementAt(index));
-                    break;
-                case OrganizerType.ROCKET:
-                    this.data.DataGetter[0].DeleteRocket(this.data.DataGetter[0].Rockets.ElementAt(index));
-                    break;
-                case OrganizerType.SHIP:
-                    this.data.DataGetter[0].DeleteShip(this.data.DataGetter[0].Ships.ElementAt(index));
-                    break;
+                int index = data.ListView.Items.IndexOf(data.ListView.SelectedItems[0]);
+                switch (type)
+                {
+                    case OrganizerType.LAUNCH:
+                        this.data.DataGetter[0].DeleteLaunch(this.data.DataGetter[0].Launches.ElementAt(index));
+                        break;
+                    case OrganizerType.ROCKET:
+                        this.data.DataGetter[0].DeleteRocket(this.data.DataGetter[0].Rockets.ElementAt(index));
+                        break;
+                    case OrganizerType.SHIP:
+                        this.data.DataGetter[0].DeleteShip(this.data.DataGetter[0].Ships.ElementAt(index));
+                        break;
+                }
             }
         }
 
         private void ShowPopertiesPopup(object sender, EventArgs e)
         {
-            int index = data.ListView.Items.IndexOf(data.ListView.SelectedItems[0]);
-            PorpertiesPopup window = null;
-            switch(type)
+            if (data.ListView.SelectedItems.Count > 0)
             {
-                case OrganizerType.LAUNCH:
-                    window = new PorpertiesPopup(new PorpertiesPopup.Payload(this.data.DataGetter[0].Launches.ElementAt(index).ToString()));
-                    break;
-                case OrganizerType.ROCKET:
-                    window = new PorpertiesPopup(new PorpertiesPopup.Payload(this.data.DataGetter[0].Rockets.ElementAt(index).ToString()));
-                    break;
-                case OrganizerType.SHIP:
-                    window = new PorpertiesPopup(new PorpertiesPopup.Payload(this.data.DataGetter[0].Ships.ElementAt(index).ToString()));
-                    break;
+                int index = data.ListView.Items.IndexOf(data.ListView.SelectedItems[0]);
+                PorpertiesPopup window = null;
+                switch (type)
+                {
+                    case OrganizerType.LAUNCH:
+                        window = new PorpertiesPopup(new PorpertiesPopup.Payload(this.data.DataGetter[0].Launches.ElementAt(index).ToString()));
+                        break;
+                    case OrganizerType.ROCKET:
+                        window = new PorpertiesPopup(new PorpertiesPopup.Payload(this.data.DataGetter[0].Rockets.ElementAt(index).ToString()));
+                        break;
+                    case OrganizerType.SHIP:
+                        window = new PorpertiesPopup(new PorpertiesPopup.Payload(this.data.DataGetter[0].Ships.ElementAt(index).ToString()));
+                        break;
+                }
+                if (window != null)
+                    window.Show();
             }
-            if(window != null)
-                window.Show();
         }
 
         private async void SwitchLaunchView(object sender, EventArgs e)
