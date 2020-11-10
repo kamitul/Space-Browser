@@ -152,10 +152,13 @@ namespace space_browser
 
         private async void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            foreach (var elem in panels)
-                elem.Value.Hide();
-            panels[e.ClickedItem.Text].Init();
-            panels[e.ClickedItem.Text].SetView<List<Launch>>();
+            if (e.ClickedItem.Text != "File")
+            {
+                foreach (var elem in panels)
+                    elem.Value.Hide();
+                panels[e.ClickedItem.Text].Init();
+                panels[e.ClickedItem.Text].SetView<List<Launch>>();
+            }
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)

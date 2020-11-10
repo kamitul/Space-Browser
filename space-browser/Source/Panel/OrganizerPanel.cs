@@ -227,9 +227,9 @@ namespace space_browser.Source
                 item.SubItems.Add(rockets[i].Type);
                 item.SubItems.Add(rockets[i].Country.ToString());
                 item.SubItems.Add(rockets[i].Mass.ToString());
-                //Add Image
-                item.SubItems.Add(rockets[i].LaunchID.ToString());
-                item.SubItems.Add(rockets[i].Launch.ToString());
+                item.SubItems.Add(rockets[i].Image.ToString());
+                item.SubItems.Add(rockets[i].LaunchID != null ? rockets[i].LaunchID.ToString() : "----");
+                item.SubItems.Add(rockets[i].Launch != null ? rockets[i].Launch.FlightId.ToString() : "----");
                 this.data.ListView.Items.Add(item);
             }
             if(this.data.ListView.SelectedItems.Count > 0)
@@ -244,12 +244,14 @@ namespace space_browser.Source
 
             for (int i = 0; i < ships.Count; ++i)
             {
-                System.Windows.Forms.ListViewItem item = new System.Windows.Forms.ListViewItem(ships[i].ShipId.ToString());
+                System.Windows.Forms.ListViewItem item = new System.Windows.Forms.ListViewItem(ships[i].ID.ToString());
+                item.SubItems.Add(ships[i].ShipId);
                 item.SubItems.Add(ships[i].Name);
                 item.SubItems.Add(ships[i].Type);
                 item.SubItems.Add(ships[i].Missions.ToString());
                 item.SubItems.Add(ships[i].HomePort);
-                item.SubItems.Add(ships[i].Launch.ToString());
+                item.SubItems.Add(ships[i].Image.ToString());
+                item.SubItems.Add(ships[i].Launch.FlightId.ToString());
                 this.data.ListView.Items.Add(item);
             }
             if (this.data.ListView.SelectedItems.Count > 0)
@@ -271,8 +273,8 @@ namespace space_browser.Source
                 item.SubItems.Add(launches[i].Country);
                 item.SubItems.Add(launches[i].LaunchDate.ToString());
                 item.SubItems.Add(launches[i].MissionName);
-                item.SubItems.Add(launches[i].Rocket != null ? launches[i].Rocket.ToString() : "------");
-                item.SubItems.Add(launches[i].Ships != null ? launches[i].Ships.ToString() : "------");
+                item.SubItems.Add(launches[i].Rocket != null ? launches[i].Rocket.ID.ToString() : "------");
+                item.SubItems.Add(launches[i].Ships != null ? "[ " + string.Join(",", launches[i].Ships.Select(x=>x.ID)) + "]" : "------");
                 this.data.ListView.Items.Add(item);
             }
             if (this.data.ListView.SelectedItems.Count > 0)

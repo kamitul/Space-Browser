@@ -86,7 +86,7 @@ namespace space_browser.Source
 
             for (int i = 0; i < launchesJSON["launches"].Count(); ++i)
             {
-                var ships_id = launchesJSON["launches"][i]["ships"];
+                var ships_id = launchesJSON["launches"][i]["ships"].ToObject<string[]>();
                 var rocket_id = (string)launchesJSON["launches"][i]["rocket"]["rocket_id"];
                 ret.Add(new Launch(
                                 (string)launchesJSON["launches"][i]["flight_number"],
