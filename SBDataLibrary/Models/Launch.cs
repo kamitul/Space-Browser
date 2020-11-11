@@ -31,7 +31,6 @@ namespace SBDataLibrary.Models
         public string RocketName { get; set; }
         [Required]
         [MaxLength(3)]
-        [Column(TypeName = "varchar(3)")]
         public string Country { get; set; }
         [MaxLength(200)]
         public string LaunchDate { get; set; }
@@ -47,7 +46,7 @@ namespace SBDataLibrary.Models
             Name = name;
             Payloads = payloads;
             RocketName = rocketName;
-            Country = GetCountry(country);
+            Country = country;
             LaunchDate = launchDate;
             MissionName = missionName;
             Rocket = rocket;
@@ -61,29 +60,9 @@ namespace SBDataLibrary.Models
             Name = name;
             Payloads = payloads;
             RocketName = rocketName;
-            Country = GetCountry(country);
+            Country = country;
             LaunchDate = launchDate;
             MissionName = missionName;
-        }
-
-        private string GetCountry(string countryUI)
-        {
-            var cultures = CultureInfo.GetCultures(CultureTypes.SpecificCultures);
-            List<RegionInfo> regions = new List<RegionInfo>();
-            for (int i = 0; i < cultures.Length; ++i)
-            {
-                regions.Add(new RegionInfo(cultures[i].LCID));
-            }
-            RegionInfo country = null;
-            for (int i = 0; i < regions.Count; ++i)
-            {
-                if (regions[i].EnglishName.Contains(countryUI))
-                {
-                    country = regions[i];
-                    break;
-                }
-            }
-            return country != null ? country.ToString() : string.Empty;
         }
 
         public override string ToString()
@@ -133,5 +112,6 @@ namespace SBDataLibrary.Models
         {
             return new []{ "Name: ", "Country: ", "Status: ", "Payloads: ", "Launch Date: ", "Mission Name: " };
         }
+
     }
 }

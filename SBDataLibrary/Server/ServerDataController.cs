@@ -32,12 +32,16 @@ namespace SBDataLibrary.Server
 
         public async Task Add(Launch launch)
         {
+            var rocket = launch.Rocket.Copy();
+            var ships = launch.Ships.Select(x => x.Copy()).ToList();
+            var lnc = new Launch(launch.FlightId, launch.Status, launch.Name, launch.Payloads, launch.RocketName, launch.Country, launch.LaunchDate, launch.MissionName, rocket, ships);
+
             dataContext.Database.OpenConnection();
             if (dataContext.Launches.Any(x => x.FlightId == launch.FlightId))
                 throw new System.Exception("Launch is already added!");
-            dataContext.Launches.Add(launch);
-            dataContext.Rockets.Add(launch.Rocket);
-            dataContext.Ships.AddRange(launch.Ships);
+            dataContext.Launches.Add(lnc);
+            dataContext.Rockets.Add(rocket);
+            dataContext.Ships.AddRange(ships);
             await dataContext.SaveChangesAsync();
             dataContext.Database.CloseConnection();
         }
@@ -73,14 +77,18 @@ namespace SBDataLibrary.Server
 
         public async Task DeleteLaunch(Launch launch)
         {
-            dataContext.Database.OpenConnection();
-            launch.Rocket = null;
             var ships = dataContext.Ships.Where(b => b.Launch.FlightId == launch.FlightId);
+            var rocket = launch.Rocket;
+            launch.Rocket = null;
             foreach (var ship in ships)
             {
                 launch.Ships.Remove(ship);
             }
+
+            dataContext.Database.OpenConnection();
             dataContext.Launches.Remove(launch);
+            dataContext.Ships.RemoveRange(ships);
+            dataContext.Rockets.Remove(rocket);
             await dataContext.SaveChangesAsync();
             dataContext.Database.CloseConnection();
         }

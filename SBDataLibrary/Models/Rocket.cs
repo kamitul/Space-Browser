@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -8,6 +9,7 @@ namespace SBDataLibrary.Models
     public class Rocket : Entity
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DefaultValue("newid()")]
         [Key]
         public int ID { get; set; }
         [Required]
@@ -19,7 +21,7 @@ namespace SBDataLibrary.Models
         [MaxLength(100)]
         public string Type { get; set; }
         [Required]
-        [MaxLength(100)]
+        [MaxLength(3)]
         public string Country { get; set; }
         public int Mass { get; set; }
         public byte[] Image { get; set; }
@@ -58,6 +60,13 @@ namespace SBDataLibrary.Models
         public override string[] GetFields()
         {
             return new []{ "Name: ", "Country: ", "Type: ", "Mass: " };
+        }
+
+        public Rocket Copy()
+        {
+            var rocket = new Rocket(RocketId, Name, Type, Country, Mass, Image);
+            rocket.ID = 0;
+            return rocket;
         }
     }
 }

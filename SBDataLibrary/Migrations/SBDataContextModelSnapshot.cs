@@ -26,7 +26,7 @@ namespace SBDataLibrary.Migrations
 
                     b.Property<string>("Country")
                         .IsRequired()
-                        .HasColumnType("varchar(3)")
+                        .HasColumnType("nvarchar(3)")
                         .HasMaxLength(3);
 
                     b.Property<string>("LaunchDate")
@@ -67,8 +67,8 @@ namespace SBDataLibrary.Migrations
 
                     b.Property<string>("Country")
                         .IsRequired()
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
+                        .HasColumnType("nvarchar(3)")
+                        .HasMaxLength(3);
 
                     b.Property<byte[]>("Image")
                         .HasColumnType("varbinary(max)");

@@ -105,6 +105,8 @@ namespace space_browser.Source
             IsActive = true;
             data.Panel.Visible = true;
             data.Panel.BringToFront();
+            data.PictureBox.Image = null;
+            data.RichTextBox.Text = string.Empty;
         }
 
         public async override Task SetView<T>()

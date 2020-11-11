@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SBDataLibrary.Migrations
 {
@@ -15,7 +16,7 @@ namespace SBDataLibrary.Migrations
                     Name = table.Column<string>(maxLength: 200, nullable: false),
                     Payloads = table.Column<int>(nullable: false),
                     RocketName = table.Column<string>(maxLength: 200, nullable: false),
-                    Country = table.Column<string>(type: "varchar(3)", maxLength: 3, nullable: false),
+                    Country = table.Column<string>(maxLength: 3, nullable: false),
                     LaunchDate = table.Column<string>(maxLength: 200, nullable: true),
                     MissionName = table.Column<string>(maxLength: 200, nullable: true)
                 },
@@ -33,7 +34,7 @@ namespace SBDataLibrary.Migrations
                     RocketId = table.Column<string>(nullable: false),
                     Name = table.Column<string>(maxLength: 200, nullable: false),
                     Type = table.Column<string>(maxLength: 100, nullable: false),
-                    Country = table.Column<string>(maxLength: 100, nullable: false),
+                    Country = table.Column<string>(maxLength: 3, nullable: false),
                     Mass = table.Column<int>(nullable: false),
                     Image = table.Column<byte[]>(nullable: true),
                     LaunchID = table.Column<string>(nullable: true)

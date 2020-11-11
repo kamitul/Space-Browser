@@ -96,7 +96,7 @@ namespace space_browser.Source
                                 (string)launchesJSON["launches"][i]["mission_name"],
                                 launchesJSON["launches"][i]["rocket"]["second_stage"]["payloads"].Count(),
                                 (string)launchesJSON["launches"][i]["rocket"]["rocket_name"],
-                                (string)launchesJSON["launches"][i]["rocket"]["second_stage"]["payloads"][0]["nationality"],
+                                Utility.GetCountry((string)launchesJSON["launches"][i]["rocket"]["second_stage"]["payloads"][0]["nationality"]),
                                 (string)launchesJSON["launches"][i]["launch_date_utc"],
                                 (string)launchesJSON["launches"][i]["mission_name"],
                                 rockets.Find(x => x.RocketId == rocket_id),
@@ -116,7 +116,7 @@ namespace space_browser.Source
                                 (string)rocketJSON["rockets"][j]["rocket_id"],
                                 (string)rocketJSON["rockets"][j]["rocket_name"],
                                 (string)rocketJSON["rockets"][j]["rocket_type"],
-                                (string)rocketJSON["rockets"][j]["country"],
+                                Utility.GetCountry((string)rocketJSON["rockets"][j]["country"]),
                                 (int)rocketJSON["rockets"][j]["mass"]["kg"],
                                 image));
             }

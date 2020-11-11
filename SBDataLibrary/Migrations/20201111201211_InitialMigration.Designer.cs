@@ -10,7 +10,7 @@ using SBDataLibrary.Server;
 namespace SBDataLibrary.Migrations
 {
     [DbContext(typeof(SBDataContext))]
-    [Migration("20201106222324_InitialMigration")]
+    [Migration("20201111201211_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,7 +28,7 @@ namespace SBDataLibrary.Migrations
 
                     b.Property<string>("Country")
                         .IsRequired()
-                        .HasColumnType("varchar(3)")
+                        .HasColumnType("nvarchar(3)")
                         .HasMaxLength(3);
 
                     b.Property<string>("LaunchDate")
@@ -69,8 +69,8 @@ namespace SBDataLibrary.Migrations
 
                     b.Property<string>("Country")
                         .IsRequired()
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
+                        .HasColumnType("nvarchar(3)")
+                        .HasMaxLength(3);
 
                     b.Property<byte[]>("Image")
                         .HasColumnType("varbinary(max)");

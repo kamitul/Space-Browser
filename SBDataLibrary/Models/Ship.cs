@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -8,6 +9,7 @@ namespace SBDataLibrary.Models
     public class Ship : Entity
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DefaultValue("newid()")]
         [Key]
         public int ID { get; set; }
         [Required]
@@ -55,6 +57,13 @@ namespace SBDataLibrary.Models
         public override string[] GetFields()
         {
             return new[] { "Name: ", "Missions: ", "Type: ", "HomePort: " };
+        }
+
+        public Ship Copy()
+        {
+            var ship = new Ship(ShipId, Missions, Name, Type, HomePort, Image);
+            ship.ID = 0;
+            return ship;
         }
     }
 }
