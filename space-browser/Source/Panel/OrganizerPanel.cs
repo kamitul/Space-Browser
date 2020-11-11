@@ -125,7 +125,10 @@ namespace space_browser.Source
         {
             try
             {
-                await data.DataGetter[0].UpdateShip(obj as Ship);
+                data.Form.Enabled = false;
+                var popup = new ProcessingPopup(new ProcessingPopup.Payload("Editing element", 100f, async () => await data.DataGetter[0].UpdateShip(obj as Ship)));
+                popup.FormClosed += (object sender, FormClosedEventArgs e) => { data.Form.Enabled = true; };
+                await popup.StartUpdating();
             }
             catch(Exception ex)
             {
@@ -137,7 +140,10 @@ namespace space_browser.Source
         {
             try
             {
-                await data.DataGetter[0].UpdateRocket(obj as Rocket);
+                data.Form.Enabled = false;
+                var popup = new ProcessingPopup(new ProcessingPopup.Payload("Editing element", 100f, async () => await data.DataGetter[0].UpdateRocket(obj as Rocket)));
+                popup.FormClosed += (object sender, FormClosedEventArgs e) => { data.Form.Enabled = true; };
+                await popup.StartUpdating();
             }
             catch (Exception ex)
             {
@@ -149,7 +155,10 @@ namespace space_browser.Source
         {
             try
             {
-                await data.DataGetter[0].UpdateLaunch(obj as Launch);
+                data.Form.Enabled = false;
+                var popup = new ProcessingPopup(new ProcessingPopup.Payload("Editing element", 100f, async () => await data.DataGetter[0].UpdateLaunch(obj as Launch)));
+                popup.FormClosed += (object sender, FormClosedEventArgs e) => { data.Form.Enabled = true; };
+                await popup.StartUpdating();
             }
             catch (Exception ex)
             {
@@ -157,21 +166,31 @@ namespace space_browser.Source
             }
         }
 
-        private void DeleteElementFromDB(object sender, EventArgs e)
+        private async void DeleteElementFromDB(object sender, EventArgs e)
         {
             if (data.ListView.SelectedItems.Count > 0)
             {
                 int index = data.ListView.Items.IndexOf(data.ListView.SelectedItems[0]);
+                ProcessingPopup popup = null;
                 switch (type)
                 {
                     case OrganizerType.LAUNCH:
-                        data.DataGetter[0].DeleteLaunch(data.DataGetter[0].Launches.ElementAt(index));
+                        data.Form.Enabled = false;
+                        popup = new ProcessingPopup(new ProcessingPopup.Payload("Deleting element", 100f, async () => await data.DataGetter[0].DeleteLaunch(data.DataGetter[0].Launches.ElementAt(index))));
+                        popup.FormClosed += (object sender, FormClosedEventArgs e) => { data.Form.Enabled = true; };
+                        await popup.StartUpdating();
                         break;
                     case OrganizerType.ROCKET:
-                        data.DataGetter[0].DeleteRocket(data.DataGetter[0].Rockets.ElementAt(index));
+                        data.Form.Enabled = false;
+                        popup = new ProcessingPopup(new ProcessingPopup.Payload("Deleting element", 100f, async () => await data.DataGetter[0].DeleteRocket(data.DataGetter[0].Rockets.ElementAt(index))));
+                        popup.FormClosed += (object sender, FormClosedEventArgs e) => { data.Form.Enabled = true; };
+                        await popup.StartUpdating();
                         break;
                     case OrganizerType.SHIP:
-                        data.DataGetter[0].DeleteShip(data.DataGetter[0].Ships.ElementAt(index));
+                        data.Form.Enabled = false;
+                        popup = new ProcessingPopup(new ProcessingPopup.Payload("Deleting element", 100f, async () => await data.DataGetter[0].DeleteShip(data.DataGetter[0].Ships.ElementAt(index))));
+                        popup.FormClosed += (object sender, FormClosedEventArgs e) => { data.Form.Enabled = true; };
+                        await popup.StartUpdating();
                         break;
                 }
             }

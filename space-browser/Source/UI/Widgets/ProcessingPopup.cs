@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -44,6 +45,7 @@ namespace space_browser.Source.UI.Widgets
             public int Index { get; set; }
             public float Frequency { get; set; }
             public List<Task<dynamic>> Tasks { get; set; }
+
             public Payload(string text, float frequency, params Func<Task<dynamic>>[] tasks)
             {
                 Content = text;
@@ -52,6 +54,16 @@ namespace space_browser.Source.UI.Widgets
                 Frequency = frequency;
                 Tasks = new List<Task<dynamic>>();
                 Tasks.Add(Task.Run(() => tasks[0].Invoke()));         
+            }
+
+            public Payload(string text, float frequency, params Func<Task>[] tasks)
+            {
+                Content = text;
+                LoadingElements = new string[] { Content + ".", Content + "..", Content + "..." };
+                Index = 0;
+                Frequency = frequency;
+                Tasks = new List<Task<dynamic>>();
+                Tasks.Add(Task.Run(new Func<dynamic>(() => tasks[0].Invoke())));
             }
         }
 

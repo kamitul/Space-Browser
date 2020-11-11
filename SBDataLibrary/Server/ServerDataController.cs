@@ -117,7 +117,6 @@ namespace SBDataLibrary.Server
             dataContext.Database.OpenConnection();
             dataContext.Launches.Update(launch);
             await dataContext.SaveChangesAsync();
-
         }
 
         public async Task UpdateRocket(Rocket rocket)
