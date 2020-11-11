@@ -42,8 +42,33 @@ namespace space_browser.Source
 
             this.data.AddButton.Click += AddElementToDB;
             this.data.RefreshButton.Click += RefreshPanel;
+            this.data.ListView.ColumnClick += SortElements;
         }
 
+        private void SortElements(object sender, ColumnClickEventArgs e)
+        {
+            int index = e.Column;
+            var launches = this.data.DataGetter[0].Launches.ToList();
+            launches.Sort((p,q) => Compare(p, q, index));
+            AddLaunches(launches);
+        }
+
+        private int Compare(Launch p, Launch q, int index)
+        {
+            var first = p.GetType().GetProperties()[index].GetValue(p).ToString();
+            var second = q.GetType().GetProperties()[index].GetValue(q).ToString();
+
+            decimal num1, num2;
+
+            if(decimal.TryParse(first, out num1) && decimal.TryParse(second, out num2))
+            {
+                return num1.CompareTo(num2);
+            }
+            else
+            {
+                return first.CompareTo(second);
+            }
+        }
 
         private async void RefreshPanel(object sender, EventArgs e)
         {
@@ -71,7 +96,8 @@ namespace space_browser.Source
 
                 try
                 {
-                    await serverController.Add(launch);
+                    var processingPopup = new ProcessingPopup(new ProcessingPopup.Payload("Adding to database", 100f, async () => await serverController.Add(launch)));
+                    await processingPopup.StartUpdating();
                 }
                 catch (Exception ex)
                 {
@@ -111,11 +137,10 @@ namespace space_browser.Source
 
         public async override Task SetView<T>()
         {
-            data.ListView.Items.Clear();
             if (typeof(T) == typeof(List<Launch>))
             {
                 data.Form.Enabled = false;
-                var loadingPopup = new LoadingPopup(new LoadingPopup.Payload("Connecting to SpaceX API", 100f, async () => await data.DataGetter[0].GetLaunchesAsync()));
+                var loadingPopup = new ProcessingPopup(new ProcessingPopup.Payload("Connecting to SpaceX API", 100f, async () => await data.DataGetter[0].GetLaunchesAsync()));
                 loadingPopup.FormClosed += (object sender, FormClosedEventArgs e) => { data.Form.Enabled = true; };
                 var result = await loadingPopup.StartUpdating();
                 if(result != null)
@@ -125,6 +150,8 @@ namespace space_browser.Source
 
         private void AddLaunches<T>(List<T> data)
         {
+            this.data.ListView.Items.Clear();
+
             var launches = data.Select(x => x as Launch).ToList();
             for (int i = 0; i < data.Count; ++i)
             {

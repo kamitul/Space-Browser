@@ -30,7 +30,7 @@ namespace SBDataLibrary.Server
 
         }
 
-        public async Task Add(Launch launch)
+        public async Task<bool> Add(Launch launch)
         {
             var rocket = launch.Rocket.Copy();
             var ships = launch.Ships.Select(x => x.Copy()).ToList();
@@ -44,6 +44,8 @@ namespace SBDataLibrary.Server
             dataContext.Ships.AddRange(ships);
             await dataContext.SaveChangesAsync();
             dataContext.Database.CloseConnection();
+
+            return true;
         }
 
 

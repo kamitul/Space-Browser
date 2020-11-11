@@ -4,6 +4,7 @@ using space_browser.Source.UI.Widgets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -54,6 +55,47 @@ namespace space_browser.Source
             this.data.Properties.Click += ShowPopertiesPopup;
             this.data.Remove.Click += DeleteElementFromDB;
             this.data.Edit.Click += EditElementFromDB;
+            this.data.ListView.ColumnClick += SortElements;
+        }
+
+        private void SortElements(object sender, ColumnClickEventArgs e)
+        {
+            int index = e.Column;
+            switch (type)
+            {
+                case OrganizerType.LAUNCH:
+                    var launches = this.data.DataGetter[0].Launches.ToList();
+                    launches.Sort((p, q) => Compare(p, q, index));
+                    AddLaunches(launches);
+                    break;
+                case OrganizerType.ROCKET:
+                    var rockets = this.data.DataGetter[0].Rockets.ToList();
+                    rockets.Sort((p, q) => Compare(p, q, index));
+                    AddRockets(rockets);
+                    break;
+                case OrganizerType.SHIP:
+                    var ships = this.data.DataGetter[0].Ships.ToList();
+                    ships.Sort((p, q) => Compare(p, q, index));
+                    AddShips(ships);
+                    break;
+            }
+        }
+
+        private int Compare(Entity p, Entity q, int index)
+        {
+            var first = p.GetType().GetProperties()[index].GetValue(p).ToString();
+            var second = q.GetType().GetProperties()[index].GetValue(q).ToString();
+
+            decimal num1, num2;
+
+            if (decimal.TryParse(first, out num1) && decimal.TryParse(second, out num2))
+            {
+                return num1.CompareTo(num2);
+            }
+            else
+            {
+                return first.CompareTo(second);
+            }
         }
 
         private void EditElementFromDB(object sender, EventArgs e)
@@ -169,7 +211,7 @@ namespace space_browser.Source
             data.ListView.Columns.Clear();
 
             data.Form.Enabled = false;
-            var loadingPopup = new LoadingPopup(new LoadingPopup.Payload("Connecting to DB", 100f, async () => await data.DataGetter[0].GetLaunchesAsync()));
+            var loadingPopup = new ProcessingPopup(new ProcessingPopup.Payload("Connecting to DB", 100f, async () => await data.DataGetter[0].GetLaunchesAsync()));
             loadingPopup.FormClosed += (object sender, FormClosedEventArgs e) => { data.Form.Enabled = true; };
             var result = await loadingPopup.StartUpdating();
             if (result != null)
@@ -186,7 +228,7 @@ namespace space_browser.Source
 
             data.Form.Enabled = false;
             data.Form.Enabled = false;
-            var loadingPopup = new LoadingPopup(new LoadingPopup.Payload("Connecting to DB", 100f, async () => await data.DataGetter[0].GetRocketsAsync()));
+            var loadingPopup = new ProcessingPopup(new ProcessingPopup.Payload("Connecting to DB", 100f, async () => await data.DataGetter[0].GetRocketsAsync()));
             loadingPopup.FormClosed += (object sender, FormClosedEventArgs e) => { data.Form.Enabled = true; };
             var result = await loadingPopup.StartUpdating();
             if (result != null)
@@ -203,7 +245,7 @@ namespace space_browser.Source
 
             data.Form.Enabled = false;
             data.Form.Enabled = false;
-            var loadingPopup = new LoadingPopup(new LoadingPopup.Payload("Connecting to DB", 100f, async () => await data.DataGetter[0].GetShipsAsync()));
+            var loadingPopup = new ProcessingPopup(new ProcessingPopup.Payload("Connecting to DB", 100f, async () => await data.DataGetter[0].GetShipsAsync()));
             loadingPopup.FormClosed += (object sender, FormClosedEventArgs e) => { data.Form.Enabled = true; };
             var result = await loadingPopup.StartUpdating();
             if (result != null)
@@ -222,9 +264,6 @@ namespace space_browser.Source
 
         public async override Task SetView<T>()
         {
-            data.ListView.Items.Clear();
-            data.ListView.Columns.Clear();
-
             if(typeof(T) == typeof(List<Launch>))
             {
                 type = OrganizerType.LAUNCH;
@@ -252,6 +291,9 @@ namespace space_browser.Source
 
         private void AddRockets<T>(List<T> data)
         {
+            this.data.ListView.Items.Clear();
+            this.data.ListView.Columns.Clear();
+
             var rockets = data.Select(x => x as Rocket).ToList();
             PopulateColumns(typeof(Rocket));
 
@@ -274,6 +316,9 @@ namespace space_browser.Source
 
         private void AddShips<T>(List<T> data)
         {
+            this.data.ListView.Items.Clear();
+            this.data.ListView.Columns.Clear();
+
             var ships = data.Select(x => x as Ship).ToList();
 
             PopulateColumns(typeof(Ship));
@@ -296,6 +341,9 @@ namespace space_browser.Source
 
         private void AddLaunches<T>(List<T> data)
         {
+            this.data.ListView.Items.Clear();
+            this.data.ListView.Columns.Clear();
+
             var launches = data.Select(x => x as Launch).ToList();
             PopulateColumns(typeof(Launch));
 
