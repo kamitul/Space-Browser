@@ -16,11 +16,12 @@
 
         public class Payload : IPayload
         {
-            public string Content { get; set; }
             public Payload(string text)
             {
                 Content = text;
             }
+
+            public string Content { get; set; }
         }
 
         private void InitializeComponent()

@@ -2,5 +2,6 @@
 {
     public interface IPayload
     {
+        string Content { get; set; }
     }
 }

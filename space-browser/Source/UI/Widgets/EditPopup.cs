@@ -16,8 +16,8 @@ namespace space_browser.Source.UI.Widgets
         public Action<Entity> OnElementEdited;
 
         private Payload payload;
-        private Button button1;
-        private Button button2;
+        private Button editButton;
+        private Button cancelButton;
         private List<RichTextBox> textBoxes = new List<RichTextBox>();
 
         public EditPopup(Payload payload) : base()
@@ -28,17 +28,17 @@ namespace space_browser.Source.UI.Widgets
 
         private void InitialzeEntity(Payload payload)
         {
-            foreach (string fi in payload.Content)
+            foreach (string fi in payload.EntityInfo)
             {
                 this.tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.AutoSize));
             }
 
-            for (int i = 0; i < payload.Content.Length; ++i)
+            for (int i = 0; i < payload.EntityInfo.Length; ++i)
             {
                 Label label = new Label();
-                label.Text = payload.Content[i];
+                label.Text = payload.EntityInfo[i];
                 RichTextBox richTextBox = new RichTextBox();
-                richTextBox.Name = payload.Content[i];
+                richTextBox.Name = payload.EntityInfo[i];
                 richTextBox.Size = new Size(190, 40);
                 richTextBox.Margin = new Padding(3, 3, 3, 3);
                 textBoxes.Add(richTextBox);
@@ -49,14 +49,17 @@ namespace space_browser.Source.UI.Widgets
 
         public class Payload : IPayload
         {
-            public string[] Content;
+            public string[] EntityInfo;
             public Entity Entity;
 
             public Payload(Entity entity)
             {
-                Content = entity.GetFields();
+                EntityInfo = entity.GetFields();
+                Content = string.Join(string.Empty, entity.GetFields());
                 Entity = entity;
             }
+
+            public string Content { get; set; }
         }
 
 
@@ -64,8 +67,8 @@ namespace space_browser.Source.UI.Widgets
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditPopup));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.editButton = new System.Windows.Forms.Button();
+            this.cancelButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -80,31 +83,31 @@ namespace space_browser.Source.UI.Widgets
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(249, 427);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(220, 33);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Edit";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.editButton.Location = new System.Drawing.Point(249, 427);
+            this.editButton.Name = "button1";
+            this.editButton.Size = new System.Drawing.Size(220, 33);
+            this.editButton.TabIndex = 1;
+            this.editButton.Text = "Edit";
+            this.editButton.UseVisualStyleBackColor = true;
+            this.editButton.Click += new System.EventHandler(this.EditEntity);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(12, 427);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(220, 33);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Cancel";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.cancelButton.Location = new System.Drawing.Point(12, 427);
+            this.cancelButton.Name = "button2";
+            this.cancelButton.Size = new System.Drawing.Size(220, 33);
+            this.cancelButton.TabIndex = 1;
+            this.cancelButton.Text = "Cancel";
+            this.cancelButton.UseVisualStyleBackColor = true;
+            this.cancelButton.Click += new System.EventHandler(this.CancelEdition);
             // 
             // EditPopup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(481, 480);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.cancelButton);
+            this.Controls.Add(this.editButton);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -123,12 +126,12 @@ namespace space_browser.Source.UI.Widgets
             InitialzeEntity(payload);
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void CancelEdition(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void EditEntity(object sender, EventArgs e)
         {
             payload.Entity.Set(textBoxes.Select(x => x.Text).ToArray());
             OnElementEdited?.Invoke(payload.Entity);

@@ -39,13 +39,15 @@ namespace space_browser.Source.UI.Widgets
 
         public class Payload : IPayload
         {
-            public string[] Content { get; set; }
+            public string Content { get; set; }
+            public string[] LoadingElements { get; set; }
             public int Index { get; set; }
             public float Frequency { get; set; }
             public List<Task<dynamic>> Tasks { get; set; }
             public Payload(string text, float frequency, params Func<Task<dynamic>>[] tasks)
             {
-                Content = new string[] { text + ".", text + "..", text + "..." };
+                Content = text;
+                LoadingElements = new string[] { Content + ".", Content + "..", Content + "..." };
                 Index = 0;
                 Frequency = frequency;
                 Tasks = new List<Task<dynamic>>();
@@ -65,15 +67,10 @@ namespace space_browser.Source.UI.Widgets
         {
             while (!cts.IsCancellationRequested)
             {
-                richTextBox1.Text = payload.Content[payload.Index++ % payload.Content.Length];
+                richTextBox1.Text = payload.LoadingElements[payload.Index++ % payload.LoadingElements.Length];
                 await Task.Delay((int)payload.Frequency);
             }
             return null;
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void InitializeComponent()
@@ -122,11 +119,6 @@ namespace space_browser.Source.UI.Widgets
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
-        }
-
-        internal void EndUpdating()
-        {
-            throw new NotImplementedException();
         }
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;

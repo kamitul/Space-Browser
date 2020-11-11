@@ -133,11 +133,6 @@ namespace space_browser
                 panels[e.ClickedItem.Text].SetView<List<Launch>>();
             }
         }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
     }
 }
     

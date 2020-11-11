@@ -67,14 +67,11 @@ namespace space_browser.Source
             {
                 int index = this.data.ListView.Items.IndexOf(this.data.ListView.SelectedItems[0]);
                 var launch = this.data.DataGetter[0].Launches.ElementAt(index);
-
                 var serverController = this.data.DataGetter[1] as ServerDataController;
 
                 try
                 {
-                    await serverController.Add(
-                        launch
-                        );
+                    await serverController.Add(launch);
                 }
                 catch (Exception ex)
                 {

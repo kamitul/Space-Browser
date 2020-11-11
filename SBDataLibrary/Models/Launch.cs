@@ -110,7 +110,7 @@ namespace SBDataLibrary.Models
                 $"Status : {Status}" + "\n" +
                 $"Payloads: {Payloads}" + "\n" +
                 $"Launch Data: {LaunchDate}" + "\n" +
-                $"Mission Name: {MissionName}" + "\n" +
+                $"Mission Name: {MissionName}" + "\n\n" +
                 $"Rocket :  \n{rocketInfo}" + "\n" +
                 $"Ships : \n{shipInfo}" + "\n";
         }

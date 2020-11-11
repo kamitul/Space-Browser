@@ -39,7 +39,7 @@ namespace SBDataLibrary.Models
                 $"Name : {Name}" + "\n" +
                 $"Missions: {Missions}" + "\n" +
                 $"Type : {Type}" + "\n" +
-                $"HomePort: {HomePort}" + "\n";
+                $"HomePort: {HomePort}" + "\n\n";
         }
 
         public override void Set(params object[] data)
