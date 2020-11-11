@@ -48,7 +48,7 @@ namespace space_browser
         {
             panels.Add("Organizer", new OrganizerPanel(
                 new OrganizerPanel.OrganizerData(
-                panel2, listView2,
+                this, panel2, listView2,
                 new List<ToolStripButton>()
                 {
                     toolStrip2.Items[0] as ToolStripButton,
@@ -64,12 +64,13 @@ namespace space_browser
                 new ServerDataController())));
             panels.Add("Browser", new BrowserPanel(
                 new BrowserPanel.BrowserData(
-                panel1, listView1,
+                this, panel1, listView1,
                 richTextBox1,
                 pictureBox1,
                 new BrowserDataController())));
             panels.Add("File", new FilePanel(
                 new FilePanel.FileData(
+                    null,
                     null,
                     null,
                     new ServerDataController())));

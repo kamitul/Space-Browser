@@ -1,5 +1,6 @@
 ﻿using SBDataLibrary.Models;
 using SBDataLibrary.Server;
+using space_browser.Source.UI.Widgets;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -17,7 +18,7 @@ namespace space_browser.Source
             public RichTextBox RichTextBox;
             public PictureBox PictureBox;
 
-            public BrowserData(System.Windows.Forms.Panel panel, ListView listView, RichTextBox textBox, PictureBox pictureBox, params IDataController[] dataGetter) : base(panel, listView, dataGetter)
+            public BrowserData(System.Windows.Forms.Form form, System.Windows.Forms.Panel panel, ListView listView, RichTextBox textBox, PictureBox pictureBox, params IDataController[] dataGetter) : base(form, panel, listView, dataGetter)
             {
                 RichTextBox = textBox;
                 PictureBox = pictureBox;
@@ -66,8 +67,12 @@ namespace space_browser.Source
             data.ListView.Items.Clear();
             if (typeof(T) == typeof(List<Launch>))
             {
-                var result = await data.DataGetter[0].GetLaunchesAsync();
-                AddLaunches(result);
+                this.data.Form.Enabled = false;
+                var loadingPopup = new LoadingPopup(new LoadingPopup.Payload("Connecting to SpaceX API", 100f, async () => await this.data.DataGetter[0].GetLaunchesAsync()));
+                loadingPopup.FormClosed += (object sender, FormClosedEventArgs e) => { this.data.Form.Enabled = true; };
+                var result = await loadingPopup.StartUpdating();
+                if(result != null)
+                    AddLaunches(result as List<Launch>);
             }
         }
 

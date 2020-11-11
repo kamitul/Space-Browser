@@ -28,7 +28,7 @@ namespace space_browser.Source
             public System.Windows.Forms.Button Remove;
             public System.Windows.Forms.Button Properties;
 
-            public OrganizerData(System.Windows.Forms.Panel panel, System.Windows.Forms.ListView listView, List<System.Windows.Forms.ToolStripButton> toolButtons, List<System.Windows.Forms.Button> buttons, params IDataController[] dataGetter) : base(panel, listView, dataGetter)
+            public OrganizerData(System.Windows.Forms.Form form, System.Windows.Forms.Panel panel, System.Windows.Forms.ListView listView, List<System.Windows.Forms.ToolStripButton> toolButtons, List<System.Windows.Forms.Button> buttons, params IDataController[] dataGetter) : base(form, panel, listView, dataGetter)
             {
                 Launches = toolButtons.Find(x => x.Name.Equals("Launches"));
                 Ships = toolButtons.Find(x => x.Name.Equals("Ships"));
@@ -163,17 +163,52 @@ namespace space_browser.Source
 
         private async void SwitchLaunchView(object sender, EventArgs e)
         {
-            await SetView<List<Launch>>();
+            data.ListView.Items.Clear();
+            data.ListView.Columns.Clear();
+
+            this.data.Form.Enabled = false;
+            var loadingPopup = new LoadingPopup(new LoadingPopup.Payload("Connecting to DB", 100f, async () => await this.data.DataGetter[0].GetLaunchesAsync()));
+            loadingPopup.FormClosed += (object sender, FormClosedEventArgs e) => { this.data.Form.Enabled = true; };
+            var result = await loadingPopup.StartUpdating();
+            if (result != null)
+            {
+                type = OrganizerType.LAUNCH;
+                AddLaunches(result as List<Launch>);
+            }
         }
 
         private async void SwitchRocketView(object sender, EventArgs e)
         {
-            await SetView<List<Rocket>>();
+            data.ListView.Items.Clear();
+            data.ListView.Columns.Clear();
+
+            this.data.Form.Enabled = false;
+            this.data.Form.Enabled = false;
+            var loadingPopup = new LoadingPopup(new LoadingPopup.Payload("Connecting to DB", 100f, async () => await this.data.DataGetter[0].GetRocketsAsync()));
+            loadingPopup.FormClosed += (object sender, FormClosedEventArgs e) => { this.data.Form.Enabled = true; };
+            var result = await loadingPopup.StartUpdating();
+            if (result != null)
+            {
+                type = OrganizerType.ROCKET;
+                AddRockets(result as List<Rocket>);
+            }
         }
 
         private async void SwitchShipView(object sender, EventArgs e)
         {
-            await SetView<List<Ship>>();
+            data.ListView.Items.Clear();
+            data.ListView.Columns.Clear();
+
+            this.data.Form.Enabled = false;
+            this.data.Form.Enabled = false;
+            var loadingPopup = new LoadingPopup(new LoadingPopup.Payload("Connecting to DB", 100f, async () => await this.data.DataGetter[0].GetShipsAsync()));
+            loadingPopup.FormClosed += (object sender, FormClosedEventArgs e) => { this.data.Form.Enabled = true; };
+            var result = await loadingPopup.StartUpdating();
+            if (result != null)
+            {
+                type = OrganizerType.SHIP;
+                AddShips(result as List<Ship>);
+            }
         }
 
         public override void Init()
@@ -202,7 +237,6 @@ namespace space_browser.Source
             }
             else if(typeof(T) == typeof(List<Rocket>))
             {
-                type = OrganizerType.ROCKET;
                 var data = await this.data.DataGetter[0].GetRocketsAsync();
                 AddRockets(data);
             }
