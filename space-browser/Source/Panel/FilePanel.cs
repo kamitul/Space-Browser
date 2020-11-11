@@ -33,9 +33,9 @@ namespace space_browser.Source.Panel
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string filePath = saveFileDialog.FileName;
-                var launches = await this.data.DataGetter[0].GetLaunchesAsync();
-                var rockets = await this.data.DataGetter[0].GetRocketsAsync();
-                var ships = await this.data.DataGetter[0].GetShipsAsync();
+                var launches = await data.DataGetter[0].GetLaunchesAsync();
+                var rockets = await data.DataGetter[0].GetRocketsAsync();
+                var ships = await data.DataGetter[0].GetShipsAsync();
 
                 string buffer = string.Join(string.Empty, launches.Select(x => x.ToString()));
                 buffer += string.Join(string.Empty, rockets.Select(x => x.ToString()));

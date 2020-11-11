@@ -6,7 +6,7 @@ namespace space_browser.Source.UI
     {
         public Popup()
         {
-            this.TopMost = true;
+            TopMost = true;
         }
         public virtual IPayload IPayload { get; protected set; }
     }

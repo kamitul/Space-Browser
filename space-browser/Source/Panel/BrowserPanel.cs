@@ -52,10 +52,10 @@ namespace space_browser.Source
 
         public async Task Refresh()
         {
-            this.data.Form.Refresh();
-            this.data.ListView.Items.Clear();
-            this.data.RichTextBox.Clear();
-            this.data.PictureBox.Image = null;
+            data.Form.Refresh();
+            data.ListView.Items.Clear();
+            data.RichTextBox.Clear();
+            data.PictureBox.Image = null;
             Init();
             await SetView<List<Launch>>();
         }
@@ -63,11 +63,11 @@ namespace space_browser.Source
 
         private async void AddElementToDB(object sender, EventArgs e)
         {
-            if (this.data.ListView.SelectedItems.Count > 0)
+            if (data.ListView.SelectedItems.Count > 0)
             {
-                int index = this.data.ListView.Items.IndexOf(this.data.ListView.SelectedItems[0]);
-                var launch = this.data.DataGetter[0].Launches.ElementAt(index);
-                var serverController = this.data.DataGetter[1] as ServerDataController;
+                int index = data.ListView.Items.IndexOf(data.ListView.SelectedItems[0]);
+                var launch = data.DataGetter[0].Launches.ElementAt(index);
+                var serverController = data.DataGetter[1] as ServerDataController;
 
                 try
                 {
@@ -112,9 +112,9 @@ namespace space_browser.Source
             data.ListView.Items.Clear();
             if (typeof(T) == typeof(List<Launch>))
             {
-                this.data.Form.Enabled = false;
-                var loadingPopup = new LoadingPopup(new LoadingPopup.Payload("Connecting to SpaceX API", 100f, async () => await this.data.DataGetter[0].GetLaunchesAsync()));
-                loadingPopup.FormClosed += (object sender, FormClosedEventArgs e) => { this.data.Form.Enabled = true; };
+                data.Form.Enabled = false;
+                var loadingPopup = new LoadingPopup(new LoadingPopup.Payload("Connecting to SpaceX API", 100f, async () => await data.DataGetter[0].GetLaunchesAsync()));
+                loadingPopup.FormClosed += (object sender, FormClosedEventArgs e) => { data.Form.Enabled = true; };
                 var result = await loadingPopup.StartUpdating();
                 if(result != null)
                     AddLaunches(result as List<Launch>);

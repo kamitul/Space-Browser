@@ -30,7 +30,7 @@ namespace space_browser.Source.UI.Widgets
         {
             foreach (string fi in payload.EntityInfo)
             {
-                this.tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+                tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.AutoSize));
             }
 
             for (int i = 0; i < payload.EntityInfo.Length; ++i)
@@ -42,8 +42,8 @@ namespace space_browser.Source.UI.Widgets
                 richTextBox.Size = new Size(190, 40);
                 richTextBox.Margin = new Padding(3, 3, 3, 3);
                 textBoxes.Add(richTextBox);
-                this.tableLayoutPanel1.Controls.Add(label, 0, i);
-                this.tableLayoutPanel1.Controls.Add(richTextBox, 1, i);
+                tableLayoutPanel1.Controls.Add(label, 0, i);
+                tableLayoutPanel1.Controls.Add(richTextBox, 1, i);
             }
         }
 
@@ -66,58 +66,58 @@ namespace space_browser.Source.UI.Widgets
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditPopup));
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.editButton = new System.Windows.Forms.Button();
-            this.cancelButton = new System.Windows.Forms.Button();
-            this.SuspendLayout();
+            tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            editButton = new System.Windows.Forms.Button();
+            cancelButton = new System.Windows.Forms.Button();
+            SuspendLayout();
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 12);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(457, 409);
-            this.tableLayoutPanel1.TabIndex = 0;
+            tableLayoutPanel1.ColumnCount = 2;
+            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            tableLayoutPanel1.Location = new System.Drawing.Point(12, 12);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.Size = new System.Drawing.Size(457, 409);
+            tableLayoutPanel1.TabIndex = 0;
             // 
             // button1
             // 
-            this.editButton.Location = new System.Drawing.Point(249, 427);
-            this.editButton.Name = "button1";
-            this.editButton.Size = new System.Drawing.Size(220, 33);
-            this.editButton.TabIndex = 1;
-            this.editButton.Text = "Edit";
-            this.editButton.UseVisualStyleBackColor = true;
-            this.editButton.Click += new System.EventHandler(this.EditEntity);
+            editButton.Location = new System.Drawing.Point(249, 427);
+            editButton.Name = "button1";
+            editButton.Size = new System.Drawing.Size(220, 33);
+            editButton.TabIndex = 1;
+            editButton.Text = "Edit";
+            editButton.UseVisualStyleBackColor = true;
+            editButton.Click += new System.EventHandler(EditEntity);
             // 
             // button2
             // 
-            this.cancelButton.Location = new System.Drawing.Point(12, 427);
-            this.cancelButton.Name = "button2";
-            this.cancelButton.Size = new System.Drawing.Size(220, 33);
-            this.cancelButton.TabIndex = 1;
-            this.cancelButton.Text = "Cancel";
-            this.cancelButton.UseVisualStyleBackColor = true;
-            this.cancelButton.Click += new System.EventHandler(this.CancelEdition);
+            cancelButton.Location = new System.Drawing.Point(12, 427);
+            cancelButton.Name = "button2";
+            cancelButton.Size = new System.Drawing.Size(220, 33);
+            cancelButton.TabIndex = 1;
+            cancelButton.Text = "Cancel";
+            cancelButton.UseVisualStyleBackColor = true;
+            cancelButton.Click += new System.EventHandler(CancelEdition);
             // 
             // EditPopup
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(481, 480);
-            this.Controls.Add(this.cancelButton);
-            this.Controls.Add(this.editButton);
-            this.Controls.Add(this.tableLayoutPanel1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "EditPopup";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Edit Entity";
-            this.Load += new System.EventHandler(this.EditPopup_Load);
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            ClientSize = new System.Drawing.Size(481, 480);
+            Controls.Add(cancelButton);
+            Controls.Add(editButton);
+            Controls.Add(tableLayoutPanel1);
+            FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "EditPopup";
+            StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            Text = "Edit Entity";
+            Load += new System.EventHandler(EditPopup_Load);
+            ResumeLayout(false);
 
         }
 
@@ -128,14 +128,14 @@ namespace space_browser.Source.UI.Widgets
 
         private void CancelEdition(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void EditEntity(object sender, EventArgs e)
         {
             payload.Entity.Set(textBoxes.Select(x => x.Text).ToArray());
             OnElementEdited?.Invoke(payload.Entity);
-            this.Close();
+            Close();
         }
     }
 }

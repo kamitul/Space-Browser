@@ -65,15 +65,15 @@ namespace space_browser.Source
                 switch (type)
                 {
                     case OrganizerType.LAUNCH:
-                        window = new EditPopup(new EditPopup.Payload(this.data.DataGetter[0].Launches.ElementAt(index)));
+                        window = new EditPopup(new EditPopup.Payload(data.DataGetter[0].Launches.ElementAt(index)));
                         window.OnElementEdited += EditLaunch;
                         break;
                     case OrganizerType.ROCKET:
-                        window = new EditPopup(new EditPopup.Payload(this.data.DataGetter[0].Rockets.ElementAt(index)));
+                        window = new EditPopup(new EditPopup.Payload(data.DataGetter[0].Rockets.ElementAt(index)));
                         window.OnElementEdited += EditRocket;
                         break;
                     case OrganizerType.SHIP:
-                        window = new EditPopup(new EditPopup.Payload(this.data.DataGetter[0].Ships.ElementAt(index)));
+                        window = new EditPopup(new EditPopup.Payload(data.DataGetter[0].Ships.ElementAt(index)));
                         window.OnElementEdited += EditShip;
                         break;
                 }
@@ -86,7 +86,7 @@ namespace space_browser.Source
         {
             try
             {
-                await this.data.DataGetter[0].UpdateShip(obj as Ship);
+                await data.DataGetter[0].UpdateShip(obj as Ship);
             }
             catch(Exception ex)
             {
@@ -98,7 +98,7 @@ namespace space_browser.Source
         {
             try
             {
-                await this.data.DataGetter[0].UpdateRocket(obj as Rocket);
+                await data.DataGetter[0].UpdateRocket(obj as Rocket);
             }
             catch (Exception ex)
             {
@@ -110,7 +110,7 @@ namespace space_browser.Source
         {
             try
             {
-                await this.data.DataGetter[0].UpdateLaunch(obj as Launch);
+                await data.DataGetter[0].UpdateLaunch(obj as Launch);
             }
             catch (Exception ex)
             {
@@ -126,13 +126,13 @@ namespace space_browser.Source
                 switch (type)
                 {
                     case OrganizerType.LAUNCH:
-                        this.data.DataGetter[0].DeleteLaunch(this.data.DataGetter[0].Launches.ElementAt(index));
+                        data.DataGetter[0].DeleteLaunch(data.DataGetter[0].Launches.ElementAt(index));
                         break;
                     case OrganizerType.ROCKET:
-                        this.data.DataGetter[0].DeleteRocket(this.data.DataGetter[0].Rockets.ElementAt(index));
+                        data.DataGetter[0].DeleteRocket(data.DataGetter[0].Rockets.ElementAt(index));
                         break;
                     case OrganizerType.SHIP:
-                        this.data.DataGetter[0].DeleteShip(this.data.DataGetter[0].Ships.ElementAt(index));
+                        data.DataGetter[0].DeleteShip(data.DataGetter[0].Ships.ElementAt(index));
                         break;
                 }
             }
@@ -147,13 +147,15 @@ namespace space_browser.Source
                 switch (type)
                 {
                     case OrganizerType.LAUNCH:
-                        window = new PorpertiesPopup(new PorpertiesPopup.Payload(this.data.DataGetter[0].Launches.ElementAt(index).ToString()));
+                        window = new PorpertiesPopup(new PorpertiesPopup.Payload(data.DataGetter[0].Launches.ElementAt(index).ToString()));
                         break;
                     case OrganizerType.ROCKET:
-                        window = new PorpertiesPopup(new PorpertiesPopup.Payload(this.data.DataGetter[0].Rockets.ElementAt(index).ToString()));
+                        var rocket = data.DataGetter[0].Rockets.ElementAt(index);
+                        window = new PorpertiesPopup(new PorpertiesPopup.Payload(rocket.ToString(), new PorpertiesPopup.Payload.Image(rocket.Image)));
                         break;
                     case OrganizerType.SHIP:
-                        window = new PorpertiesPopup(new PorpertiesPopup.Payload(this.data.DataGetter[0].Ships.ElementAt(index).ToString()));
+                        var ship = data.DataGetter[0].Ships.ElementAt(index);
+                        window = new PorpertiesPopup(new PorpertiesPopup.Payload(ship.ToString(), new PorpertiesPopup.Payload.Image(ship.Image)));
                         break;
                 }
                 if (window != null)
@@ -166,9 +168,9 @@ namespace space_browser.Source
             data.ListView.Items.Clear();
             data.ListView.Columns.Clear();
 
-            this.data.Form.Enabled = false;
-            var loadingPopup = new LoadingPopup(new LoadingPopup.Payload("Connecting to DB", 100f, async () => await this.data.DataGetter[0].GetLaunchesAsync()));
-            loadingPopup.FormClosed += (object sender, FormClosedEventArgs e) => { this.data.Form.Enabled = true; };
+            data.Form.Enabled = false;
+            var loadingPopup = new LoadingPopup(new LoadingPopup.Payload("Connecting to DB", 100f, async () => await data.DataGetter[0].GetLaunchesAsync()));
+            loadingPopup.FormClosed += (object sender, FormClosedEventArgs e) => { data.Form.Enabled = true; };
             var result = await loadingPopup.StartUpdating();
             if (result != null)
             {
@@ -182,10 +184,10 @@ namespace space_browser.Source
             data.ListView.Items.Clear();
             data.ListView.Columns.Clear();
 
-            this.data.Form.Enabled = false;
-            this.data.Form.Enabled = false;
-            var loadingPopup = new LoadingPopup(new LoadingPopup.Payload("Connecting to DB", 100f, async () => await this.data.DataGetter[0].GetRocketsAsync()));
-            loadingPopup.FormClosed += (object sender, FormClosedEventArgs e) => { this.data.Form.Enabled = true; };
+            data.Form.Enabled = false;
+            data.Form.Enabled = false;
+            var loadingPopup = new LoadingPopup(new LoadingPopup.Payload("Connecting to DB", 100f, async () => await data.DataGetter[0].GetRocketsAsync()));
+            loadingPopup.FormClosed += (object sender, FormClosedEventArgs e) => { data.Form.Enabled = true; };
             var result = await loadingPopup.StartUpdating();
             if (result != null)
             {
@@ -199,10 +201,10 @@ namespace space_browser.Source
             data.ListView.Items.Clear();
             data.ListView.Columns.Clear();
 
-            this.data.Form.Enabled = false;
-            this.data.Form.Enabled = false;
-            var loadingPopup = new LoadingPopup(new LoadingPopup.Payload("Connecting to DB", 100f, async () => await this.data.DataGetter[0].GetShipsAsync()));
-            loadingPopup.FormClosed += (object sender, FormClosedEventArgs e) => { this.data.Form.Enabled = true; };
+            data.Form.Enabled = false;
+            data.Form.Enabled = false;
+            var loadingPopup = new LoadingPopup(new LoadingPopup.Payload("Connecting to DB", 100f, async () => await data.DataGetter[0].GetShipsAsync()));
+            loadingPopup.FormClosed += (object sender, FormClosedEventArgs e) => { data.Form.Enabled = true; };
             var result = await loadingPopup.StartUpdating();
             if (result != null)
             {
@@ -285,7 +287,7 @@ namespace space_browser.Source
                 item.SubItems.Add(ships[i].Missions.ToString());
                 item.SubItems.Add(ships[i].HomePort);
                 item.SubItems.Add(ships[i].Image.ToString());
-                item.SubItems.Add(ships[i].Launch.FlightId.ToString());
+                item.SubItems.Add(ships[i].Launch != null ? ships[i].Launch.FlightId.ToString() : "----");
                 this.data.ListView.Items.Add(item);
             }
             if (this.data.ListView.SelectedItems.Count > 0)

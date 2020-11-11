@@ -344,7 +344,7 @@ namespace space_browser
             this.Launches.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.Launches.Name = "Launches";
             this.Launches.Size = new System.Drawing.Size(23, 22);
-            this.Launches.Text = "toolStripButton1";
+            this.Launches.Text = "Launches collection";
             // 
             // toolStripSeparator1
             // 
@@ -358,7 +358,7 @@ namespace space_browser
             this.Ships.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.Ships.Name = "Ships";
             this.Ships.Size = new System.Drawing.Size(23, 22);
-            this.Ships.Text = "toolStripButton2";
+            this.Ships.Text = "Ships collection";
             // 
             // toolStripSeparator2
             // 
@@ -372,7 +372,7 @@ namespace space_browser
             this.Rockets.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.Rockets.Name = "Rockets";
             this.Rockets.Size = new System.Drawing.Size(23, 22);
-            this.Rockets.Text = "toolStripButton3";
+            this.Rockets.Text = "Rockets collection";
             // 
             // Form1
             // 
