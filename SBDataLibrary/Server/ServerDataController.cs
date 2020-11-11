@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SBDataLibrary.Models;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,9 +15,9 @@ namespace SBDataLibrary.Server
         private List<Rocket> rockets;
         private List<Ship> ships;
 
-        public IEnumerable<Launch> Launches => launches;
-        public IEnumerable<Ship> Ships => ships;
-        public IEnumerable<Rocket> Rockets => rockets;
+        public List<Launch> Launches { get => launches; set => launches = value; }
+        public List<Ship> Ships { get => ships; set => ships = value; }
+        public List<Rocket> Rockets { get => rockets; set => rockets = value; }
 
         public ServerDataController()
         {

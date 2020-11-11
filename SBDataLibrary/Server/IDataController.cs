@@ -6,9 +6,9 @@ namespace SBDataLibrary.Server
 {
     public interface IDataController
     {
-        IEnumerable<Launch> Launches { get; }
-        IEnumerable<Ship> Ships { get; }
-        IEnumerable<Rocket> Rockets { get; }
+        List<Launch> Launches { get; set; }
+        List<Ship> Ships { get; set; }
+        List<Rocket> Rockets { get; set; }
         Task Init();
         Task<List<Launch>> GetLaunchesAsync();
         Task<List<Ship>> GetShipsAsync();

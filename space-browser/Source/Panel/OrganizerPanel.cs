@@ -64,19 +64,16 @@ namespace space_browser.Source
             switch (type)
             {
                 case OrganizerType.LAUNCH:
-                    var launches = this.data.DataGetter[0].Launches.ToList();
-                    launches.Sort((p, q) => Compare(p, q, index));
-                    AddLaunches(launches);
+                    this.data.DataGetter[0].Launches.Sort((p, q) => Compare(p, q, index));
+                    AddLaunches(this.data.DataGetter[0].Launches);
                     break;
                 case OrganizerType.ROCKET:
-                    var rockets = this.data.DataGetter[0].Rockets.ToList();
-                    rockets.Sort((p, q) => Compare(p, q, index));
-                    AddRockets(rockets);
+                    this.data.DataGetter[0].Rockets.Sort((p, q) => Compare(p, q, index));
+                    AddRockets(this.data.DataGetter[0].Rockets);
                     break;
                 case OrganizerType.SHIP:
-                    var ships = this.data.DataGetter[0].Ships.ToList();
-                    ships.Sort((p, q) => Compare(p, q, index));
-                    AddShips(ships);
+                    this.data.DataGetter[0].Ships.Sort((p, q) => Compare(p, q, index));
+                    AddShips(this.data.DataGetter[0].Ships);
                     break;
             }
         }

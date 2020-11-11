@@ -48,9 +48,8 @@ namespace space_browser.Source
         private void SortElements(object sender, ColumnClickEventArgs e)
         {
             int index = e.Column;
-            var launches = this.data.DataGetter[0].Launches.ToList();
-            launches.Sort((p,q) => Compare(p, q, index));
-            AddLaunches(launches);
+            this.data.DataGetter[0].Launches.Sort((p,q) => Compare(p, q, index));
+            AddLaunches(this.data.DataGetter[0].Launches);
         }
 
         private int Compare(Launch p, Launch q, int index)
@@ -131,6 +130,7 @@ namespace space_browser.Source
             IsActive = true;
             data.Panel.Visible = true;
             data.Panel.BringToFront();
+            data.ListView.Items.Clear();
             data.PictureBox.Image = null;
             data.RichTextBox.Text = string.Empty;
         }

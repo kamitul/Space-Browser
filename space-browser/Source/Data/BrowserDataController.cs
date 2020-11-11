@@ -13,14 +13,13 @@ namespace space_browser.Source
     public class BrowserDataController : IDataController
     {
         private Connection connection;
-        private List<Launch> Launches;
-        private List<Rocket> Rockets;
-        private List<Ship> Ships;
+        private List<Launch> launches;
+        private List<Rocket> rockets;
+        private List<Ship> ships;
 
-
-        IEnumerable<Launch> IDataController.Launches => Launches;
-        IEnumerable<Ship> IDataController.Ships => Ships;
-        IEnumerable<Rocket> IDataController.Rockets => Rockets;
+        public List<Launch> Launches { get => launches; set => launches = value; }
+        public List<Ship> Ships { get => ships; set => ships = value; }
+        public List<Rocket> Rockets { get => rockets; set => rockets = value; }
 
         public BrowserDataController()
         {
@@ -37,9 +36,9 @@ namespace space_browser.Source
             var result = await Task.WhenAll(Connect("https://api.spacexdata.com/v3/launches"), Connect("https://api.spacexdata.com/v3/ships"), Connect("https://api.spacexdata.com/v3/rockets"));
             var parsedData = await CollectData(result[0], result[2], result[1]);
 
-            Launches = parsedData.Select(x=>x.Launch).ToList();
-            Rockets = parsedData.Select(x => x.Rocket).ToList();
-            Ships = parsedData.SelectMany(x => x.Ships).Distinct().ToList();
+            launches = parsedData.Select(x=>x.Launch).ToList();
+            rockets = parsedData.Select(x => x.Rocket).ToList();
+            ships = parsedData.SelectMany(x => x.Ships).Distinct().ToList();
         }
 
         private async Task<string> Connect(string url)
@@ -159,43 +158,43 @@ namespace space_browser.Source
         public async Task<List<Launch>> GetLaunchesAsync()
         {
             await Init();
-            return Launches;
+            return launches;
         }
 
         public async Task<List<Ship>> GetShipsAsync()
         {
             await Init();
-            return Ships;
+            return ships;
         }
 
         public async Task<List<Rocket>> GetRocketsAsync()
         {
             await Init();
-            return Rockets;
+            return rockets;
         }
 
         public async Task DeleteLaunch(Launch launch)
         {
             await Task.Yield();
-            Launches.Remove(launch);
+            launches.Remove(launch);
         }
 
         public async Task DeleteRocket(Rocket rocket)
         {
             await Task.Yield();
-            Rockets.Remove(rocket);
+            rockets.Remove(rocket);
         }
 
         public async Task DeleteShip(Ship ship)
         {
             await Task.Yield();
-            Ships.Remove(ship);
+            ships.Remove(ship);
         }
 
         public async Task UpdateLaunch(Launch launch)
         {
             await Task.Yield();
-            var elem = Launches.Find(x => x.FlightId == launch.FlightId);
+            var elem = launches.Find(x => x.FlightId == launch.FlightId);
             if(elem != null)
                 elem.Set(launch.Name, launch.Country, launch.Status, launch.Payloads, launch.LaunchDate, launch.MissionName);
         }
@@ -203,7 +202,7 @@ namespace space_browser.Source
         public async Task UpdateRocket(Rocket rocket)
         {
             await Task.Yield();
-            var elem = Rockets.Find(x => x.ID == rocket.ID);
+            var elem = rockets.Find(x => x.ID == rocket.ID);
             if (elem != null)
                 elem.Set(rocket.Name, rocket.Country, rocket.Type, rocket.Mass);
         }
@@ -211,7 +210,7 @@ namespace space_browser.Source
         public async Task UpdateShip(Ship ship)
         {
             await Task.Yield();
-            var elem = Ships.Find(x => x.ID == ship.ID);
+            var elem = ships.Find(x => x.ID == ship.ID);
             if (elem != null)
                 elem.Set(ship.Name, ship.Missions, ship.Type, ship.HomePort);
         }
