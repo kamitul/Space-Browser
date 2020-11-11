@@ -21,15 +21,15 @@ namespace space_browser.Source
 
         public class OrganizerData : PanelData
         {
-            public System.Windows.Forms.ToolStripButton Launches;
-            public System.Windows.Forms.ToolStripButton Ships;
-            public System.Windows.Forms.ToolStripButton Rocket;
+            public ToolStripButton Launches;
+            public ToolStripButton Ships;
+            public ToolStripButton Rocket;
 
-            public System.Windows.Forms.Button Edit;
-            public System.Windows.Forms.Button Remove;
-            public System.Windows.Forms.Button Properties;
+            public Button Edit;
+            public Button Remove;
+            public Button Properties;
 
-            public OrganizerData(System.Windows.Forms.Form form, System.Windows.Forms.Panel panel, System.Windows.Forms.ListView listView, List<System.Windows.Forms.ToolStripButton> toolButtons, List<System.Windows.Forms.Button> buttons, params IDataController[] dataGetter) : base(form, panel, listView, dataGetter)
+            public OrganizerData(Form form, System.Windows.Forms.Panel panel, ListView listView, List<ToolStripButton> toolButtons, List<Button> buttons, params IDataController[] dataGetter) : base(form, panel, listView, dataGetter)
             {
                 Launches = toolButtons.Find(x => x.Name.Equals("Launches"));
                 Ships = toolButtons.Find(x => x.Name.Equals("Ships"));
@@ -64,16 +64,16 @@ namespace space_browser.Source
             switch (type)
             {
                 case OrganizerType.LAUNCH:
-                    this.data.DataGetter[0].Launches.Sort((p, q) => Compare(p, q, index));
-                    AddLaunches(this.data.DataGetter[0].Launches);
+                    data.DataGetter[0].Launches.Sort((p, q) => Compare(p, q, index));
+                    AddLaunches(data.DataGetter[0].Launches);
                     break;
                 case OrganizerType.ROCKET:
-                    this.data.DataGetter[0].Rockets.Sort((p, q) => Compare(p, q, index));
-                    AddRockets(this.data.DataGetter[0].Rockets);
+                    data.DataGetter[0].Rockets.Sort((p, q) => Compare(p, q, index));
+                    AddRockets(data.DataGetter[0].Rockets);
                     break;
                 case OrganizerType.SHIP:
-                    this.data.DataGetter[0].Ships.Sort((p, q) => Compare(p, q, index));
-                    AddShips(this.data.DataGetter[0].Ships);
+                    data.DataGetter[0].Ships.Sort((p, q) => Compare(p, q, index));
+                    AddShips(data.DataGetter[0].Ships);
                     break;
             }
         }
@@ -315,7 +315,7 @@ namespace space_browser.Source
 
             for (int i = 0; i < rockets.Count; ++i)
             {
-                System.Windows.Forms.ListViewItem item = new System.Windows.Forms.ListViewItem(rockets[i].ID.ToString());
+                ListViewItem item = new ListViewItem(rockets[i].ID.ToString());
                 item.SubItems.Add(rockets[i].RocketId.ToString());
                 item.SubItems.Add(rockets[i].Name.ToString());
                 item.SubItems.Add(rockets[i].Type);
@@ -341,7 +341,7 @@ namespace space_browser.Source
 
             for (int i = 0; i < ships.Count; ++i)
             {
-                System.Windows.Forms.ListViewItem item = new System.Windows.Forms.ListViewItem(ships[i].ID.ToString());
+                ListViewItem item = new ListViewItem(ships[i].ID.ToString());
                 item.SubItems.Add(ships[i].ShipId);
                 item.SubItems.Add(ships[i].Name);
                 item.SubItems.Add(ships[i].Type);
@@ -365,7 +365,7 @@ namespace space_browser.Source
 
             for (int i = 0; i < launches.Count; ++i)
             {
-                System.Windows.Forms.ListViewItem item = new System.Windows.Forms.ListViewItem(launches[i].FlightId.ToString());
+                ListViewItem item = new ListViewItem(launches[i].FlightId.ToString());
                 item.SubItems.Add(launches[i].Status.ToString());
                 item.SubItems.Add(launches[i].Name);
                 item.SubItems.Add(launches[i].Payloads.ToString());

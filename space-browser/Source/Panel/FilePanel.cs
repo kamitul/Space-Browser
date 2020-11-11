@@ -14,7 +14,7 @@ namespace space_browser.Source.Panel
     {
         public class FileData : PanelData
         {
-            public FileData(System.Windows.Forms.Form form, System.Windows.Forms.Panel panel, System.Windows.Forms.ListView listView, params IDataController[] dataGetter) : base(form, panel, listView, dataGetter)
+            public FileData(Form form, System.Windows.Forms.Panel panel, ListView listView, params IDataController[] dataGetter) : base(form, panel, listView, dataGetter)
             {
             }
         }

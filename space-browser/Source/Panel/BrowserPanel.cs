@@ -21,7 +21,7 @@ namespace space_browser.Source
             public Button AddButton;
             public Button RefreshButton;
 
-            public BrowserData(System.Windows.Forms.Form form, System.Windows.Forms.Panel panel, ListView listView, RichTextBox textBox, PictureBox pictureBox, List<Button> buttons, params IDataController[] dataGetter) : base(form, panel, listView, dataGetter)
+            public BrowserData(Form form, System.Windows.Forms.Panel panel, ListView listView, RichTextBox textBox, PictureBox pictureBox, List<Button> buttons, params IDataController[] dataGetter) : base(form, panel, listView, dataGetter)
             {
                 RichTextBox = textBox;
                 PictureBox = pictureBox;
@@ -48,8 +48,8 @@ namespace space_browser.Source
         private void SortElements(object sender, ColumnClickEventArgs e)
         {
             int index = e.Column;
-            this.data.DataGetter[0].Launches.Sort((p,q) => Compare(p, q, index));
-            AddLaunches(this.data.DataGetter[0].Launches);
+            data.DataGetter[0].Launches.Sort((p,q) => Compare(p, q, index));
+            AddLaunches(data.DataGetter[0].Launches);
         }
 
         private int Compare(Launch p, Launch q, int index)
