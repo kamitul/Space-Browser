@@ -67,7 +67,13 @@ namespace space_browser
                 this, panel1, listView1,
                 richTextBox1,
                 pictureBox1,
-                new BrowserDataController())));
+                new List<Button>()
+                {
+                    AddButton,
+                    RefreshButton
+                },
+                new BrowserDataController(),
+                new ServerDataController())));
             panels.Add("File", new FilePanel(
                 new FilePanel.FileData(
                     null,
@@ -115,40 +121,6 @@ namespace space_browser
                 elem.Value.Hide();
             panels["Browser"].Init();
             await panels["Browser"].SetView<List<Launch>>();
-        }
-
-        private async void button2_Click(object sender, EventArgs e)
-        {
-            if (listView1.SelectedItems.Count > 0)
-            {
-                int index = listView1.Items.IndexOf(listView1.SelectedItems[0]);
-                var launch = panels["Browser"].Data.DataGetter[0].Launches.ElementAt(index);
-
-                try
-                {
-                    await dataController.Add(
-                        launch
-                        );
-                }
-                catch(Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            Refresh();
-        }
-
-        public override async void Refresh()
-        {
-            base.Refresh();
-            listView1.Items.Clear();
-            richTextBox1.Clear();
-            pictureBox1.Image = null;
-            await LoadForm();
         }
 
         private async void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)

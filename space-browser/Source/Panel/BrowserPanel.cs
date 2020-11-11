@@ -18,10 +18,16 @@ namespace space_browser.Source
             public RichTextBox RichTextBox;
             public PictureBox PictureBox;
 
-            public BrowserData(System.Windows.Forms.Form form, System.Windows.Forms.Panel panel, ListView listView, RichTextBox textBox, PictureBox pictureBox, params IDataController[] dataGetter) : base(form, panel, listView, dataGetter)
+            public Button AddButton;
+            public Button RefreshButton;
+
+            public BrowserData(System.Windows.Forms.Form form, System.Windows.Forms.Panel panel, ListView listView, RichTextBox textBox, PictureBox pictureBox, List<Button> buttons, params IDataController[] dataGetter) : base(form, panel, listView, dataGetter)
             {
                 RichTextBox = textBox;
                 PictureBox = pictureBox;
+
+                AddButton = buttons.Find(x => x.Name.Equals("AddButton"));
+                RefreshButton = buttons.Find(x => x.Name.Equals("RefreshButton"));
             }
 
         }
@@ -33,6 +39,48 @@ namespace space_browser.Source
         {
             this.data = data as BrowserData;
             this.data.ListView.SelectedIndexChanged += SelectedIndexChangedEvent;
+
+            this.data.AddButton.Click += AddElementToDB;
+            this.data.RefreshButton.Click += RefreshPanel;
+        }
+
+
+        private async void RefreshPanel(object sender, EventArgs e)
+        {
+            await Refresh();
+        }
+
+        public async Task Refresh()
+        {
+            this.data.Form.Refresh();
+            this.data.ListView.Items.Clear();
+            this.data.RichTextBox.Clear();
+            this.data.PictureBox.Image = null;
+            Init();
+            await SetView<List<Launch>>();
+        }
+
+
+        private async void AddElementToDB(object sender, EventArgs e)
+        {
+            if (this.data.ListView.SelectedItems.Count > 0)
+            {
+                int index = this.data.ListView.Items.IndexOf(this.data.ListView.SelectedItems[0]);
+                var launch = this.data.DataGetter[0].Launches.ElementAt(index);
+
+                var serverController = this.data.DataGetter[1] as ServerDataController;
+
+                try
+                {
+                    await serverController.Add(
+                        launch
+                        );
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
         private void SelectedIndexChangedEvent(object sender, EventArgs e)

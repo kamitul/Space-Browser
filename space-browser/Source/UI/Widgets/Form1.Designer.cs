@@ -45,8 +45,8 @@ namespace space_browser
             this.Rocket = new System.Windows.Forms.ColumnHeader();
             this.Country = new System.Windows.Forms.ColumnHeader();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.RefreshButton = new System.Windows.Forms.Button();
+            this.AddButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -185,8 +185,8 @@ namespace space_browser
             this.tableLayoutPanel2.ColumnCount = 2;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Controls.Add(this.button1, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.button2, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.RefreshButton, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.AddButton, 1, 0);
             this.tableLayoutPanel2.Location = new System.Drawing.Point(563, 376);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
@@ -195,25 +195,23 @@ namespace space_browser
             this.tableLayoutPanel2.Size = new System.Drawing.Size(237, 35);
             this.tableLayoutPanel2.TabIndex = 3;
             // 
-            // button1
+            // RefreshButton
             // 
-            this.button1.Location = new System.Drawing.Point(3, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(112, 29);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Refresh";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.RefreshButton.Location = new System.Drawing.Point(3, 3);
+            this.RefreshButton.Name = "RefreshButton";
+            this.RefreshButton.Size = new System.Drawing.Size(112, 29);
+            this.RefreshButton.TabIndex = 0;
+            this.RefreshButton.Text = "Refresh";
+            this.RefreshButton.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // AddButton
             // 
-            this.button2.Location = new System.Drawing.Point(121, 3);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(112, 29);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Add";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.AddButton.Location = new System.Drawing.Point(121, 3);
+            this.AddButton.Name = "AddButton";
+            this.AddButton.Size = new System.Drawing.Size(112, 29);
+            this.AddButton.TabIndex = 1;
+            this.AddButton.Text = "Add";
+            this.AddButton.UseVisualStyleBackColor = true;
             // 
             // groupBox1
             // 
@@ -423,8 +421,8 @@ namespace space_browser
         private ColumnHeader Rocket;
         private ColumnHeader Country;
         private TableLayoutPanel tableLayoutPanel2;
-        private Button button1;
-        private Button button2;
+        private Button RefreshButton;
+        private Button AddButton;
         private GroupBox groupBox1;
         private TableLayoutPanel tableLayoutPanel1;
         private PictureBox pictureBox1;
