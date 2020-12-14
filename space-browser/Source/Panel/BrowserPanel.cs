@@ -11,8 +11,14 @@ using System.Windows.Forms;
 
 namespace space_browser.Source
 {
+    /// <summary>
+    /// Browser panel class
+    /// </summary>
     class BrowserPanel : PanelView
     {
+        /// <summary>
+        /// Browser data class
+        /// </summary>
         public class BrowserData : PanelData
         {
             public RichTextBox RichTextBox;

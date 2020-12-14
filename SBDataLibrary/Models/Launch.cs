@@ -7,13 +7,18 @@ using System.Linq;
 
 namespace SBDataLibrary.Models
 {
-
+    /// <summary>
+    /// Launch state
+    /// </summary>
     public enum State
     {
         Finished,
         Pending
     }
 
+    /// <summary>
+    /// Launch entity
+    /// </summary>
     [Serializable]
     public class Launch : Entity
     {
@@ -39,6 +44,19 @@ namespace SBDataLibrary.Models
         public Rocket Rocket { get; set; }
         public List<Ship> Ships { get; set; }
 
+        /// <summary>
+        /// Constructs launch 
+        /// </summary>
+        /// <param name="flightId">Launch ID</param>
+        /// <param name="status">Launch status</param>
+        /// <param name="name">Launch name</param>
+        /// <param name="payloads">Launch payload</param>
+        /// <param name="rocketName">Launch rocket name</param>
+        /// <param name="country">Launch country</param>
+        /// <param name="launchDate">Launch launch date</param>
+        /// <param name="missionName">Launch mission name</param>
+        /// <param name="rocket">Launch rocket</param>
+        /// <param name="ships">Launch ships</param>
         public Launch(string flightId, State status, string name, int payloads, string rocketName, string country, string launchDate, string missionName, Rocket rocket, List<Ship> ships)
         {
             FlightId = flightId;
@@ -65,6 +83,10 @@ namespace SBDataLibrary.Models
             MissionName = missionName;
         }
 
+        /// <summary>
+        /// Parse launch to string
+        /// </summary>
+        /// <returns>Parsed launch</returns>
         public override string ToString()
         {
             string rocketInfo = string.Empty;
@@ -94,6 +116,10 @@ namespace SBDataLibrary.Models
                 $"Ships : \n{shipInfo}" + "\n";
         }
 
+        /// <summary>
+        /// Sets entity data
+        /// </summary>
+        /// <param name="data">Passed data</param>
         public override void Set(params object[] data)
         {
             Name = (string)data[0];
@@ -108,6 +134,10 @@ namespace SBDataLibrary.Models
             MissionName = (string)data[5];
         }
 
+        /// <summary>
+        /// Gets fields as string
+        /// </summary>
+        /// <returns>Fields names as array</returns>
         public override string[] GetFields()
         {
             return new []{ "Name: ", "Country: ", "Status: ", "Payloads: ", "Launch Date: ", "Mission Name: " };

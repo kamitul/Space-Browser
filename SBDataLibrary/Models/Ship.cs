@@ -5,6 +5,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SBDataLibrary.Models
 {
+    /// <summary>
+    /// Ship entity class
+    /// </summary>
     [Serializable]
     public class Ship : Entity
     {
@@ -25,6 +28,15 @@ namespace SBDataLibrary.Models
         public byte[] Image { get; set; }
         public Launch Launch { get; set; }
 
+        /// <summary>
+        /// Constructs ship
+        /// </summary>
+        /// <param name="shipId">Ship ID</param>
+        /// <param name="missions">Ship missions</param>
+        /// <param name="name">Ship name</param>
+        /// <param name="type">Ship type</param>
+        /// <param name="homePort">Ship homePort</param>
+        /// <param name="image">Ship image</param>
         public Ship(string shipId, int missions, string name, string type, string homePort, byte[] image)
         {
             ShipId = shipId;
@@ -35,6 +47,10 @@ namespace SBDataLibrary.Models
             Image = image;
         }
 
+        /// <summary>
+        /// Parses ship to string
+        /// </summary>
+        /// <returns>Parsed ship</returns>
         public override string ToString()
         {
             return  $"Ship ID: {ShipId}" + "\n" +
@@ -44,6 +60,10 @@ namespace SBDataLibrary.Models
                 $"HomePort: {HomePort}" + "\n\n";
         }
 
+        /// <summary>
+        /// Sets entity data
+        /// </summary>
+        /// <param name="data">Passed data</param>
         public override void Set(params object[] data)
         {
             Name = (string)data[0];
@@ -54,11 +74,19 @@ namespace SBDataLibrary.Models
             HomePort = (string)data[3];
         }
 
+        /// <summary>
+        /// Gets fields as string
+        /// </summary>
+        /// <returns>Fields names as array</returns>
         public override string[] GetFields()
         {
             return new[] { "Name: ", "Missions: ", "Type: ", "HomePort: " };
         }
 
+        /// <summary>
+        /// Copies ship
+        /// </summary>
+        /// <returns>Copied ship</returns>
         public Ship Copy()
         {
             var ship = new Ship(ShipId, Missions, Name, Type, HomePort, Image);

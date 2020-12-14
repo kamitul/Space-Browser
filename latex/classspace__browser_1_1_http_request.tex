@@ -1,0 +1,114 @@
+\hypertarget{classspace__browser_1_1_http_request}{}\doxysection{space\+\_\+browser.\+Http\+Request Class Reference}
+\label{classspace__browser_1_1_http_request}\index{space\_browser.HttpRequest@{space\_browser.HttpRequest}}
+
+
+Http Request class handling  
+
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classspace__browser_1_1_http_request_a5a8916828d01ba8c3dd611c1fd39e740}{Http\+Request}} (Http\+Request\+Message request\+Message, \mbox{\hyperlink{classspace__browser_1_1_http_request_a9293a45bced560b857907f18bda07b6e}{Http\+Client}} http\+Client)
+\begin{DoxyCompactList}\small\item\em Constructs request \end{DoxyCompactList}\item 
+async Task$<$ Http\+Response\+Message $>$ \mbox{\hyperlink{classspace__browser_1_1_http_request_a2af42249904de05163c6ac93bd15973f}{Send}} ()
+\begin{DoxyCompactList}\small\item\em Sends request \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+Http\+Request\+Message \mbox{\hyperlink{classspace__browser_1_1_http_request_a1333843c6572db43fcdd86678697ba4b}{Message}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Request message \end{DoxyCompactList}\item 
+Http\+Client \mbox{\hyperlink{classspace__browser_1_1_http_request_a9293a45bced560b857907f18bda07b6e}{Http\+Client}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Request client \end{DoxyCompactList}\item 
+Cancellation\+Token \mbox{\hyperlink{classspace__browser_1_1_http_request_ab2f0830a59a756b9136927e690caaf24}{Cancellation\+Token}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Request cancelation token \end{DoxyCompactList}\item 
+Http\+Method \mbox{\hyperlink{classspace__browser_1_1_http_request_ae0c46a6fd5b7aa44e5c0bec088f47c45}{Http\+Method}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Request http method \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Http Request class handling 
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classspace__browser_1_1_http_request_a5a8916828d01ba8c3dd611c1fd39e740}\label{classspace__browser_1_1_http_request_a5a8916828d01ba8c3dd611c1fd39e740}} 
+\index{space\_browser.HttpRequest@{space\_browser.HttpRequest}!HttpRequest@{HttpRequest}}
+\index{HttpRequest@{HttpRequest}!space\_browser.HttpRequest@{space\_browser.HttpRequest}}
+\doxysubsubsection{\texorpdfstring{HttpRequest()}{HttpRequest()}}
+{\footnotesize\ttfamily space\+\_\+browser.\+Http\+Request.\+Http\+Request (\begin{DoxyParamCaption}\item[{Http\+Request\+Message}]{request\+Message,  }\item[{\mbox{\hyperlink{classspace__browser_1_1_http_request_a9293a45bced560b857907f18bda07b6e}{Http\+Client}}}]{http\+Client }\end{DoxyParamCaption})}
+
+
+
+Constructs request 
+
+
+\begin{DoxyParams}{Parameters}
+{\em request\+Message} & Message of request\\
+\hline
+{\em http\+Client} & Http\+Client for each request\\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classspace__browser_1_1_http_request_a2af42249904de05163c6ac93bd15973f}\label{classspace__browser_1_1_http_request_a2af42249904de05163c6ac93bd15973f}} 
+\index{space\_browser.HttpRequest@{space\_browser.HttpRequest}!Send@{Send}}
+\index{Send@{Send}!space\_browser.HttpRequest@{space\_browser.HttpRequest}}
+\doxysubsubsection{\texorpdfstring{Send()}{Send()}}
+{\footnotesize\ttfamily async Task$<$Http\+Response\+Message$>$ space\+\_\+browser.\+Http\+Request.\+Send (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Sends request 
+
+\begin{DoxyReturn}{Returns}
+Async task for request sent
+\end{DoxyReturn}
+
+
+\doxysubsection{Property Documentation}
+\mbox{\Hypertarget{classspace__browser_1_1_http_request_ab2f0830a59a756b9136927e690caaf24}\label{classspace__browser_1_1_http_request_ab2f0830a59a756b9136927e690caaf24}} 
+\index{space\_browser.HttpRequest@{space\_browser.HttpRequest}!CancellationToken@{CancellationToken}}
+\index{CancellationToken@{CancellationToken}!space\_browser.HttpRequest@{space\_browser.HttpRequest}}
+\doxysubsubsection{\texorpdfstring{CancellationToken}{CancellationToken}}
+{\footnotesize\ttfamily Cancellation\+Token space\+\_\+browser.\+Http\+Request.\+Cancellation\+Token\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Request cancelation token 
+
+\mbox{\Hypertarget{classspace__browser_1_1_http_request_a9293a45bced560b857907f18bda07b6e}\label{classspace__browser_1_1_http_request_a9293a45bced560b857907f18bda07b6e}} 
+\index{space\_browser.HttpRequest@{space\_browser.HttpRequest}!HttpClient@{HttpClient}}
+\index{HttpClient@{HttpClient}!space\_browser.HttpRequest@{space\_browser.HttpRequest}}
+\doxysubsubsection{\texorpdfstring{HttpClient}{HttpClient}}
+{\footnotesize\ttfamily Http\+Client space\+\_\+browser.\+Http\+Request.\+Http\+Client\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Request client 
+
+\mbox{\Hypertarget{classspace__browser_1_1_http_request_ae0c46a6fd5b7aa44e5c0bec088f47c45}\label{classspace__browser_1_1_http_request_ae0c46a6fd5b7aa44e5c0bec088f47c45}} 
+\index{space\_browser.HttpRequest@{space\_browser.HttpRequest}!HttpMethod@{HttpMethod}}
+\index{HttpMethod@{HttpMethod}!space\_browser.HttpRequest@{space\_browser.HttpRequest}}
+\doxysubsubsection{\texorpdfstring{HttpMethod}{HttpMethod}}
+{\footnotesize\ttfamily Http\+Method space\+\_\+browser.\+Http\+Request.\+Http\+Method\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Request http method 
+
+\mbox{\Hypertarget{classspace__browser_1_1_http_request_a1333843c6572db43fcdd86678697ba4b}\label{classspace__browser_1_1_http_request_a1333843c6572db43fcdd86678697ba4b}} 
+\index{space\_browser.HttpRequest@{space\_browser.HttpRequest}!Message@{Message}}
+\index{Message@{Message}!space\_browser.HttpRequest@{space\_browser.HttpRequest}}
+\doxysubsubsection{\texorpdfstring{Message}{Message}}
+{\footnotesize\ttfamily Http\+Request\+Message space\+\_\+browser.\+Http\+Request.\+Message\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Request message 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+space-\/browser/\+Source/\+Server/Http\+Request.\+cs\end{DoxyCompactItemize}

@@ -3,6 +3,9 @@ using System.Windows.Forms;
 
 namespace space_browser
 {
+    /// <summary>
+    /// Static class for program running
+    /// </summary>
     static class Program
     {
         /// <summary>

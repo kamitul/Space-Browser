@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace SBDataLibrary.Server
 {
+    /// <summary>
+    /// Server data controller class
+    /// </summary>
     public class ServerDataController : IDataController
     {
         private SBDataContext dataContext;
@@ -15,10 +18,22 @@ namespace SBDataLibrary.Server
         private List<Rocket> rockets;
         private List<Ship> ships;
 
+        /// <summary>
+        /// Launches list
+        /// </summary>
         public List<Launch> Launches { get => launches; set => launches = value; }
+        /// <summary>
+        /// Ships list
+        /// </summary>
         public List<Ship> Ships { get => ships; set => ships = value; }
+        /// <summary>
+        /// Rockets list
+        /// </summary>
         public List<Rocket> Rockets { get => rockets; set => rockets = value; }
 
+        /// <summary>
+        /// Constructs server data controller
+        /// </summary>
         public ServerDataController()
         {
             var builder = new DbContextOptionsBuilder();
@@ -31,6 +46,11 @@ namespace SBDataLibrary.Server
 
         }
 
+        /// <summary>
+        /// Adds launch to database
+        /// </summary>
+        /// <param name="launch">Launch to be added</param>
+        /// <returns>Adding async task</returns>
         public async Task<bool> Add(Launch launch)
         {
             var rocket = launch.Rocket.Copy();

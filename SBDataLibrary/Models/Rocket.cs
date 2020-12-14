@@ -5,6 +5,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SBDataLibrary.Models
 {
+    /// <summary>
+    /// Rocket entity object
+    /// </summary>
     [Serializable]
     public class Rocket : Entity
     {
@@ -28,6 +31,15 @@ namespace SBDataLibrary.Models
         public string LaunchID { get; set; }
         public Launch Launch { get; set; }
 
+        /// <summary>
+        /// Constructs rocket
+        /// </summary>
+        /// <param name="rocketId">Rocket  ID</param>
+        /// <param name="name">Rocket name</param>
+        /// <param name="type">Rocket type</param>
+        /// <param name="country">Rocket country</param>
+        /// <param name="mass">Rocket mass</param>
+        /// <param name="image">Rocket image</param>
         public Rocket(string rocketId, string name, string type, string country, int mass, byte[] image)
         {
             RocketId = rocketId;
@@ -37,7 +49,11 @@ namespace SBDataLibrary.Models
             Mass = mass;
             Image = image;
         }
-
+        
+        /// <summary>
+        /// Parses rocket to string
+        /// </summary>
+        /// <returns>Parsed rocket</returns>
         public override string ToString()
         {
             return $"Rocket ID: {RocketId}" + "\n" +
@@ -47,6 +63,10 @@ namespace SBDataLibrary.Models
                 $"Mass: {Mass}" + "\n";
         }
 
+        /// <summary>
+        /// Sets entity data
+        /// </summary>
+        /// <param name="data">Passed data</param>
         public override void Set(params object[] data)
         {
             Name = (string)data[0];
@@ -57,11 +77,19 @@ namespace SBDataLibrary.Models
                 Mass = mass;
         }
 
+        /// <summary>
+        /// Gets fields as string
+        /// </summary>
+        /// <returns>Fields names as array</returns>
         public override string[] GetFields()
         {
             return new []{ "Name: ", "Country: ", "Type: ", "Mass: " };
         }
 
+        /// <summary>
+        /// Copies exsiting rocket
+        /// </summary>
+        /// <returns>Copied rocket object</returns>
         public Rocket Copy()
         {
             var rocket = new Rocket(RocketId, Name, Type, Country, Mass, Image);

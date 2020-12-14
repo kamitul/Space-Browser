@@ -10,6 +10,9 @@ using System.Windows.Forms;
 
 namespace space_browser.Source
 {
+    /// <summary>
+    /// Organizer panel class
+    /// </summary>
     public class OrganizerPanel : PanelView
     {
         private enum OrganizerType

@@ -11,11 +11,17 @@ using System.Windows.Forms;
 
 namespace space_browser
 {
+    /// <summary>
+    /// Main form of the program
+    /// </summary>
     public partial class Form1 : Form
     {
         private ServerDataController dataController;
         private Dictionary<string, PanelView> panels = new Dictionary<string, PanelView>();
 
+        /// <summary>
+        /// Initialzes form 
+        /// </summary>
         public Form1()
         {
             InitializeComponent();
@@ -39,11 +45,19 @@ namespace space_browser
             SaveButton.Click += SaveToFile;
         }
 
+        /// <summary>
+        /// Handles saving actions
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Params for method</param>
         private async void SaveToFile(object sender, EventArgs e)
         {
             await (panels["File"] as FilePanel).Save();
         }
 
+        /// <summary>
+        /// Initializes panels to dictionary
+        /// </summary>
         private void AddPanels()
         {
             panels.Add("Organizer", new OrganizerPanel(
@@ -82,6 +96,11 @@ namespace space_browser
                     new ServerDataController())));
         }
 
+        /// <summary>
+        /// Draws columns headers
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Passed parameters</param>
         private void DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
         {
             e.Graphics.FillRectangle(SystemBrushes.Menu, e.Bounds);
@@ -94,16 +113,31 @@ namespace space_browser
             TextRenderer.DrawText(e.Graphics, text, listView1.Font, e.Bounds, Color.Black, cFlag);
         }
 
+        /// <summary>
+        /// Draws item
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Passed parameters</param>
         private void DrawItem(object sender, DrawListViewItemEventArgs e)
         {
             e.DrawDefault = true;
         }
 
+        /// <summary>
+        /// Draws subitem
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Passed parameters</param>
         private void DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
         {
             e.DrawDefault = true;
         }
 
+        /// <summary>
+        /// Blocks resizing column functionalites
+        /// </summary>
+        /// <param name="listview">ListView to be resized</param>
+        /// <param name="e">Passed parameters</param>
         private void ResizeColumn(ListView listview, ColumnWidthChangingEventArgs e)
         {
             e.NewWidth = listview.Columns[e.ColumnIndex].Width;
@@ -115,6 +149,10 @@ namespace space_browser
             await LoadForm();
         }
 
+        /// <summary>
+        /// Handles loading specific form
+        /// </summary>
+        /// <returns>Loading form task</returns>
         private async Task LoadForm()
         {
             foreach (var elem in panels)

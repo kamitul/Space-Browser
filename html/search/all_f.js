@@ -1,0 +1,24 @@
+var searchData=
+[
+  ['space_2dbrowser_60',['space-browser',['../md__r_e_a_d_m_e.html',1,'']]],
+  ['migrations_61',['Migrations',['../namespace_s_b_data_library_1_1_migrations.html',1,'SBDataLibrary']]],
+  ['models_62',['Models',['../namespace_s_b_data_library_1_1_models.html',1,'SBDataLibrary']]],
+  ['panel_63',['Panel',['../namespacespace__browser_1_1_source_1_1_panel.html',1,'space_browser::Source']]],
+  ['properties_64',['Properties',['../namespacespace__browser_1_1_properties.html',1,'space_browser']]],
+  ['sbdatacontext_65',['SBDataContext',['../class_s_b_data_library_1_1_server_1_1_s_b_data_context.html',1,'SBDataLibrary.Server.SBDataContext'],['../class_s_b_data_library_1_1_server_1_1_s_b_data_context.html#a91ff2896704c563b1544cef51c63713a',1,'SBDataLibrary.Server.SBDataContext.SBDataContext()'],['../class_s_b_data_library_1_1_server_1_1_s_b_data_context.html#a982db03baecea8e53a389a33ea4e44b0',1,'SBDataLibrary.Server.SBDataContext.SBDataContext(DbContextOptions options)']]],
+  ['sbdatacontextmodelsnapshot_66',['SBDataContextModelSnapshot',['../class_s_b_data_library_1_1_migrations_1_1_s_b_data_context_model_snapshot.html',1,'SBDataLibrary::Migrations']]],
+  ['sbdatalibrary_67',['SBDataLibrary',['../namespace_s_b_data_library.html',1,'']]],
+  ['send_68',['Send',['../classspace__browser_1_1_http_request.html#a2af42249904de05163c6ac93bd15973f',1,'space_browser::HttpRequest']]],
+  ['server_69',['Server',['../namespace_s_b_data_library_1_1_server.html',1,'SBDataLibrary']]],
+  ['serverdatacontroller_70',['ServerDataController',['../class_s_b_data_library_1_1_server_1_1_server_data_controller.html',1,'SBDataLibrary.Server.ServerDataController'],['../class_s_b_data_library_1_1_server_1_1_server_data_controller.html#aae61ee88acc2dadbfae7fa93cb259f52',1,'SBDataLibrary.Server.ServerDataController.ServerDataController()']]],
+  ['set_71',['Set',['../class_s_b_data_library_1_1_models_1_1_entity.html#a8d2083ba533bdaa948bc779f3bacc833',1,'SBDataLibrary.Models.Entity.Set()'],['../class_s_b_data_library_1_1_models_1_1_launch.html#a7019e64c340a3f9c9613b17b10871578',1,'SBDataLibrary.Models.Launch.Set()'],['../class_s_b_data_library_1_1_models_1_1_rocket.html#aa1950dc9d8af05ecbef0589b2ea1cecf',1,'SBDataLibrary.Models.Rocket.Set()'],['../class_s_b_data_library_1_1_models_1_1_ship.html#a48caf3fbca8221d4f630c63f85467080',1,'SBDataLibrary.Models.Ship.Set()']]],
+  ['setview_3c_20t_20_3e_72',['SetView&lt; T &gt;',['../classspace__browser_1_1_source_1_1_browser_panel.html#a66352b75ae15ff341c9fbc02a65cca8e',1,'space_browser.Source.BrowserPanel.SetView&lt; T &gt;()'],['../classspace__browser_1_1_source_1_1_panel_1_1_file_panel.html#a566f6f855f6da930da931dd335c6102f',1,'space_browser.Source.Panel.FilePanel.SetView&lt; T &gt;()'],['../classspace__browser_1_1_source_1_1_organizer_panel.html#af4b3b97bfbf7a49ab3015378d2a2ce32',1,'space_browser.Source.OrganizerPanel.SetView&lt; T &gt;()'],['../classspace__browser_1_1_source_1_1_panel_view.html#adb31cbe671a799a1d98e6b4d4ec402f5',1,'space_browser.Source.PanelView.SetView&lt; T &gt;()']]],
+  ['ship_73',['Ship',['../class_s_b_data_library_1_1_models_1_1_ship.html',1,'SBDataLibrary.Models.Ship'],['../class_s_b_data_library_1_1_models_1_1_ship.html#ab71459ffc9d0eb04a2874f5df43b65a9',1,'SBDataLibrary.Models.Ship.Ship()']]],
+  ['ships_74',['Ships',['../interface_s_b_data_library_1_1_server_1_1_i_data_controller.html#af47e937a3c1960f864281e9a7369a0b8',1,'SBDataLibrary.Server.IDataController.Ships()'],['../class_s_b_data_library_1_1_server_1_1_s_b_data_context.html#adcb4a7f7cc2125e6eff4b14f3f51f639',1,'SBDataLibrary.Server.SBDataContext.Ships()'],['../class_s_b_data_library_1_1_server_1_1_server_data_controller.html#a99354c6808add58a9ec0c8a4603dfa54',1,'SBDataLibrary.Server.ServerDataController.Ships()'],['../classspace__browser_1_1_source_1_1_browser_data_controller.html#ae23b481b76bd53c97cca3b31c1d8c755',1,'space_browser.Source.BrowserDataController.Ships()'],['../classspace__browser_1_1_source_1_1_j_s_o_n_data.html#a77503566ef7103ab6170397ebfd158cb',1,'space_browser.Source.JSONData.Ships()']]],
+  ['source_75',['Source',['../namespacespace__browser_1_1_source.html',1,'space_browser']]],
+  ['space_5fbrowser_76',['space_browser',['../namespacespace__browser.html',1,'']]],
+  ['startupdating_77',['StartUpdating',['../classspace__browser_1_1_source_1_1_u_i_1_1_widgets_1_1_processing_popup.html#a00137d7071c09bbc49617235042db984',1,'space_browser::Source::UI::Widgets::ProcessingPopup']]],
+  ['state_78',['State',['../namespace_s_b_data_library_1_1_models.html#a7705ad66808785540e1bc43c5d52af6b',1,'SBDataLibrary::Models']]],
+  ['ui_79',['UI',['../namespacespace__browser_1_1_source_1_1_u_i.html',1,'space_browser::Source']]],
+  ['widgets_80',['Widgets',['../namespacespace__browser_1_1_source_1_1_u_i_1_1_widgets.html',1,'space_browser::Source::UI']]]
+];

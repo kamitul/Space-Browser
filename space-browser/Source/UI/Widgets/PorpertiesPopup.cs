@@ -3,20 +3,30 @@ using System.IO;
 
 namespace space_browser.Source.UI.Widgets
 {
+    /// <summary>
+    /// Popup with properties of entinty screen
+    /// </summary>
     public class PorpertiesPopup : Popup
     {
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.GroupBox groupBox1;
 
+        /// <summary>
+        /// Property of data payload of the screen
+        /// </summary>
         public override IPayload IPayload { get => payload; }
         private Payload payload;
 
+        /// <summary>
+        /// Constructs popup with specific payload
+        /// </summary>
+        /// <param name="payload">Payload data passed</param>
         public PorpertiesPopup(Payload payload) : base()
         {
             this.payload = payload;
-            richTextBox1.Text = payload.Content;
             InitializeComponent();
+            richTextBox1.Text = payload.Content;
             if (payload.Images.Length > 0 )
             {
                 using (var ms = new MemoryStream(payload.Images[0].img))
@@ -32,19 +42,38 @@ namespace space_browser.Source.UI.Widgets
             }
         }
 
+        /// <summary>
+        /// Properties popup data
+        /// </summary>
         public class Payload : IPayload
         {
+            /// <summary>
+            /// Image of payload
+            /// </summary>
             public class Image
             {
                 public byte[] img;
 
+                /// <summary>
+                /// Constructs image
+                /// </summary>
+                /// <param name="img">Byte array of image</param>
                 public Image(byte[] img)
                 {
                     this.img = img;
                 }
             }
 
+            /// <summary>
+            /// Images of payload
+            /// </summary>
             public Image[] Images;
+
+            /// <summary>
+            /// Constructs payload
+            /// </summary>
+            /// <param name="text">Text of payload</param>
+            /// <param name="images">Payload images</param>
             public Payload(string text, params Image[] images)
             {
                 Images = images;
@@ -54,6 +83,9 @@ namespace space_browser.Source.UI.Widgets
             public string Content { get; set; }
         }
 
+        /// <summary>
+        /// Initializes components
+        /// </summary>
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PorpertiesPopup));

@@ -13,17 +13,36 @@ using System.Windows.Forms;
 
 namespace space_browser.Source.UI.Widgets
 {
+    /// <summary>
+    /// Processing data popup class
+    /// </summary>
     public partial class ProcessingPopup : Popup
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public ProcessingPopup()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Property for payload data of the screen
+        /// </summary>
         public override IPayload IPayload { get => payload; }
+        /// <summary>
+        /// Payload data field
+        /// </summary>
         private Payload payload;
+        /// <summary>
+        /// Cancellation token for asynchhrounous methods to stop them
+        /// </summary>
         private CancellationTokenSource cts;
 
+        /// <summary>
+        /// Constructor with passed payload data
+        /// </summary>
+        /// <param name="payload">Passed payload data</param>
         public ProcessingPopup(Payload payload) : base()
         {
             this.payload = payload;
@@ -33,19 +52,48 @@ namespace space_browser.Source.UI.Widgets
             FormClosed += CancelLoading;
         }
 
+        /// <summary>
+        /// Cancel loading popup
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e"> events passed</param>
         private void CancelLoading(object sender, FormClosedEventArgs e)
         {
             cts.Cancel();
         }
 
+        /// <summary>
+        /// Payload data of processing popup screen
+        /// </summary>
         public class Payload : IPayload
         {
+            /// <summary>
+            /// Content of payload
+            /// </summary>
             public string Content { get; set; }
+            /// <summary>
+            /// Loading string elements to display while loading
+            /// </summary>
             public string[] LoadingElements { get; set; }
+            /// <summary>
+            /// Index of current string element
+            /// </summary>
             public int Index { get; set; }
+            /// <summary>
+            /// Frequency of information displayed progress
+            /// </summary>
             public float Frequency { get; set; }
+            /// <summary>
+            /// Container for asynchrounus tasks while processing window is being opened
+            /// </summary>
             public List<Task<dynamic>> Tasks { get; set; }
 
+            /// <summary>
+            /// Conctructs payload
+            /// </summary>
+            /// <param name="text">Text do be displayed</param>
+            /// <param name="frequency">Frequency of tasks</param>
+            /// <param name="tasks">Asynchrounus functions to be processed</param>
             public Payload(string text, float frequency, params Func<Task<dynamic>>[] tasks)
             {
                 Content = text;
@@ -56,6 +104,12 @@ namespace space_browser.Source.UI.Widgets
                 Tasks.Add(Task.Run(() => tasks[0].Invoke()));         
             }
 
+            /// <summary>
+            /// Constructs payload
+            /// </summary>
+            /// <param name="text">Text do be displayed</param>
+            /// <param name="frequency">Frequency of tasks</param>
+            /// <param name="tasks">Asynchrounus functions to be processed</param>
             public Payload(string text, float frequency, params Func<Task>[] tasks)
             {
                 Content = text;
@@ -67,6 +121,10 @@ namespace space_browser.Source.UI.Widgets
             }
         }
 
+        /// <summary>
+        /// Starts updating all tasks and processing them
+        /// </summary>
+        /// <returns>Awaiting task for all functionalites</returns>
         public async Task<dynamic> StartUpdating()
         {
             Show();
@@ -75,6 +133,10 @@ namespace space_browser.Source.UI.Widgets
             return await result;
         }
 
+        /// <summary>
+        /// Loads task
+        /// </summary>
+        /// <returns>Awaitng task for loading functionalites</returns>
         private async Task<dynamic> LoadingTask()
         {
             while (!cts.IsCancellationRequested)
@@ -84,7 +146,10 @@ namespace space_browser.Source.UI.Widgets
             }
             return null;
         }
-
+        
+        /// <summary>
+        /// Initializes components
+        /// </summary>
         private void InitializeComponent()
         {
             ComponentResourceManager resources = new ComponentResourceManager(typeof(ProcessingPopup));

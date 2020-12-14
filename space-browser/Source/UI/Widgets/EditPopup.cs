@@ -8,11 +8,21 @@ using System.Windows.Forms;
 
 namespace space_browser.Source.UI.Widgets
 {
+    /// <summary>
+    /// Edit popup class
+    /// </summary>
     public class EditPopup : Popup
     {
         private TableLayoutPanel tableLayoutPanel1;
 
+        /// <summary>
+        /// Payload property of data of this screen
+        /// </summary>
         public override IPayload IPayload { get => payload; }
+
+        /// <summary>
+        /// Action when element is edited
+        /// </summary>
         public Action<Entity> OnElementEdited;
 
         private Payload payload;
@@ -20,12 +30,20 @@ namespace space_browser.Source.UI.Widgets
         private Button cancelButton;
         private List<RichTextBox> textBoxes = new List<RichTextBox>();
 
+        /// <summary>
+        /// Edit popup constructor
+        /// </summary>
+        /// <param name="payload">Passed data to popup</param>
         public EditPopup(Payload payload) : base()
         {
             this.payload = payload;
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Initiliazes edited entity
+        /// </summary>
+        /// <param name="payload">Passed payload data</param>
         private void InitialzeEntity(Payload payload)
         {
             foreach (string fi in payload.EntityInfo)
@@ -47,11 +65,24 @@ namespace space_browser.Source.UI.Widgets
             }
         }
 
+        /// <summary>
+        /// Edit popup payload class
+        /// </summary>
         public class Payload : IPayload
         {
+            /// <summary>
+            /// Edited entity info
+            /// </summary>
             public string[] EntityInfo;
+            /// <summary>
+            /// Edited entity reference
+            /// </summary>
             public Entity Entity;
 
+            /// <summary>
+            /// Constructs data payload
+            /// </summary>
+            /// <param name="entity">Edited entity</param>
             public Payload(Entity entity)
             {
                 EntityInfo = entity.GetFields();
@@ -59,10 +90,15 @@ namespace space_browser.Source.UI.Widgets
                 Entity = entity;
             }
 
+            /// <summary>
+            /// Content property
+            /// </summary>
             public string Content { get; set; }
         }
 
-
+        /// <summary>
+        /// Initializes poups
+        /// </summary>
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditPopup));
@@ -121,16 +157,31 @@ namespace space_browser.Source.UI.Widgets
 
         }
 
+        /// <summary>
+        /// Called on popup loaded
+        /// </summary>
+        /// <param name="sender">Object sender</param>
+        /// <param name="e">Passed arguments</param>
         private void EditPopup_Load(object sender, EventArgs e)
         {
             InitialzeEntity(payload);
         }
 
+        /// <summary>
+        /// Cancels edition of entity
+        /// </summary>
+        /// <param name="sender">Object sender</param>
+        /// <param name="e">Passed arguments</param>
         private void CancelEdition(object sender, EventArgs e)
         {
             Close();
         }
 
+        /// <summary>
+        /// Called after entity is edited
+        /// </summary>
+        /// <param name="sender">Object sender</param>
+        /// <param name="e">Passed arguments</param>
         private void EditEntity(object sender, EventArgs e)
         {
             payload.Entity.Set(textBoxes.Select(x => x.Text).ToArray());

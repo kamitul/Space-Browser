@@ -10,8 +10,14 @@ using static space_browser.Source.PanelView;
 
 namespace space_browser.Source.Panel
 {
+    /// <summary>
+    /// File panel class
+    /// </summary>
     public class FilePanel : PanelView
     {
+        /// <summary>
+        /// File panel data
+        /// </summary>
         public class FileData : PanelData
         {
             public FileData(Form form, System.Windows.Forms.Panel panel, ListView listView, params IDataController[] dataGetter) : base(form, panel, listView, dataGetter)

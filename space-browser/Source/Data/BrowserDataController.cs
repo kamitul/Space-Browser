@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace space_browser.Source
 {
+    /// <summary>
+    /// Browser data controller class
+    /// </summary>
     public class BrowserDataController : IDataController
     {
         private Connection connection;
@@ -17,10 +20,22 @@ namespace space_browser.Source
         private List<Rocket> rockets;
         private List<Ship> ships;
 
+        /// <summary>
+        /// Launches local list
+        /// </summary>
         public List<Launch> Launches { get => launches; set => launches = value; }
+        /// <summary>
+        /// Ships local list
+        /// </summary>
         public List<Ship> Ships { get => ships; set => ships = value; }
+        /// <summary>
+        /// Rockets local list
+        /// </summary>
         public List<Rocket> Rockets { get => rockets; set => rockets = value; }
 
+        /// <summary>
+        /// Constructs browser data controller
+        /// </summary>
         public BrowserDataController()
         {
             connection = new Connection(60);
@@ -31,6 +46,10 @@ namespace space_browser.Source
             await LoadData();
         }
 
+        /// <summary>
+        /// Loads data from REST API
+        /// </summary>
+        /// <returns>Loading data task</returns>
         public async Task LoadData()
         {
             var result = await Task.WhenAll(Connect("https://api.spacexdata.com/v3/launches"), Connect("https://api.spacexdata.com/v3/ships"), Connect("https://api.spacexdata.com/v3/rockets"));
@@ -41,6 +60,11 @@ namespace space_browser.Source
             ships = parsedData.SelectMany(x => x.Ships).Distinct().ToList();
         }
 
+        /// <summary>
+        /// Connects to specific URL
+        /// </summary>
+        /// <param name="url">URL to be connected to</param>
+        /// <returns>Connection async task</returns>
         private async Task<string> Connect(string url)
         {
             var task = connection.CreateGet(url);
@@ -50,6 +74,13 @@ namespace space_browser.Source
             return content;
         }
 
+        /// <summary>
+        /// Collects data as JSON
+        /// </summary>
+        /// <param name="launches">JSON launches data</param>
+        /// <param name="rockets">JSON rockets data</param>
+        /// <param name="ships">JSON ships data</param>
+        /// <returns>Collection JSON data async task</returns>
         private async Task<List<JSONData>> CollectData(string launches, string rockets, string ships)
         {
             var result = await PopulateData(
@@ -60,6 +91,13 @@ namespace space_browser.Source
             return result;
         }
 
+        /// <summary>
+        /// Populates data
+        /// </summary>
+        /// <param name="launchesJSON">JSON launches data</param>
+        /// <param name="rocketsJSON">JSON rockets data</param>
+        /// <param name="shipsJSON">JSON ships data</param>
+        /// <returns>Collection JSON data async task</returns>
         private async Task<List<JSONData>> PopulateData(string launchesJSON, string shipsJSON, string rocketsJSON)
         {
             List<JSONData> collectedData = new List<JSONData>();
@@ -81,6 +119,13 @@ namespace space_browser.Source
             return collectedData;
         }
 
+        /// <summary>
+        /// Collects launch info from json
+        /// </summary>
+        /// <param name="launchesJSON">JSON launches data</param>
+        /// <param name="ships">Ships list</param>
+        /// <param name="rockets">Rocket list</param>
+        /// <returns>Launches collecting async task</returns>
         private async Task<List<Launch>> SetLaunchInfo(JObject launchesJSON, List<Ship> ships, List<Rocket> rockets)
         {
             List<Launch> ret = new List<Launch>();
@@ -104,6 +149,11 @@ namespace space_browser.Source
             return ret;
         }
 
+        /// <summary>
+        /// Sets rocket list data from rocket json data
+        /// </summary>
+        /// <param name="rocketJSON">JSON Rocket data</param>
+        /// <returns>Seting rocket info list async task</returns>
         private async Task<List<Rocket>> SetRocketInfo(JObject rocketJSON)
         {
             List<Rocket> rockets = new List<Rocket>();
@@ -122,6 +172,11 @@ namespace space_browser.Source
             return rockets;
         }
 
+        /// <summary>
+        /// Sets ships list data from rocket json data
+        /// </summary>
+        /// <param name="shipsJSON">JSON Ship data</param>
+        /// <returns>Seting ship info list async task</returns>
         private async Task<List<Ship>> SetShipsInfo(JObject shipsJSON)
         {
             List<Ship> shipInfos = new List<Ship>();
@@ -140,6 +195,11 @@ namespace space_browser.Source
             return shipInfos;
         }
 
+        /// <summary>
+        /// Gets image from specific url
+        /// </summary>
+        /// <param name="url">Image URL</param>
+        /// <returns>Getting image async task</returns>
         private  async Task<byte[]> GetImage(string url)
         {
             if (url != null && !url.Equals(string.Empty))
